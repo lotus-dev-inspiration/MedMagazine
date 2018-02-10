@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class UserService {
 
-  private baseUrl = "192.168.88.243:8000";
+  private baseUrl = "http://127.0.0.1:8000";
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -16,7 +16,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getUser(): Observable<any> {
-    return this.http.get(this.baseUrl + '/getUser');
+    return this.http.get(this.baseUrl + '/get-user');
   }
 
 }
