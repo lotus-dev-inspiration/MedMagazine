@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from rest_framework import generics, viewsets
+from django.contrib.auth.models import User
 from .serialazers import UserSerializer
-from rest_framework.views import APIView
 
-class UsersList(APIView):
-    
+class userList(viewsets.ReadOnlyModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
