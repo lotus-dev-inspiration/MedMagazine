@@ -40,7 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'api'
 ]
+
+#AUTH_USER_MODEL = 'api.User'
 
 # REST_FRAMEWORK = {
 #     # Use Django's standard `django.contrib.auth` permissions,
@@ -84,11 +87,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'MedMagazine.wsgi.application'
 
-
+ONLINE = False
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-if is_connected():
+if is_connected() and ONLINE:
     try:
         DATABASES = {
             'default': {
@@ -100,13 +103,14 @@ if is_connected():
             }
         }
     except:
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-            }
+        print('Connection to DB failed with error!')
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
-
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
