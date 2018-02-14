@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'api'
 ]
 
-#AUTH_USER_MODEL = 'api.User'
+AUTH_PROFILE_MODULE = 'api.Profile'
 
 # REST_FRAMEWORK = {
 #     # Use Django's standard `django.contrib.auth` permissions,

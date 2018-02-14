@@ -1,9 +1,9 @@
 from django.contrib import admin
-from django.contrib.auth.models import User
-
-from .models import CustomUser
-
+from .models import Profile
+from django.contrib.admin.models import models
 
 # Register your models here.
-admin.site.unregister(User)
-admin.site.register(CustomUser)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('patronymic', 'company', 'phone',)
+
+admin.site.register(Profile, ProfileAdmin)
