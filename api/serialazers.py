@@ -7,7 +7,9 @@ from django.http import HttpResponse, Http404
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        exclude = ('id','user',)
+        exclude = ('id',)
+
+
 
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
@@ -21,4 +23,6 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         Profile.objects.create(user=user,**profile_data)
         return user
+
+
 
