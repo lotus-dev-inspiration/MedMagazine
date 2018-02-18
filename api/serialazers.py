@@ -25,15 +25,16 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
     def update(self, instance, validated_data):
-        instance.profile.phone = validated_data.get('profile.phone', instance.profile.phone)
+        instance.profile.patronymic = validated_data.get('profile.patronymic', instance.profile.patronymic)
         instance.profile.company = validated_data.get('profile.company', instance.profile.company)
-        instance.profile.phone = validated_data.get('profile.patronymic', instance.profile.patronymic)
+        instance.profile.phone = validated_data.get('profile.phone', instance.profile.phone)
         instance.username = validated_data.get('username', instance.username)
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.email = validated_data.get('email', instance.email)
         instance.password = validated_data.get('password', instance.password)
         instance.is_staff = validated_data.get('is_staff', instance.is_staff)
-        instance.is_active = validated_data.get('is_staff', instance.is_active)
+        instance.is_active = validated_data.get('is_active', instance.is_active)
         instance.save()
         return instance
+
