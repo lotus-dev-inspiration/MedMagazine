@@ -1,7 +1,14 @@
-from django.urls import path, include
+from django.urls import path
 from rest_framework import routers
-from .views import *
+from rest_framework_jwt.views import obtain_jwt_token
+from .views import SimpleView
+
 
 router = routers.DefaultRouter()
-urlpatterns = router.urls
 
+urlpatterns = [
+
+    path('auth/', obtain_jwt_token),
+    path('view/', SimpleView)
+
+] + router.urls
