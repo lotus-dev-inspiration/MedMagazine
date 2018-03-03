@@ -1,20 +1,21 @@
 from .models import Profile
+from django.contrib.auth.models import User
 from rest_framework import serializers
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Article
 
 # Serializers define the API representation.
 class ProfileSerializer(serializers.ModelSerializer):
-class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         exclude = ('id',)
-        model = Article
-        fields = '__all__'
-
-
+        
+class ArticleSerializer(serializers.ModelSerializer):
+    model = Article
+    fields = '__all__'
 
 class UserSerializer(serializers.ModelSerializer):
+
     profile = ProfileSerializer()
 
     class Meta:

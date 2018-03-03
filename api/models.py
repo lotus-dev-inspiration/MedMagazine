@@ -1,20 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
-
 
 # Create your models here.
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, parent_link=True)
-    patronymic = models.CharField(max_length=100, blank=True)
-    company = models.CharField(max_length=200, blank= True)
-    phone = models.CharField(max_length=20, blank=True)
-    #articles = models.ForeignKey(User_Articles)
-    
 class ArticleStatus(models.Model):
-
     name = models.CharField(max_length=150, db_index=True,unique=True, primary_key=True, blank=False)
 
     class Meta:
@@ -32,3 +20,13 @@ class Article(models.Model):
     author = models.ForeignKey(User,on_delete=models.CASCADE)
     reviewers = models.ManyToManyField(User,related_name='reviewer')
     status = models.ForeignKey(ArticleStatus, on_delete=models.NOT_PROVIDED)
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, parent_link=True)
+    patronymic = models.CharField(max_length=100, blank=True)
+    company = models.CharField(max_length=200, blank= True)
+    phone = models.CharField(max_length=20, blank=True)
+    articles = models.ForeignKey(Article, on_delete=models.NOT_PROVIDED)
+    
+
