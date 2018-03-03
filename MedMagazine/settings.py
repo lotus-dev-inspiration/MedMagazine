@@ -90,6 +90,7 @@ WSGI_APPLICATION = 'MedMagazine.wsgi.application'
 ONLINE = False
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+ONLINE = False
 
 if is_connected() and ONLINE:
     try:

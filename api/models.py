@@ -12,13 +12,23 @@ class Profile(models.Model):
     company = models.CharField(max_length=200, blank= True)
     phone = models.CharField(max_length=20, blank=True)
     #articles = models.ForeignKey(User_Articles)
+    
+class ArticleStatus(models.Model):
 
-#
-# @receiver(post_save, sender=User)
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         Profile.objects.create(user=instance)
-#
-# @receiver(post_save, sender=User)
-# def save_user_profile(sender, instance, **kwargs):
-#     instance.profile.save()
+    name = models.CharField(max_length=150, db_index=True,unique=True, primary_key=True, blank=False)
+
+    class Meta:
+        verbose_name_plural = "Article Statuses"
+
+    def __str__(self):
+        return self.name
+
+class Article(models.Model):
+    name = models.CharField(max_length=200)
+    theme = models.CharField(max_length=200)
+    description = models.CharField(max_length=200, blank=True)
+    content = models.CharField(max_length=200, blank=True)
+    date = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User,on_delete=models.CASCADE)
+    reviewers = models.ManyToManyField(User,related_name='reviewer')
+    status = models.ForeignKey(ArticleStatus, on_delete=models.NOT_PROVIDED)
