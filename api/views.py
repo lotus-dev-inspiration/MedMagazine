@@ -12,6 +12,7 @@ class UserViewset(mixins.CreateModelMixin,
                   viewsets.GenericViewSet):
     queryset = User.objects.filter(is_active=True)
     serializer_class = UserSerializer
+    http_method_names = ['get', 'post', 'head', 'options', 'patch']
 
 class ArticleViewset(mixins.CreateModelMixin,
                    mixins.RetrieveModelMixin,
@@ -21,3 +22,4 @@ class ArticleViewset(mixins.CreateModelMixin,
 
     queryset =  Article.objects.all()
     serializer_class = ArticleSerializer
+    http_method_names = ['get', 'post', 'head','options','patch']

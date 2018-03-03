@@ -17,9 +17,12 @@ class Article(models.Model):
     description = models.CharField(max_length=200, blank=True)
     content = models.CharField(max_length=200, blank=True)
     date = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(User,on_delete=models.CASCADE)
-    reviewers = models.ManyToManyField(User,related_name='reviewer')
+    author = models.ForeignKey(User,on_delete=models.NOT_PROVIDED)
+    reviewers = models.ManyToManyField(User,related_name='reviewers')
     status = models.ForeignKey(ArticleStatus, on_delete=models.NOT_PROVIDED)
+
+    def __str__(self):
+        return self.name
 
 
 class Profile(models.Model):
@@ -27,6 +30,6 @@ class Profile(models.Model):
     patronymic = models.CharField(max_length=100, blank=True)
     company = models.CharField(max_length=200, blank= True)
     phone = models.CharField(max_length=20, blank=True)
-    articles = models.ForeignKey(Article, on_delete=models.NOT_PROVIDED)
+    articles = models.ForeignKey(Article, on_delete=models.NOT_PROVIDED, blank=True)
     
 

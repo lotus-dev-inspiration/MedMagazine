@@ -9,18 +9,24 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         exclude = ('id',)
+        required = False
+
         
 class ArticleSerializer(serializers.ModelSerializer):
-    model = Article
-    fields = '__all__'
+
+    class Meta:
+        model = Article
+        fields = '__all__'
+        required = False
+
 
 class UserSerializer(serializers.ModelSerializer):
-
     profile = ProfileSerializer()
 
     class Meta:
         model = User
-        exclude = ('groups','last_login','date_joined','user_permissions','is_superuser','password',)
+        exclude = ('groups','last_login','date_joined','user_permissions','is_superuser',)
+        required = False
 
     def create(self, validated_data):
         profile_data = validated_data.pop('profile')
@@ -30,9 +36,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         profile_data = validated_data.get('profile')
-        instance.profile.patronymic = profile_data['patronymic']
-        instance.profile.company = profile_data['company']
-        instance.profile.phone = profile_data['phone']
+        instance.profile.patronymic = profile_data.get('patronymic', instance.profile.patronymic)
+        instance.profile.company = profile_data.get('company', instance.profile.company)
+        instance.profile.phone = profile_data.get('phone', instance.profile.phone)
         instance.username = validated_data.get('username', instance.username)
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
