@@ -10,7 +10,7 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-
+          <Route path="/article" component={ArticleList} />
         </Switch>
       </Router>
     );
