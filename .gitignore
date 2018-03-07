@@ -25,4 +25,6 @@ venv
 db.sqlite3
 *.pyc
 __ pycache __
+.vscode
+.idea
 
