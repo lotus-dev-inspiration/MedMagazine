@@ -10,7 +10,6 @@ router.register(r'users', UserViewset, base_name='user')
 router.register(r'articles', ArticleViewset, base_name='article')
 
 
-
 urlpatterns = [
 
     path('auth/', obtain_jwt_token),
