@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-
+            <Route path="/login" component={Login}/>
         </Switch>
       </Router>
     );
