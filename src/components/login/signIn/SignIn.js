@@ -2,6 +2,18 @@ import React, {Component} from 'react';
 import "./SignIn.css";
 
 class SignIn extends Component {
+    submitUser() {
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        fetch("http://127.0.0.1:8000/users", {
+            method: 'post',
+            body: JSON.stringify({name: "ValiK"})
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            console.log(data);
+        })
+            
+    }
    render(){
        return(
            <div>
@@ -21,7 +33,7 @@ class SignIn extends Component {
                       </div>
                   </div>
                  
-                  <button className="btn-submit">Sign in</button>
+                  <button className="btn-submit" onClick={this.submitUser.bind(this)}>Sign in</button>
                  
                   {/* <input type="submit" value="Sign up" />     */}
                {/* </form>  */}

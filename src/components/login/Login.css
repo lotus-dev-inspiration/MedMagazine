@@ -22,8 +22,8 @@
     color:white;
     background: var(--main-steelblue-color);
     border:none;
-    width: 150px;
-    height:40px;
+    width: 120px;
+    height:35px;
     cursor:pointer;
     outline:none;
     transition: background 1s;
