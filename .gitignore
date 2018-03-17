@@ -9,6 +9,9 @@
 # production
 /build
 
+# css
+src/**/*.css
+
 # misc
 .DS_Store
 .env.local
@@ -25,4 +28,5 @@ venv
 db.sqlite3
 *.pyc
 __ pycache __
+
 
