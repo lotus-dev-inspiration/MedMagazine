@@ -29,4 +29,7 @@ db.sqlite3
 *.pyc
 __ pycache __
 
+#orig
+*.orig
+
 
