@@ -12,7 +12,6 @@ class UserViewset(mixins.CreateModelMixin,
                   mixins.UpdateModelMixin,
                   mixins.ListModelMixin,
                   viewsets.GenericViewSet):
-    permission_classes = (IsAdminUser,)
     queryset = User.objects.filter(is_active=True)
     serializer_class = UserSerializer
     http_method_names = ['get', 'post', 'head', 'options', 'patch']
