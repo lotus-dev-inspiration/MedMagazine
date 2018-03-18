@@ -27,9 +27,11 @@ class Article(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, parent_link=True)
-    patronymic = models.CharField(max_length=100, blank=True)
-    company = models.CharField(max_length=200, blank= True)
-    phone = models.CharField(max_length=20, blank=True)
-    articles = models.ForeignKey(Article, on_delete=models.NOT_PROVIDED, blank=True)
-    
+    patronymic = models.CharField(max_length=100, default='Not Provided')
+    company = models.CharField(max_length=200, default='Not Provided')
+    phone = models.CharField(max_length=20, default='Not Provided')
+    articles = models.ManyToManyField(Article, blank=True)
+
+    def __str__(self):
+        return User.objects.filter(id=self.user)
 
