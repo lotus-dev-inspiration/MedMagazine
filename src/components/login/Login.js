@@ -15,25 +15,10 @@ class Login extends Component {
             isUser: !this.state.isUser
         })
     }
-    submitUser() {
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        fetch(proxyurl + "http://api.thequestion.ru/api/search/answers?q=%D0%9F%D0%BE%D1%87%D0%B5%D0%BC%D1%83&limit=1")
-            .then(
-                (response) => {
-                    if (response.status !== 200) {
-                        console.log('Looks like there was a problem. Status Code: ' +
-                            response.status);
-                        return;
-                    }
-                    response.json().then((data) => {
-                        console.log(data);
-                    })
-                }
-            )
-    }
+    
     render() {
         return (
-            <div>
+            <div className="Login">
                 <div className="login-wrapper">
                     <div className="login-image-wrapper">
 

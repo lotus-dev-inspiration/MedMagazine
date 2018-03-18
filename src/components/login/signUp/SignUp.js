@@ -1,24 +1,9 @@
 import React, { Component } from 'react';
-import "./SignUp.css";
+import "../signIn/SignIn";
 
 class SignUp extends Component {
     constructor(props){
         super(props);
-        // this.state = {
-        //     user: {
-        //         profile: {
-        //             patronymic: "",
-        //             company: "",
-        //             phone: ""
-        //         },
-        //         username: "",
-        //         first_name: "",
-        //         last_name: "",
-        //         email: "",
-        //         is_staff: false,
-        //         is_active: false
-        //     }
-        // };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleSubmit(e){
@@ -41,7 +26,7 @@ class SignUp extends Component {
     
     render() {
         return (
-            <div>
+            <div className="SignIn">
                 <h1 className="content-heading">Sign Up</h1>
                 <form onSubmit = {this.handleSubmit}>
                     <div className="input-field-wrapper">
@@ -63,7 +48,7 @@ class SignUp extends Component {
                             className="input-field" 
                             type="text" 
                             name="lastName"
-                             
+                            ref={(input) => {this.lastName = input;}} 
                             required/>
                         </div>
                     </div>
@@ -83,14 +68,24 @@ class SignUp extends Component {
                     <div className="input-field-wrapper">
                         <span className="input-heading">Username</span>
                         <div className="input-wrapper">
-                            <input className="input-field" type="text" name="userNmae" required/>
+                            <input 
+                            className="input-field" 
+                            type="text" 
+                            name="userName"
+                            ref={(input) => {this.username = input;}} 
+                            required/>
                         </div>
                     </div>
 
                     <div className="input-field-wrapper">
                         <span className="input-heading">Email</span>
                         <div className="input-wrapper">
-                            <input className="input-field" type="email" name="email" required/>
+                            <input 
+                            className="input-field" 
+                            type="email" 
+                            name="email"
+                            ref={(input) => {this.email = input;}} 
+                            required/>
                         </div>
                     </div>
 
@@ -121,7 +116,11 @@ class SignUp extends Component {
                     <div className="input-field-wrapper">
                         <span className="input-heading">Password</span>
                         <div className="input-wrapper">
-                            <input className="input-field" type="password" name="password" required/>
+                            <input 
+                            className="input-field" 
+                            type="password" 
+                            name="password" 
+                            required/>
                         </div>
                     </div>
 

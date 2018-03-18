@@ -1,30 +1,39 @@
-.input-field-wrapper{
-    margin-bottom: 10px;
-}
-.input-heading{
-   font-size: 12px;
-   color:#4d4d4d;
-   font-weight: bold;   
-}
-.content-heading{
-   margin-bottom: 15px;
-   font-size: 22px;
-}
-.input-wrapper{
-    margin-top: 5px;
-}
-.input-field{
-    width:70%;
-    height:20px;
-    border:none;
-    border-bottom: 2px solid var(--main-darkgray-color);
-    outline: none;
-    color:dimgray;
-    font-size:15px;
-    font-weight: bold;
-    padding-left: 5px;
-    transition: border-bottom 1s;
-}
-.input-field:focus{
-    border-bottom: 2px solid var(--main-midnightblue-color);   
-}
+.SignIn .content-heading {
+  margin-bottom: 15px;
+  font-size: 22px; }
+
+.SignIn .input-field-wrapper {
+  margin-bottom: 10px; }
+  .SignIn .input-field-wrapper .input-heading {
+    font-size: 12px;
+    color: #4d4d4d;
+    font-weight: bold; }
+  .SignIn .input-field-wrapper .input-wrapper {
+    margin-top: 5px; }
+    .SignIn .input-field-wrapper .input-wrapper .input-field {
+      width: 70%;
+      height: 20px;
+      border: none;
+      border-bottom: 2px solid var(--main-darkgray-color);
+      outline: none;
+      color: dimgray;
+      font-size: 15px;
+      font-weight: bold;
+      padding-left: 5px;
+      transition: border-bottom 1s; }
+    .SignIn .input-field-wrapper .input-wrapper .input-field:focus {
+      border-bottom: 2px solid var(--main-midnightblue-color); }
+
+.SignIn .btn-submit {
+  margin-top: 14px;
+  color: white;
+  background: var(--main-steelblue-color);
+  border: none;
+  width: 120px;
+  height: 35px;
+  cursor: pointer;
+  outline: none;
+  transition: background 1s; }
+
+.SignIn .btn-submit:hover {
+  background: var(--main-midnightblue-color); }

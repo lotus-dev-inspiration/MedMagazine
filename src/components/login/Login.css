@@ -1,58 +1,31 @@
-.login-wrapper{
-    display: flex;
-    width:100%;
-    height:100vh;
-    /* background: var(--main-steelblue-color); */
-    flex-direction: row;
-}
-.login-image-wrapper{
-   width: 55%;
-   background: url('./login-image.png') no-repeat;
-   background-size: cover;
-}
-.login-content-wrapper{
-    width:45%;
-}
-.login-content-main-wrapper{
-    width:75%;
-    margin:15px auto;
-}
-.btn-submit{
-    margin-top:14px;
-    color:white;
-    background: var(--main-steelblue-color);
-    border:none;
-    width: 120px;
-    height:35px;
-    cursor:pointer;
-    outline:none;
-    transition: background 1s;
-}
+.Login .login-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  flex-direction: row; }
+  .Login .login-wrapper .login-image-wrapper {
+    width: 55%;
+    background: url("./login-image.png") no-repeat;
+    background-size: cover; }
+  .Login .login-wrapper .login-content-wrapper {
+    width: 45%; }
+    .Login .login-wrapper .login-content-wrapper .login-content-main-wrapper {
+      width: 75%;
+      margin: 15px auto; }
+      .Login .login-wrapper .login-content-wrapper .login-content-main-wrapper .login-button-wrapper {
+        position: relative;
+        top: -55px;
+        left: 140px;
+        width: 125px; }
+        .Login .login-wrapper .login-content-wrapper .login-content-main-wrapper .login-button-wrapper .btn-pass-wrapper {
+          margin-top: 24px; }
+          .Login .login-wrapper .login-content-wrapper .login-content-main-wrapper .login-button-wrapper .btn-pass-wrapper .btn-pass {
+            color: #4d4d4d;
+            text-decoration: none;
+            font-size: 14px;
+            margin-left: 60px;
+            height: 40px; }
 
-.btn-submit:hover{
-    background: var(--main-midnightblue-color);   
-}
-.btn-pass{
-    color:#4d4d4d;
-    text-decoration:none;
-    font-size:14px;
-    margin-left:60px;
-    height:40px;
-}
-.btn-pass-wrapper{
-    margin-top:24px;
-}
-.login-button-wrapper{
-    /* display:flex;
-    flex-direction: row; */
-    position: relative;
-    top:-55px;
-    left:140px;
-    width: 125px;
-}
-
-@media(max-width:768px){
-   .login-image-wrapper{
-       display:none;
-   }
-}
+@media (max-width: 768px) {
+  .Login .login-image-wrapper {
+    display: none; } }

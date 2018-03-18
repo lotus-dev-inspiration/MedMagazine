@@ -1,0 +1,44 @@
+.Login{
+   .login-wrapper{
+    display: flex;
+    width:100%;
+    height:100vh;
+    flex-direction: row;
+        .login-image-wrapper{
+         width: 55%;
+         background: url('./login-image.png') no-repeat;
+         background-size: cover;
+        }
+        .login-content-wrapper{
+         width:45%;
+            .login-content-main-wrapper{
+             width:75%;
+             margin:15px auto;
+             .login-button-wrapper{
+                position: relative;
+                top:-55px;
+                left:140px;
+                width: 125px;
+                .btn-pass-wrapper{
+                    margin-top:24px;
+                    .btn-pass{
+                        color:#4d4d4d;
+                        text-decoration:none;
+                        font-size:14px;
+                        margin-left:60px;
+                        height:40px;
+                    }
+                }
+              }
+             }
+
+
+}
+}
+
+@media(max-width:768px){
+   .login-image-wrapper{
+       display:none;
+   }
+}
+}

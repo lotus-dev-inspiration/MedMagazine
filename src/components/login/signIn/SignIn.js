@@ -3,7 +3,6 @@ import "./SignIn.css";
 
 class SignIn extends Component {
     submitUser() {
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
         fetch("http://127.0.0.1:8000/users", {
             method: 'post',
             body: JSON.stringify({name: "ValiK"})
@@ -16,7 +15,7 @@ class SignIn extends Component {
     }
    render(){
        return(
-           <div>
+           <div className="SignIn">
                <h1 className="content-heading">Sign In</h1>
                {/* <form> */}
                <div className="input-field-wrapper">
