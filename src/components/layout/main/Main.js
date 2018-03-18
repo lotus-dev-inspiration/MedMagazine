@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+
+import './Main.css';
+import StartPage from 'components/start-page/StartPage';
 
 class Main extends Component {
     render() {
         return (
             <main className="Main">
-                <Router>
                     <Switch>
-                        <h1>I am Main</h1>
+                        <Route exact path='/' component={StartPage}/>
                     </Switch>
-                </Router>
             </main>
         );
     }

@@ -1,9 +1,15 @@
 import React from 'react';
+import './Footer.css';
 
 const Footer = () => {
     return (
         <footer className="Footer">
-            <h1>I am footer</h1>
+            <p className="footer-content">
+                Made by 
+                <a className="footer-link" href="https://github.com/Spyrot" target="_blank"> Spyrot</a>
+                <a className="footer-link" href="https://github.com/vladshyrinov" target="_blank"> Vlad.Shyrinov</a>
+                <a className="footer-link" href="https://github.com/valentine1004" target="_blank"> Valentine1004</a> 
+            </p>
         </footer>
     );
 }
