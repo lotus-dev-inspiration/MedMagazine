@@ -9,6 +9,9 @@
 # production
 /build
 
+# css
+*.css
+
 # misc
 .DS_Store
 .env.local
@@ -27,4 +30,8 @@ db.sqlite3
 __ pycache __
 .vscode
 .idea
+
+#orig
+*.orig
+
 

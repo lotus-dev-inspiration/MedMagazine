@@ -1,0 +1,17 @@
+.Footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    background-color: var(--main-black-color);
+    color: var(--main-ghostwhite-color);
+    padding: 0 0 0 20px; 
+
+    .footer-content {
+        .footer-link {
+            &:hover {
+                color: var(--main-lightyellow-color);
+            }
+        }
+    }
+}

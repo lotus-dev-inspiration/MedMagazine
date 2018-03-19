@@ -1,0 +1,30 @@
+:root {
+    --main-steelblue-color: #4682B4;
+    --main-midnightblue-color: #191970;
+    --main-darkgray-color: #A9A9A9;
+    --main-white-color: #ffffff;
+    --main-ghostwhite-color: #F8F8FF;
+    --main-black075-color: rgba(0, 0, 0, 0.75);
+    --main-black-color: #000000;
+    --main-lightyellow-color: #FFFF66;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+body {
+    margin: 0 auto;
+    max-width: 1920px;
+    font-family: 'Fira Sans', sans-serif;
+}
