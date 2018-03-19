@@ -1,5 +1,6 @@
 import socket
 
+
 def is_connected():
   try:
     host = socket.gethostbyname("www.google.com")
@@ -8,3 +9,4 @@ def is_connected():
   except:
      pass
   return False
+

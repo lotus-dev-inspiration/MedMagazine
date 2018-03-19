@@ -1,6 +1,5 @@
-from rest_framework import generics, viewsets, mixins
 from .serialazers import UserSerializer
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.contrib.auth.models import User
 from rest_framework import viewsets, mixins
 from .serialazers import ArticleSerializer

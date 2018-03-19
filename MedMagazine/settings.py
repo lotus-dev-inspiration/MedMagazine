@@ -69,6 +69,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'MedMagazine.backends.EmailOrUsernameModelBackend',
+    'django.contrib.auth.backends.ModelBackend'
+)
+
 CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'MedMagazine.urls'
