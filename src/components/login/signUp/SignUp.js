@@ -7,21 +7,42 @@ class SignUp extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleSubmit(e){
+       e.preventDefault();
+    //    let profile = JSON.stringify({
+    //     patronymic: this.patronymic.value,
+    //     company: this.company.value,
+    //     phone: this.phone.value,
+    //     articles: []
+    //  });
        let user = {
            profile: {
-              patronymic: this.patronymic.value,
-              company: this.company.value,
-              phone: this.phone.value
+            patronymic: this.patronymic.value,
+            company: this.company.value,
+            phone: this.phone.value,
+            articles: []
            },
+           password: this.password.value,
            username: this.username.value,
            first_name: this.firstName.value,
            last_name: this.lastName.value,
            email: this.email.value,
            is_staff: false,
-           is_active: false
+           is_active: true,
+           groups: []
        }
-       console.log(user);
-       e.preventDefault();
+       fetch("http://127.0.0.1:8000/users/", {
+        headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json' 
+          },
+            method: 'post',
+            body: JSON.stringify(user)
+        }).then((response) => {
+            return response;
+        }).then((data) => {
+            console.log(data);
+        })
+      
     }
     
     render() {
@@ -119,7 +140,8 @@ class SignUp extends Component {
                             <input 
                             className="input-field" 
                             type="password" 
-                            name="password" 
+                            name="password"
+                            ref={(input) => {this.password = input;}} 
                             required/>
                         </div>
                     </div>
@@ -134,6 +156,7 @@ class SignUp extends Component {
                     <input type="submit" className="btn-submit" value="Sign up"/>
 
                 </form>
+                
             </div>
         )
     }
