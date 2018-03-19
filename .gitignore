@@ -23,6 +23,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+#conflicts_resolving
+.orig
+
 #python
 venv
 db.sqlite3
