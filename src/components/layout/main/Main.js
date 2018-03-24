@@ -6,6 +6,7 @@ import './Main.css';
 import StartPage from 'components/start-page/StartPage';
 import Login from 'components/login/Login';
 import ArticleList from 'components/articleList/ArticleList';
+import ArticleReview from 'components/article-review/ArticleReview';
 
 class Main extends Component {
     render() {
@@ -15,6 +16,7 @@ class Main extends Component {
                         <Route exact path='/' component={StartPage}/>
                         <Route exact path='/login' component={Login}/>
                         <Route exact path='/articles' component={ArticleList}/>
+                        <Route exact path='/articles-review' component={ArticleReview} />
                     </Switch>
             </main>
         );
