@@ -8,12 +8,6 @@ class SignUp extends Component {
     }
     handleSubmit(e){
        e.preventDefault();
-    //    let profile = JSON.stringify({
-    //     patronymic: this.patronymic.value,
-    //     company: this.company.value,
-    //     phone: this.phone.value,
-    //     articles: []
-    //  });
        let user = {
            profile: {
             patronymic: this.patronymic.value,
