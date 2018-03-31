@@ -24,3 +24,10 @@ class ArticleViewset(mixins.CreateModelMixin,
     queryset =  Article.objects.all()
     serializer_class = ArticleSerializer
     http_method_names = ['get', 'post', 'head','options','patch']
+
+def jwt_response_payload_handler(token, user=None, request=None):
+    return {
+        'token': token,
+        'user': UserSerializer(user,context={'request': request}).data
+    }
+
