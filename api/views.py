@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from rest_framework import viewsets, mixins
 from .serialazers import ArticleSerializer
 from .models import Article
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 
 class UserViewset(mixins.CreateModelMixin,
@@ -31,3 +33,6 @@ def jwt_response_payload_handler(token, user=None, request=None):
         'user': UserSerializer(user,context={'request': request}).data
     }
 
+@api_view()
+def GetUserFromToken(request):
+    return Response({'user': UserSerializer(request.user,context={'request': request}).data})
