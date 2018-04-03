@@ -21,3 +21,14 @@ export const userAuthenticate = (data) => {
         body: JSON.stringify(data)
     })
 }
+
+export const userFromToken = (token) => {
+    return fetch(baseUrl + '/user/', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': token
+        },
+        method: 'get'
+    })
+}

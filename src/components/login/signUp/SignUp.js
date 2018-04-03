@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from "react-router";
 import "../signIn/SignIn";
 import {createUser, userAuthenticate} from 'services/user-service';
+import {setCookie} from 'services/cookie-service';
 
 class SignUp extends Component {
     
@@ -26,9 +27,9 @@ class SignUp extends Component {
                 return response.json();
             }).then((data) => {
                 this.props.onUserCreation(data.user);
-                localStorage.setItem("tokenId", data.token);
-                // <Redirect to="/articles"/>
-                // window.location.replace('/articles');
+                // setCookie("Authorization", "JWT " + data.token, data.expires);
+            }).catch((error) => {
+                console.log(error);
             })
         })
     }
