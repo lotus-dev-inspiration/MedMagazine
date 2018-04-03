@@ -9,7 +9,7 @@ export default class Article extends Component {
 
     render() {
         return (
-            <article className="article-wrapper">
+            <article className="Article">
                 <h2 className="article-heading">{this.props.data.theme}</h2>
                 <div className="article-content">
                     <div className="content-description-wrapper">
