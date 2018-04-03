@@ -7,9 +7,10 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isUser: true
+            isUser: localStorage.getItem("tokenId") ? true : false
         }
     }
+    
     handlePass() {
         this.setState({
             isUser: !this.state.isUser
@@ -25,11 +26,11 @@ class Login extends Component {
                     </div>
                     <div className="login-content-wrapper">
                         <div className="login-content-main-wrapper">
-                            {this.state.isUser ? <SignUp /> : <SignIn />}
+                            {this.state.isUser ? <SignIn /> : <SignUp onUserCreation={this.props.createNewUser} />}
                             <div className="login-button-wrapper">
 
                                 <div className="btn-pass-wrapper">
-                                    <a href="#" className="btn-pass" onClick={this.handlePass.bind(this)}>{this.state.isUser ? "Sign in ->" : "Sign up ->"}</a>
+                                    <a href="#" className="btn-pass" onClick={this.handlePass.bind(this)}>{this.state.isUser ? "Sign up ->" : "Sign in ->"}</a>
                                 </div>
                             </div>
 

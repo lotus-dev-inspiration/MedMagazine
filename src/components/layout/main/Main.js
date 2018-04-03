@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import './Main.css';
 import StartPage from 'components/start-page/StartPage';
-import Login from 'components/login/Login';
+import Login from 'containers/login/Login';
 import ArticleList from 'components/articleList/ArticleList';
 
 class Main extends Component {
