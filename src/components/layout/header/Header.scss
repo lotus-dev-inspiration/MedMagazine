@@ -1,6 +1,7 @@
 .Header {
     z-index: 10000;
     position: relative;
+    background-color: var(--main-white-color);
 
     .header-navigation-wrapper {
         display: flex;
