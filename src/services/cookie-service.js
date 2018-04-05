@@ -1,11 +1,10 @@
-export const setCookie = (cname, cvalue, exdays) => {
-    const d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    const expires = "expires=" + d.toUTCString();
+export const setCookie = (cname, cvalue, exdate = '2050-01-01') => {
+    const date = new Date(exdate);
+    const expires = "expires=" + date.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
-export const getCookie =(cname) => {
+export const getCookie = (cname) => {
     const name = cname + "=";
     const ca = document.cookie.split(';');
     for(let i = 0; i < ca.length; i++) {
@@ -19,3 +18,7 @@ export const getCookie =(cname) => {
     }
     return "";
 }
+
+export const deleteCookie = (cname) => {
+    document.cookie = cname + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+};

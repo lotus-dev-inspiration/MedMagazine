@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from "react-router";
+import {withRouter} from 'react-router-dom';
+
 import "../signIn/SignIn";
 import {createUser, userAuthenticate} from 'services/user-service';
 import {setCookie} from 'services/cookie-service';
@@ -8,17 +10,17 @@ class SignUp extends Component {
     
     constructor(props) {
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.submitUser = this.submitUser.bind(this);
     }
 
-    handleSubmit(e) {
+    submitUser(e) {
         e.preventDefault();
 
         const user = this.getUser();
 
         createUser(user).then((response) => {
             return response.json();
-        }).then((data) => {
+        }).then(() => {
             const creds = {
                 username: user.username,
                 password: user.password
@@ -26,8 +28,10 @@ class SignUp extends Component {
             userAuthenticate(creds).then((response) => {
                 return response.json();
             }).then((data) => {
-                this.props.onUserCreation(data.user);
-                // setCookie("Authorization", "JWT " + data.token, data.expires);
+                this.props.onDefineUser(data.user);
+                setCookie("Authorization", "JWT " + data.token, data.exp_time);
+                setCookie("isUser", true);
+                this.props.history.replace("/articles");
             }).catch((error) => {
                 console.log(error);
             })
@@ -59,7 +63,7 @@ class SignUp extends Component {
         return (
             <div className="SignIn">
                 <h1 className="content-heading">Sign Up</h1>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.submitUser}>
                     <div className="input-field-wrapper">
                         <span className="input-heading">First Name</span>
                         <div className="input-wrapper">
@@ -137,7 +141,7 @@ class SignUp extends Component {
                         <div className="input-wrapper">
                             <input
                                 className="input-field"
-                                type="text"
+                                type="tel"
                                 name="phone"
                                 ref={(input) => { this.phone = input; }}
                                 required />
@@ -159,7 +163,11 @@ class SignUp extends Component {
                     <div className="input-field-wrapper">
                         <span className="input-heading">Repeat password</span>
                         <div className="input-wrapper">
-                            <input className="input-field" type="password" name="repeat-password" required />
+                            <input 
+                            className="input-field" 
+                            type="password" 
+                            name="repeat-password" 
+                            required />
                         </div>
                     </div>
 
@@ -172,4 +180,4 @@ class SignUp extends Component {
     }
 }
 
-export default SignUp;
+export default withRouter(SignUp);

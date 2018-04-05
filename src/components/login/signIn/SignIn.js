@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {withRouter} from 'react-router-dom';
+
 import "./SignIn.css";
 import { userAuthenticate } from 'services/user-service';
 import {setCookie} from 'services/cookie-service';
@@ -20,7 +22,10 @@ class SignIn extends Component {
         userAuthenticate(userCreds).then((response) => {
             return response.json();
         }).then((data) => {
-            // setCookie("Authorization", "JWT " + data.token, data.expires);
+            this.props.onDefineUser(data.user);
+            setCookie("Authorization", "JWT " + data.token, data.exp_time);
+            setCookie("isUser", true);
+            this.props.history.replace("/articles");
         }).catch((error) => {
             console.log(error);
         })
@@ -62,4 +67,4 @@ class SignIn extends Component {
     }
 }
 
-export default SignIn;
+export default withRouter(SignIn);

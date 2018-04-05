@@ -1,12 +1,13 @@
 import {
-    CREATE_NEW_USER,
-    GET_USERS,
-    LOGIN_USER
+    userActionTypes
 } from 'actionTypes';
 
-export const user = (state = {}, action) => {
-    if(action.type === CREATE_NEW_USER) {
-        return action.type; 
+export const user = (state = {}, {type, payload}) => {
+    if( type === userActionTypes.DEFINE_USER_SUCCESS || 
+        type === userActionTypes.DEFINE_USER_FAILURE ||
+        type === userActionTypes.LOGOUT_USER
+    ) {
+        return payload; 
     }
     return state;
 }

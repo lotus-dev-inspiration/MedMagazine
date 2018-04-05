@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import './Login.css';
 import SignUp from './signUp/SignUp';
 import SignIn from './signIn/SignIn';
+import { getCookie } from 'services/cookie-service';
 
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isUser: localStorage.getItem("tokenId") ? true : false
+            isUser: getCookie("isUser") ? true : false
         }
     }
     
@@ -26,7 +27,7 @@ class Login extends Component {
                     </div>
                     <div className="login-content-wrapper">
                         <div className="login-content-main-wrapper">
-                            {this.state.isUser ? <SignIn /> : <SignUp onUserCreation={this.props.createNewUser} />}
+                            {this.state.isUser ? <SignIn onDefineUser={this.props.defineUser} /> : <SignUp onDefineUser={this.props.defineUser} />}
                             <div className="login-button-wrapper">
 
                                 <div className="btn-pass-wrapper">
