@@ -39,4 +39,11 @@
      .btn-review:hover{
        background: var(--main-midnightblue-color);    
     }
+    @media(max-width:768px){
+            flex-direction: column;
+            width:80%;
+            .article-data{
+                margin-bottom: 20px;
+            }
+     }
 }
