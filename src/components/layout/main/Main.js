@@ -39,15 +39,8 @@ class Main extends Component {
                     <Route exact path="/articles" component={ArticleList}/>
                     <Route exact path='/login' 
                     render={() => {
-                        if(this.props.user.isLoggedIn !== undefined) {
-                            return this.props.user.isLoggedIn ? (
-                                <Redirect to="/"/>
-                            ) : (
-                                <Login/>
-                            )
-                        } else {
-                            return null;
-                        }
+                        return this.props.user.isLoggedIn 
+                        ? <Redirect to="/"/> : <Login/>
                     }}
                     />
                     <Authentication>
