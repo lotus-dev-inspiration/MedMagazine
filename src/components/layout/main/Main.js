@@ -8,6 +8,7 @@ import Login from 'containers/login/Login';
 import Logout from 'components/logout/Logout';
 import ArticleList from 'components/articleList/ArticleList';
 import ArticleCreation from 'components/articleCreation/article-creation';
+import Authentication from 'components/authentication/Authentication';
 
 import { userFromToken } from 'services/user-service';
 import { getCookie } from 'services/cookie-service';
@@ -35,22 +36,20 @@ class Main extends Component {
             <main className="Main">
                 <Switch>
                     <Route exact path='/' component={StartPage} />
-                    <Route exact path="/logout" component={Logout}/>
                     <Route exact path="/articles" component={ArticleList}/>
-                    <Route exact path='/login' render={(props) => {
+                    <Route exact path='/login' 
+                    render={(props) => {
                         return this.props.user.isLoggedIn ? (
                             <Redirect to="/"/>
                         ) : (
                             <Login {...props}/>
                         )
-                    }}/>
-                    <Route exact path='/article-creation' render={(props) => {
-                        return this.props.user.isLoggedIn ? (
-                            <ArticleCreation {...props}/>
-                        ) : (
-                            <Redirect to="/login"/>
-                        )
-                    }}/>
+                    }}
+                    />
+                    <Authentication>
+                        <Route exact path='/article-creation' component={ArticleCreation}/>
+                        <Route exact path="/logout" component={Logout}/>
+                    </Authentication>
                 </Switch>
             </main>
         );

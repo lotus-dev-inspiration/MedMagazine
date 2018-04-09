@@ -5,10 +5,11 @@
     height: 50px;
     background-color: var(--main-black-color);
     color: var(--main-ghostwhite-color);
-    padding: 0 0 0 20px; 
+    margin: 0 auto;
 
     .footer-content {
         .footer-link {
+            font-style: italic;
             &:hover {
                 color: var(--main-lightyellow-color);
             }
