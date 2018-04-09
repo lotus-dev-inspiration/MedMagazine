@@ -132,13 +132,11 @@
                     }
                 }
             }
-            .logo-link {}
             .navigation-list {
                 .navigation-item {
                     &:not(:last-child) {
                         display: none;
                     }
-                    .navigation-link {}
                 }
             }
             .navigation-list-mob {

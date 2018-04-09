@@ -38,12 +38,16 @@ class Main extends Component {
                     <Route exact path='/' component={StartPage} />
                     <Route exact path="/articles" component={ArticleList}/>
                     <Route exact path='/login' 
-                    render={(props) => {
-                        return this.props.user.isLoggedIn ? (
-                            <Redirect to="/"/>
-                        ) : (
-                            <Login {...props}/>
-                        )
+                    render={() => {
+                        if(this.props.user.isLoggedIn !== undefined) {
+                            return this.props.user.isLoggedIn ? (
+                                <Redirect to="/"/>
+                            ) : (
+                                <Login/>
+                            )
+                        } else {
+                            return null;
+                        }
                     }}
                     />
                     <Authentication>
