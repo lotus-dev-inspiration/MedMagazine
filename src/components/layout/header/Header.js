@@ -83,6 +83,13 @@ class Header extends Component {
                             </li>
                             : null
                     }
+                    {
+                        this.props.user.isLoggedIn
+                            ? <li className="navigation-item" >
+                                <Link onClick={this.allMenusClose} className="navigation-link" to="/articles-review">Review</Link>
+                            </li>
+                            : null
+                    }
                     <li className="navigation-item">
                         <Link onClick={this.allMenusClose} className="navigation-link" to="/contact">Contact</Link>
                     </li>                 
@@ -105,6 +112,12 @@ class Header extends Component {
                         this.props.user.isLoggedIn 
                         ? <li className="navigation-item-mob">
                         <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/article-creation">Create</Link>
+                        </li> : null 
+                    }
+                    {
+                        this.props.user.isLoggedIn 
+                        ? <li className="navigation-item-mob">
+                        <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/articles-review">Review</Link>
                         </li> : null 
                     }
                     <li className="navigation-item-mob">

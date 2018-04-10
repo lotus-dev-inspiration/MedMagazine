@@ -1,12 +1,12 @@
-.ArticlesReviewList{
-    .header{
-       margin: 20px auto;
-       width:25%;
-       font-size:27px;    
+.ArticlesReviewList {
+    padding-top: 40px;
+    .header {
+        text-align: center;
+        font-size: 27px;
     }
-    @media(max-width:768px){
-       .header{
-           width:80%;
-       }
- }
+    @media(max-width:768px) {
+        .header {
+            font-size: 22px;
+        }
+    }
 }

@@ -7,9 +7,10 @@ import StartPage from 'components/start-page/StartPage';
 import Login from 'containers/login/Login';
 import Logout from 'components/logout/Logout';
 import ArticleList from 'components/articleList/ArticleList';
-import ArticleCreation from 'components/articleCreation/article-creation';
+import ArticleCreation from 'components/articleCreation/ArticleCreation';
 import ArticlesReviewList from 'components/articles-review/ArticlesReviewList';
 import ArticleReview from 'components/articles-review/articleReview/ArticleReview';
+import Contact from 'components/contact/Contact';
 import Authentication from 'components/authentication/Authentication';
 
 import { userFromToken } from 'services/user-service';
@@ -18,8 +19,9 @@ import { getCookie } from 'services/cookie-service';
 class Main extends Component {
     constructor(props) {
         super(props);
+        console.log("Main.js");
     }
-
+    
     componentDidMount() {
         const token = getCookie("Authorization");
         if(token) {
@@ -32,13 +34,14 @@ class Main extends Component {
             })
         }
     }
-
+    
     render() {
         return (
             <main className="Main">
                 <Switch>
                     <Route exact path='/' component={StartPage} />
                     <Route exact path="/articles" component={ArticleList}/>
+                    <Route exact path="/contact" component={Contact} />  
                     <Route exact path='/login' 
                     render={() => {
                         return this.props.user.isLoggedIn 
@@ -51,6 +54,7 @@ class Main extends Component {
                         <Route exact path='/articles-review' component={ArticlesReviewList} />
                         <Route exact path='/articles-review/:number' component={ArticleReview} />
                     </Authentication>
+
                 </Switch>
             </main>
         );

@@ -5,12 +5,15 @@ import {connect} from 'react-redux';
 class Authentication extends Component {
     constructor(props) {
         super(props);
+        console.log("Authentication.js");
     }
 
     componentDidMount() {
-        if(!this.props.isLoggedIn) {
-            this.props.history.replace("/login");
-        }
+        setTimeout(() => {
+            if(!this.props.isLoggedIn) {
+                this.props.history.replace("/login");
+            }
+        }, 300);
     }
 
     render() {

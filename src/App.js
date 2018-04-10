@@ -6,8 +6,8 @@ import Main from 'containers/main/Main';
 import Footer from 'components/layout/footer/Footer';
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   render() {
