@@ -7,6 +7,7 @@
     --main-black075-color: rgba(0, 0, 0, 0.75);
     --main-black-color: #000000;
     --main-lightyellow-color: #FFFF66;
+    --main-yellow-color: #FFFF00;
 }
 
 * {
@@ -27,4 +28,9 @@ body {
     margin: 0 auto;
     max-width: 1920px;
     font-family: 'Fira Sans', sans-serif;
+    background: url("./assets/img/global/global-back.png");
+}
+
+.pointer {
+    cursor: pointer;
 }

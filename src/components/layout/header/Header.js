@@ -1,26 +1,158 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import './Header.css';
 
-const Header = () => {
-    return (
+class Header extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            openedSettings: false,
+            openedMenu: false
+        }
+
+        this.userSettingsWrapperClasses = ['user-settings-wrapper'];
+        this.menuClasses = ['navigation-list-mob'];
+        this.menuSignClasses = ['menu-mob-btn'];
+        this.settingsOpen = this.settingsOpen.bind(this);
+        this.menuOpen = this.menuOpen.bind(this);
+        this.allMenusClose = this.allMenusClose.bind(this);
+    }
+
+    settingsOpen() {
+        
+        if(!this.state.openedSettings) {
+            this.userSettingsWrapperClasses.push("show");
+        } else {
+            this.userSettingsWrapperClasses.pop();
+        }
+
+        this.setState({
+            openedSettings: !this.state.openedSettings
+        });
+    }
+
+    menuOpen() {
+        if(!this.state.openedMenu) {
+            this.menuClasses.push("show");
+            this.menuSignClasses.push("cross");
+        } else {
+            this.menuClasses.pop();
+            this.menuSignClasses.pop();
+        }
+        
+        this.setState({
+            openedMenu: !this.state.openedMenu
+        });
+    }
+    
+    allMenusClose() {
+        if(this.menuClasses.includes("show")) {
+            this.menuClasses.pop();
+            this.menuSignClasses.pop();
+        }
+        if(this.userSettingsWrapperClasses.includes("show")) {
+            this.userSettingsWrapperClasses.pop();
+        }
+
+        this.setState({
+            openedMenu: false,
+            openedSettings: false
+        });
+    }
+    
+    render() {
+        return (
         <header className="Header">
             <nav className="header-navigation-wrapper">
-                <Link className="logo-link" to="/">Logo</Link>
+                <button className={this.menuSignClasses.join(' ')} onClick={this.menuOpen}>
+                    <div className="bar bar1"></div>
+                    <div className="bar bar2"></div>
+                    <div className="bar bar3"></div>
+                </button>  
+                <Link onClick={this.allMenusClose} className="logo-link" to="/">Logo</Link>
                 <ul className="navigation-list">
                     <li className="navigation-item">
-                        <Link className="navigation-link" to="/articles">Articles</Link>
+                        <Link onClick={this.allMenusClose} className="navigation-link" to="/articles">Articles</Link>
                     </li>
+                    {
+                        this.props.user.isLoggedIn
+                            ? <li className="navigation-item" >
+                                <Link onClick={this.allMenusClose} className="navigation-link" to="/article-creation">Create</Link>
+                            </li>
+                            : null
+                    }
+                    {
+                        this.props.user.isLoggedIn
+                            ? <li className="navigation-item" >
+                                <Link onClick={this.allMenusClose} className="navigation-link" to="/articles-review">Review</Link>
+                            </li>
+                            : null
+                    }
                     <li className="navigation-item">
-                        <Link className="navigation-link" to="/contact">Contact</Link>
+                        <Link onClick={this.allMenusClose} className="navigation-link" to="/contact">Contact</Link>
+                    </li>                 
+                    <li className="navigation-item" >
+                    {
+                        this.props.user.isLoggedIn
+                        ? <span onClick={this.settingsOpen} className="pointer navigation-link"> 
+                            {this.props.user.model.username + ' '}
+                            <i className="fa fa-angle-down"></i>
+                        </span>
+                        : <Link onClick={this.allMenusClose} className="navigation-link" to="/login">Log In</Link> 
+                    }
                     </li>
-                    <li className="navigation-item">
-                        <Link className="navigation-link" to="/login">Log In</Link>
-                    </li> 
-                </ul>                
+                </ul>
+                <ul className={this.menuClasses.join(" ")}>
+                    <li className="navigation-item-mob">
+                        <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/articles">Articles</Link>
+                    </li>
+                    {
+                        this.props.user.isLoggedIn 
+                        ? <li className="navigation-item-mob">
+                        <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/article-creation">Create</Link>
+                        </li> : null 
+                    }
+                    {
+                        this.props.user.isLoggedIn 
+                        ? <li className="navigation-item-mob">
+                        <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/articles-review">Review</Link>
+                        </li> : null 
+                    }
+                    <li className="navigation-item-mob">
+                        <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/contact">Contact</Link>
+                    </li>
+                </ul>    
             </nav>
+            {
+                this.props.user.isLoggedIn
+                ?
+                <div className={this.userSettingsWrapperClasses.join(' ')}>
+                    <ul className="user-settings-list">
+                        <li className="user-settings-item">
+                            <Link onClick={this.allMenusClose} className="user-settings-link" to="/account">Account</Link>
+                        </li>
+                        <li className="user-settings-item">
+                            <Link onClick={this.allMenusClose} className="user-settings-link" to="/logout">Log Out</Link>
+                        </li>
+                    </ul>
+                </div>
+                : null
+            }     
         </header>
     );
+    }
 }
 
-export default Header;
+
+const mapStateToProps = state => {
+
+    const user = state.user;
+
+    return {
+        user
+    };
+};
+
+export default connect(mapStateToProps, null)(Header);
