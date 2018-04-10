@@ -6,6 +6,7 @@ from .serialazers import ArticleSerializer
 from .models import Article
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework_jwt.utils import jwt_payload_handler
 
 
 class UserViewset(mixins.CreateModelMixin,
@@ -30,6 +31,7 @@ class ArticleViewset(mixins.CreateModelMixin,
 def jwt_response_payload_handler(token, user=None, request=None):
     return {
         'token': token,
+        'exp_time': jwt_payload_handler(user)['exp'],
         'user': UserSerializer(user,context={'request': request}).data
     }
 
