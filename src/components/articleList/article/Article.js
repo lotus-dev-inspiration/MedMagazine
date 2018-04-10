@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import './Article.css';
-import doctorImage from '../../../assests/img/article/doctor.png';
 
 export default class Article extends Component {
     constructor(props) {
@@ -10,12 +9,9 @@ export default class Article extends Component {
 
     render() {
         return (
-            <article className="article-wrapper">
+            <article className="Article">
                 <h2 className="article-heading">{this.props.data.theme}</h2>
                 <div className="article-content">
-                    {/* <div className="content-img-wrapper">
-                        <img className="content-img" src={doctorImage} alt="article"/>
-                    </div> */}
                     <div className="content-description-wrapper">
                         <p className="content-description">
                         {this.props.data.content}
