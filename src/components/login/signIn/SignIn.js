@@ -1,44 +1,70 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import {withRouter} from 'react-router-dom';
+
 import "./SignIn.css";
+import { userAuthenticate } from 'services/user-service';
+import {setCookie} from 'services/cookie-service';
 
 class SignIn extends Component {
-    submitUser() {
-        fetch("http://127.0.0.1:8000/users", {
-            method: 'post',
-            body: JSON.stringify({name: "ValiK"})
-        }).then((response) => {
+    constructor(props) {
+        super(props);
+        this.loginUser = this.loginUser.bind(this);
+    }
+
+    loginUser(e) {
+        e.preventDefault();
+
+        const userCreds = {
+            username: this.username.value,
+            password: this.password.value 
+        }
+
+        userAuthenticate(userCreds).then((response) => {
             return response.json();
         }).then((data) => {
-            console.log(data);
+            this.props.onDefineUser(data.user);
+            setCookie("Authorization", "JWT " + data.token, data.exp_time);
+            setCookie("isUser", true);
+            this.props.history.replace("/articles");
+        }).catch((error) => {
+            console.log(error);
         })
-            
     }
-   render(){
-       return(
-           <div className="SignIn">
-               <h1 className="content-heading">Sign In</h1>
-               {/* <form> */}
-               <div className="input-field-wrapper">
-                      <span className="input-heading">Username</span>
-                      <div className="input-wrapper">
-                          <input className="input-field" type="text" name="firstName"  />
-                      </div>
-                  </div>
 
-                   <div className="input-field-wrapper">
-                      <span className="input-heading">Password</span>
-                      <div className="input-wrapper">
-                          <input className="input-field" type="password" name="firstName"  />
-                      </div>
-                  </div>
-                 
-                  <button className="btn-submit" onClick={this.submitUser.bind(this)}>Sign in</button>
-                 
-                  {/* <input type="submit" value="Sign up" />     */}
-               {/* </form>  */}
-           </div>
-       )
-   }
+    render() {
+        return (
+            <div className="SignIn">
+                <h1 className="content-heading">Sign In</h1>
+                <form onSubmit={this.loginUser}>
+                    <div className="input-field-wrapper">
+                        <span className="input-heading">Username</span>
+                        <div className="input-wrapper">
+                            <input
+                                className="input-field"
+                                type="text"
+                                name="username"
+                                ref={(input) => this.username = input}
+                                required />
+                        </div>
+                    </div>
+
+                    <div className="input-field-wrapper">
+                        <span className="input-heading">Password</span>
+                        <div className="input-wrapper">
+                            <input
+                                className="input-field"
+                                type="password"
+                                name="password"
+                                ref={(input) => this.password = input}
+                                required />
+                        </div>
+                    </div>
+
+                    <input className="btn-submit" type="submit" value="Sign in"/>
+                </form>
+            </div>
+        )
+    }
 }
 
-export default SignIn;
+export default withRouter(SignIn);
