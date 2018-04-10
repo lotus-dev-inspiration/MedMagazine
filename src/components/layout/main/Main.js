@@ -8,6 +8,8 @@ import Login from 'containers/login/Login';
 import Logout from 'components/logout/Logout';
 import ArticleList from 'components/articleList/ArticleList';
 import ArticleCreation from 'components/articleCreation/article-creation';
+import ArticlesReviewList from 'components/articles-review/ArticlesReviewList';
+import ArticleReview from 'components/articles-review/articleReview/ArticleReview';
 import Authentication from 'components/authentication/Authentication';
 
 import { userFromToken } from 'services/user-service';
@@ -46,6 +48,8 @@ class Main extends Component {
                     <Authentication>
                         <Route exact path='/article-creation' component={ArticleCreation}/>
                         <Route exact path="/logout" component={Logout}/>
+                        <Route exact path='/articles-review' component={ArticlesReviewList} />
+                        <Route exact path='/articles-review/:number' component={ArticleReview} />
                     </Authentication>
                 </Switch>
             </main>

@@ -1,0 +1,12 @@
+.ArticlesReviewList{
+    .header{
+       margin: 20px auto;
+       width:25%;
+       font-size:27px;    
+    }
+    @media(max-width:768px){
+       .header{
+           width:80%;
+       }
+ }
+}

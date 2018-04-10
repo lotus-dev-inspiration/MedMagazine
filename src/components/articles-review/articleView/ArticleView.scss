@@ -1,0 +1,49 @@
+.ArticleView{
+    width:60%;
+    margin: 40px auto;
+    border-bottom: 1px solid var(--main-darkgray-color);
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 20px;
+    .article-data{
+        width:30%;
+        color: var(--main-steelblue-color);
+    }
+    .article-theme{
+        cursor:pointer;
+    }
+    .article-theme:hover{
+        color: var(--main-steelblue-color);
+    }
+    .article-description{
+        margin-top:20px;
+    }
+    .article-status{
+        margin-top: 15px;
+        .article-status-changed{
+            color:red;
+        }
+    }
+    .btn-review{
+        margin-top:14px;
+        color:white;
+        background: var(--main-steelblue-color);
+        border:none;
+        width: 120px;
+        height:35px;
+        cursor:pointer;
+        outline:none;
+        transition: background 1s;
+     }
+ 
+     .btn-review:hover{
+       background: var(--main-midnightblue-color);    
+    }
+    @media(max-width:768px){
+            flex-direction: column;
+            width:80%;
+            .article-data{
+                margin-bottom: 20px;
+            }
+     }
+}
