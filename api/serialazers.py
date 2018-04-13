@@ -2,7 +2,7 @@ from .models import Profile
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Article
+from .models import Article, Comment
 
 # Serializers define the API representation.
 class ProfileSerializer(serializers.ModelSerializer):
@@ -55,4 +55,10 @@ class UserSerializer(serializers.ModelSerializer):
         instance.groups.set(validated_data.get('groups', instance.groups))
         instance.save()
         return instance
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = '__all__'
+        required = True
 

@@ -35,3 +35,9 @@ class Profile(models.Model):
     def __str__(self):
         return User.objects.filter(id=self.user)
 
+class Comment(models.Model):
+    user = models.ForeignKey(User,models.CASCADE)
+    article = models.ForeignKey(Article, models.CASCADE)
+    text = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+

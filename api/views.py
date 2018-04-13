@@ -2,8 +2,8 @@ from .serialazers import UserSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.contrib.auth.models import User
 from rest_framework import viewsets, mixins
-from .serialazers import ArticleSerializer
-from .models import Article
+from .serialazers import ArticleSerializer, CommentSerializer
+from .models import Article, Comment
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework_jwt.utils import jwt_payload_handler
@@ -27,6 +27,16 @@ class ArticleViewset(mixins.CreateModelMixin,
     queryset =  Article.objects.all()
     serializer_class = ArticleSerializer
     http_method_names = ['get', 'post', 'head','options','patch']
+
+class CommentViewset(mixins.CreateModelMixin,
+                   mixins.RetrieveModelMixin,
+                   mixins.UpdateModelMixin,
+                   mixins.ListModelMixin,
+                   viewsets.GenericViewSet):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    http_method_names = ['get', 'post', 'head', 'options', 'patch']
 
 def jwt_response_payload_handler(token, user=None, request=None):
     return {
