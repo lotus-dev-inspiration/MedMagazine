@@ -19,7 +19,6 @@ import { getCookie } from 'services/cookie-service';
 class Main extends Component {
     constructor(props) {
         super(props);
-        console.log("Main.js");
     }
     
     componentDidMount() {
@@ -49,7 +48,7 @@ class Main extends Component {
                     }}
                     />
                     <Authentication>
-                        <Route exact path='/article-creation' component={ArticleCreation}/>
+                        <Route exact path='/article-creation' render={ () => (<ArticleCreation user={this.props.user}/>)}/>
                         <Route exact path="/logout" component={Logout}/>
                         <Route exact path='/articles-review' component={ArticlesReviewList} />
                         <Route exact path='/articles-review/:number' component={ArticleReview} />

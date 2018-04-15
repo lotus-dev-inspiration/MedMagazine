@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 class Authentication extends Component {
     constructor(props) {
         super(props);
-        console.log("Authentication.js");
     }
 
     componentDidMount() {
