@@ -1,7 +1,7 @@
 from .models import Profile
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.response import Response
 from .models import Article
 
 # Serializers define the API representation.
@@ -19,6 +19,13 @@ class ArticleSerializer(serializers.ModelSerializer):
         model = Article
         fields = '__all__'
         required = False
+
+    # def create(self, validated_data):
+    #     article = Article.objects.create(**validated_data)
+    #     reviewers = User.objects.filter(groups='Reviewer')
+    #     user_list = [user for user in reviewers.all()]
+    #     print(user_list)
+    #     return  article
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -38,6 +45,7 @@ class UserSerializer(serializers.ModelSerializer):
         profile = Profile.objects.create(user=user,**profile_data)
         profile.articles.set(articles)
         return user
+
 
     def update(self, instance, validated_data):
         profile_data = validated_data.get('profile')

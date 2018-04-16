@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class ArticleStatus(models.Model):
-    name = models.CharField(max_length=150, db_index=True,unique=True, primary_key=True, blank=False)
+    name = models.CharField(max_length=150, unique=True, blank=False)
 
     class Meta:
         verbose_name_plural = "Article Statuses"
@@ -19,7 +19,7 @@ class Article(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User,on_delete=models.NOT_PROVIDED)
     reviewers = models.ManyToManyField(User,related_name='reviewers',blank=True)
-    status = models.ForeignKey(ArticleStatus, on_delete=models.NOT_PROVIDED,default=1)
+    status = models.ForeignKey(ArticleStatus, on_delete=models.NOT_PROVIDED, default=1)
 
     def __str__(self):
         return self.name
@@ -31,7 +31,4 @@ class Profile(models.Model):
     company = models.CharField(max_length=200, default='Not Provided')
     phone = models.CharField(max_length=20, default='Not Provided')
     articles = models.ManyToManyField(Article, blank=True)
-
-    def __str__(self):
-        return User.objects.filter(id=self.user)
 
