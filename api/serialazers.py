@@ -18,14 +18,17 @@ class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = '__all__'
+        read_only_fields = ('reviewers','status',)
         required = False
 
-    # def create(self, validated_data):
-    #     article = Article.objects.create(**validated_data)
-    #     reviewers = User.objects.filter(groups='Reviewer')
-    #     user_list = [user for user in reviewers.all()]
-    #     print(user_list)
-    #     return  article
+    def create(self, validated_data):
+        article = Article.objects.create(**validated_data)
+        reviewers = User.objects.filter(groups=1).order_by('profile__articles')[:3]
+        article.reviewers.set([reviewers[0].id,reviewers[1].id,reviewers[2].id])
+        print(reviewers)
+        for user in reviewers.iterator():
+            user.profile.articles.add(article.id)
+        return article
 
 
 class UserSerializer(serializers.ModelSerializer):
