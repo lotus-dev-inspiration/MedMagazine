@@ -107,7 +107,7 @@ if is_connected() and ONLINE:
             'default': {
                 'ENGINE': 'django.db.backends.postgresql',
                 'HOST': '35.187.32.238',
-                'NAME': 'postgres',
+                'NAME': 'medmagazinedb',
                 'USER': 'root',
                 'PASSWORD': 'QwertY123456',
             }
