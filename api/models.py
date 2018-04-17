@@ -19,7 +19,7 @@ class Article(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User,on_delete=models.NOT_PROVIDED)
     reviewers = models.ManyToManyField(User,related_name='reviewers',blank=True)
-    status = models.ForeignKey(ArticleStatus, on_delete=models.NOT_PROVIDED, default=1)
+    status = models.ForeignKey(ArticleStatus, on_delete=models.NOT_PROVIDED,default=1)
 
     def __str__(self):
         return self.name
@@ -31,4 +31,10 @@ class Profile(models.Model):
     company = models.CharField(max_length=200, default='Not Provided')
     phone = models.CharField(max_length=20, default='Not Provided')
     articles = models.ManyToManyField(Article, blank=True)
+
+class Comment(models.Model):
+    user = models.ForeignKey(User,models.CASCADE)
+    article = models.ForeignKey(Article, models.CASCADE)
+    text = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
 
