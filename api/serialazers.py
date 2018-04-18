@@ -24,10 +24,10 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         article = Article.objects.create(**validated_data)
-        reviewers = User.objects.filter(groups=1).order_by('profile__articles')[:3]
+        reviewers = list(User.objects.filter(groups=1))
+        reviewers.sort(key=lambda reviewer: len(list(reviewer.profile.articles.all())))
         article.reviewers.set([reviewers[0].id,reviewers[1].id,reviewers[2].id])
-        print(reviewers)
-        for user in reviewers.iterator():
+        for user in reviewers[:3]:
             user.profile.articles.add(article.id)
         return article
 
