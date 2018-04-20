@@ -97,7 +97,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'MedMagazine.wsgi.application'
 
-ONLINE = False
+ONLINE = True
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
@@ -107,7 +107,7 @@ if is_connected() and ONLINE:
             'default': {
                 'ENGINE': 'django.db.backends.postgresql',
                 'HOST': '35.187.32.238',
-                'NAME': 'postgres',
+                'NAME': 'medmagazinedb',
                 'USER': 'root',
                 'PASSWORD': 'QwertY123456',
             }
@@ -159,3 +159,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.gs.GSBotoStorage'
+GS_ACCESS_KEY_ID = os.environ['GS_ACCESS_KEY_ID']
+GS_SECRET_ACCESS_KEY = os.environ['GS_SECRET_ACCESS_KEY']
+GS_BUCKET_NAME = os.environ['GS_BUCKET_NAME']
+STATICFILES_STORAGE = 'storages.backends.gs.GSBotoStorage'
