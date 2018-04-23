@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from MedMagazine.backends import FileValidator
 
 # Create your models here.
 class ArticleStatus(models.Model):
@@ -14,8 +15,8 @@ class ArticleStatus(models.Model):
 class Article(models.Model):
     name = models.CharField(max_length=200)
     theme = models.CharField(max_length=200)
-    description = models.CharField(max_length=200, blank=True)
-    content = models.FileField(upload_to='pdf/')
+    description = models.CharField(max_length=200, blank=False)
+    content = models.FileField(upload_to='pdf/', validators=[FileValidator(max_size=24*1024*1024, allowed_extensions=('pdf',))])
     date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User,on_delete=models.NOT_PROVIDED)
     reviewers = models.ManyToManyField(User,related_name='reviewers',blank=True)

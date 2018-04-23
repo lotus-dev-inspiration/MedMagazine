@@ -40,7 +40,7 @@ class ArticleViewset(mixins.CreateModelMixin,
                    mixins.UpdateModelMixin,
                    mixins.ListModelMixin,
                    viewsets.GenericViewSet):
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    #permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset =  Article.objects.all()
     serializer_class = ArticleSerializer
     http_method_names = ['get', 'post', 'head','options','patch']
