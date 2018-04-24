@@ -1,8 +1,9 @@
 from .models import Profile
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
+from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Article
+from .models import Article, Comment
 
 # Serializers define the API representation.
 class ProfileSerializer(serializers.ModelSerializer):
@@ -18,7 +19,17 @@ class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = '__all__'
+        read_only_fields = ('reviewers','status',)
         required = False
+
+    def create(self, validated_data):
+        article = Article.objects.create(**validated_data)
+        reviewers = list(User.objects.filter(groups=1))
+        reviewers.sort(key=lambda reviewer: len(list(reviewer.profile.articles.all())))
+        article.reviewers.set([reviewers[0].id,reviewers[1].id,reviewers[2].id])
+        for user in reviewers[:3]:
+            user.profile.articles.add(article.id)
+        return article
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -39,6 +50,7 @@ class UserSerializer(serializers.ModelSerializer):
         profile.articles.set(articles)
         return user
 
+
     def update(self, instance, validated_data):
         profile_data = validated_data.get('profile')
         instance.profile.patronymic = profile_data.get('patronymic', instance.profile.patronymic)
@@ -55,4 +67,10 @@ class UserSerializer(serializers.ModelSerializer):
         instance.groups.set(validated_data.get('groups', instance.groups))
         instance.save()
         return instance
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = '__all__'
+        required = True
 
