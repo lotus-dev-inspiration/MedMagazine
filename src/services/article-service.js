@@ -6,7 +6,6 @@ const token = getCookie("Authorization");
 export const createArticle = (data) => {
     return fetch(baseUrl + '/articles/', {
         headers: {
-            'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Authorization': token
         },

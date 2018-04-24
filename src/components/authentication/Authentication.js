@@ -12,7 +12,7 @@ class Authentication extends Component {
             if(!this.props.isLoggedIn) {
                 this.props.history.replace("/login");
             }
-        }, 300);
+        }, 1000);
     }
 
     render() {

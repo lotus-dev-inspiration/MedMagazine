@@ -12,37 +12,50 @@ class ArticleCreation extends Component {
 
     submitArticle(e) {
         e.preventDefault();
-        // const article = this.getArticle();
-        // createArticle(article).then((response) => {
-        //     return response.json();
-        // }).then(data => {
-        //     console.log(data);
-        // }).catch((error) => {
-        //     console.log(error);
-        // }); 
-        console.log(this.article.files[0]);
+        const article = this.getArticle();
+        createArticle(article).then((response) => {
+            return response.json();
+        }).then(data => {
+            console.log(data);
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
     getArticle() {
+
+        // const article = new FormData();
+        // article.append('name', this.name.value);
+        // article.append('theme', this.theme.value);
+        // article.append('description', this.description.value);
+        // article.append('content', this.article.files[0]);
+        // article.append('author', this.props.user.model.id);
+
+        const reader = new FileReader();
+        reader.readAsDataURL(this.article.files[0]);
+
         const article = {
             name: this.name.value,
             theme: this.theme.value,
             description: this.description.value,
-            content: this.content.value,
-            author: this.props.user.model.id,
-            reviewers: [1],
-            status: "Uploaded"
+            content: reader.result,
+            author: this.props.user.model.id
         }
+        console.log(reader.result);
         return article;
     }
 
     handleFileUpload(e) {
         const file = e.target.files[0]; 
         if(file) {
-            if(file.size > 10000) {
-                console.log("The file must be no more than 5 Mb");
-                return false;
-            }
+            // if(file.size > 10000000) {
+            //     console.log("The file must be no more than 5 Mb");
+            //     return;
+            // }
+            // if(!file.type.includes("pdf")) {
+            //     console.log("The file must be in pdf format");
+            //     return;
+            // }
             const fileLabelName = file.name.split("").map((letter, idx, letArr) => {
                 if(idx > 10) {
                     return "";
@@ -88,16 +101,6 @@ class ArticleCreation extends Component {
                             id="description"
                             name="description"
                             ref={(input) => { this.description = input }}
-                            required />
-                    </div>
-                    <div className="input-block">
-                        <label className="input-name" htmlFor="content">Content</label>
-                        <input
-                            className="input-field"
-                            type="text"
-                            id="content"
-                            name="content"
-                            ref={(input) => { this.content = input }}
                             required />
                     </div>
                     <div className="input-block">
