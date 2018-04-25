@@ -11,12 +11,15 @@ class ArticleStatus(models.Model):
     def __str__(self):
         return self.name
 
+class Language(models.Model):
+    language = models.CharField(max_length=200, primary_key=True, unique = True)
+
 class Article(models.Model):
     name = models.CharField(max_length=200)
     theme = models.CharField(max_length=200)
     description = models.CharField(max_length=200, blank=True)
-    # content = models.FileField(upload_to='pdf/')
-    content = models.CharField(max_length=500)
+    content = models.FileField(upload_to='pdf/')
+    language = models.ForeignKey(Language, on_delete=models.NOT_PROVIDED)
     date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User,on_delete=models.NOT_PROVIDED)
     reviewers = models.ManyToManyField(User,related_name='reviewers',blank=True)
