@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Profile
-from .models import Article,ArticleStatus
+from .models import Article,ArticleStatus, Language
 
 
 # Register your models here.
@@ -17,3 +17,4 @@ class ArticleStatusAdmin(admin.ModelAdmin):
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(ArticleStatus, ArticleStatusAdmin)
 admin.site.register(Article,ArticleAdmin)
+admin.site.register(Language)

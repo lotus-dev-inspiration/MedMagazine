@@ -4,6 +4,9 @@ from rest_framework import serializers
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Article, Comment
+from drf_extra_fields.fields import Base64FileField
+import PyPDF2, io
+
 
 # Serializers define the API representation.
 class ProfileSerializer(serializers.ModelSerializer):
@@ -12,9 +15,21 @@ class ProfileSerializer(serializers.ModelSerializer):
         exclude = ('id',)
         required = False
 
+class PDFBase64FileField(Base64FileField):
+    ALLOWED_TYPES = ['pdf']
+
+    def get_file_extension(self, filename, decoded_file):
+        try:
+            PyPDF2.PdfFileReader(io.BytesIO(decoded_file))
+        except PyPDF2.utils.PdfReadError as e:
+            return 'Erorr, try again'
+        else:
+            return 'pdf'
+
 
         
 class ArticleSerializer(serializers.ModelSerializer):
+    content = PDFBase64FileField()
 
     class Meta:
         model = Article

@@ -12,6 +12,7 @@ from .models import Profile
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import filters
 
+
 class ArticlesPaginator(PageNumberPagination):
     page_size = 10
 
@@ -61,6 +62,7 @@ class ArticleViewset(mixins.CreateModelMixin,
         theme = self.request.query_params.get('theme', None)
         year = self.request.query_params.get('year', None)
         month = self.request.query_params.get('month', None)
+        language = self.request.query_params.get('language', None)
         if author is not None:
             queryset = queryset.filter(author=author)
         if theme is not None:
@@ -69,6 +71,8 @@ class ArticleViewset(mixins.CreateModelMixin,
             queryset = queryset.filter(date__year = year)
         if month is not None:
             queryset = queryset.filter(date__month = month)
+        if language is not None:
+            queryset = queryset.filter(language = language)
 
         return queryset
 
