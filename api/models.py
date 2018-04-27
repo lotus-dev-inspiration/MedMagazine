@@ -15,15 +15,12 @@ class Article(models.Model):
     name = models.CharField(max_length=200)
     theme = models.CharField(max_length=200)
     description = models.CharField(max_length=200, blank=True)
-    content = models.FileField(upload_to='pdf/')
+    # content = models.FileField(upload_to='pdf/')
+    content = models.CharField(max_length=500)
     date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User,on_delete=models.NOT_PROVIDED)
     reviewers = models.ManyToManyField(User,related_name='reviewers',blank=True)
     status = models.ForeignKey(ArticleStatus, on_delete=models.NOT_PROVIDED,default=1)
-
-    def __str__(self):
-        return self.name
-
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, parent_link=True)
