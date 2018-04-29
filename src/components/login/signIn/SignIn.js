@@ -40,7 +40,7 @@ class SignIn extends Component {
                         <span className="input-heading">Username</span>
                         <div className="input-wrapper">
                             <input
-                                className="input-field"
+                                className="input-field started"
                                 type="text"
                                 name="username"
                                 ref={(input) => this.username = input}
@@ -52,7 +52,7 @@ class SignIn extends Component {
                         <span className="input-heading">Password</span>
                         <div className="input-wrapper">
                             <input
-                                className="input-field"
+                                className="input-field started"
                                 type="password"
                                 name="password"
                                 ref={(input) => this.password = input}
