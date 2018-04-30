@@ -1,9 +1,8 @@
-from .models import Profile
 from django.contrib.auth.models import User, Group
+from .models import Article, Comment, Profile
 from rest_framework import serializers
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Article, Comment
 from drf_extra_fields.fields import Base64FileField
 import PyPDF2, io
 
@@ -26,8 +25,6 @@ class PDFBase64FileField(Base64FileField):
         else:
             return 'pdf'
 
-
-        
 class ArticleSerializer(serializers.ModelSerializer):
     content = PDFBase64FileField()
 
