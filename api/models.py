@@ -14,9 +14,12 @@ class ArticleStatus(models.Model):
 class Language(models.Model):
     language = models.CharField(max_length=200, primary_key=True, unique = True)
 
+class ArticleTheme(models.Model):
+    theme = models.CharField(max_length=200, primary_key=True, unique = True)
+
 class Article(models.Model):
     name = models.CharField(max_length=200)
-    theme = models.CharField(max_length=200)
+    theme = models.ForeignKey(ArticleTheme, on_delete=models.NOT_PROVIDED)
     description = models.CharField(max_length=200, blank=True)
     content = models.FileField(upload_to='pdf/')
     language = models.ForeignKey(Language, on_delete=models.NOT_PROVIDED)
