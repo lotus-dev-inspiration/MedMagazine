@@ -3,6 +3,7 @@ import { Redirect } from "react-router";
 import {withRouter} from 'react-router-dom';
 
 import "../signIn/SignIn";
+import Spinner from 'components/spinner/Spinner';
 import {createUser, userAuthenticate} from 'services/user-service';
 import {setCookie} from 'services/cookie-service';
 
@@ -11,12 +12,18 @@ class SignUp extends Component {
     constructor(props) {
         super(props);
         this.submitUser = this.submitUser.bind(this);
+        this.state = {
+            isUserCreating: false
+        }
     }
 
     submitUser(e) {
         e.preventDefault();
 
         const user = this.getUser();
+        this.setState({
+            isUserCreationg: true
+        });
 
         createUser(user).then((response) => {
             return response.json();
@@ -31,8 +38,14 @@ class SignUp extends Component {
                 this.props.onDefineUser(data.user);
                 setCookie("Authorization", "JWT " + data.token, data.exp_time);
                 setCookie("isUser", true);
+                this.setState({
+                    isUserCreationg: false
+                });
                 this.props.history.replace("/articles");
             }).catch((error) => {
+                this.setState({
+                    isUserCreationg: false
+                });
                 console.log(error);
             })
         })
@@ -174,7 +187,9 @@ class SignUp extends Component {
                     <input type="submit" className="btn-submit" value="Sign up" />
 
                 </form>
-
+                {
+                    this.state.isUserCreating ? <Spinner /> : null                   
+                }
             </div>
         )
     }

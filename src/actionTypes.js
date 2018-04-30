@@ -9,3 +9,7 @@ export const userActionTypes = {
     GET_USERS_SUCCESS: 'GET_USERS_SUCCESS',
     GET_USERS_REQUEST: 'GET_USERS_REQUEST'
 }
+
+export const articleActionTypes = {
+    ARTICLE_CREATION_REQUEST: ''
+}

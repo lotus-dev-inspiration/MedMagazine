@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {withRouter} from 'react-router-dom';
 
 import "./SignIn.css";
+import Spinner from 'components/spinner/Spinner';
 import { userAuthenticate } from 'services/user-service';
 import {setCookie} from 'services/cookie-service';
 
@@ -9,10 +10,16 @@ class SignIn extends Component {
     constructor(props) {
         super(props);
         this.loginUser = this.loginUser.bind(this);
+        this.state = {
+            isUserLoggingIn: false
+        }
     }
 
     loginUser(e) {
         e.preventDefault();
+        this.setState({
+            isUserLoggingIn: true
+        });
 
         const userCreds = {
             username: this.username.value,
@@ -25,8 +32,14 @@ class SignIn extends Component {
             this.props.onDefineUser(data.user);
             setCookie("Authorization", "JWT " + data.token, data.exp_time);
             setCookie("isUser", true);
+            this.setState({
+                isUserLoggingIn: false
+            });
             this.props.history.replace("/articles");
         }).catch((error) => {
+            this.setState({
+                isUserLoggingIn: false
+            });
             console.log(error);
         })
     }
@@ -62,6 +75,9 @@ class SignIn extends Component {
 
                     <input className="btn-submit" type="submit" value="Sign in"/>
                 </form>
+                {
+                    this.state.isUserLoggingIn ? <Spinner /> : null                   
+                }
             </div>
         )
     }

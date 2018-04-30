@@ -14,7 +14,7 @@ class Header extends Component {
 
         this.userSettingsWrapperClasses = ['user-settings-wrapper'];
         this.menuClasses = ['navigation-list-mob'];
-        this.menuSignClasses = ['menu-mob-btn'];
+        this.menuSignClasses = ['menu-mob-btn', 'pointer'];
         this.settingsOpen = this.settingsOpen.bind(this);
         this.menuOpen = this.menuOpen.bind(this);
         this.allMenusClose = this.allMenusClose.bind(this);

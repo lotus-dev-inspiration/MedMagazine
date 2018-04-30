@@ -39,6 +39,8 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         article = Article.objects.create(**validated_data)
+        user = User.objects.get(username=article.author)
+        user.profile.articles.add(article.id)
         reviewers = list(User.objects.filter(groups=1))
         reviewers.sort(key=lambda reviewer: len(list(reviewer.profile.articles.all())))
         article.reviewers.set([reviewers[0].id,reviewers[1].id,reviewers[2].id])
@@ -57,10 +59,10 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         profile_data = validated_data.pop('profile')
+        articles = profile_data.pop('articles')
         groups = validated_data.pop('groups')
         user = User.objects.create_user(**validated_data)
         user.groups.set(groups)
-        articles = profile_data.pop('articles')
         profile = Profile.objects.create(user=user,**profile_data)
         profile.articles.set(articles)
         return user
