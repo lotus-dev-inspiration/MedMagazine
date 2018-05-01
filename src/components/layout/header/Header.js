@@ -20,6 +20,7 @@ class Header extends Component {
         this.allMenusClose = this.allMenusClose.bind(this);
     }
 
+
     settingsOpen() {
         
         if(!this.state.openedSettings) {
@@ -77,18 +78,18 @@ class Header extends Component {
                         <Link onClick={this.allMenusClose} className="navigation-link" to="/articles">Articles</Link>
                     </li>
                     {
-                        this.props.user.isLoggedIn
-                            ? <li className="navigation-item" >
+                            this.props.user.model
+                            ? this.props.user.model.groups[0] === 2 ? <li className="navigation-item" >
                                 <Link onClick={this.allMenusClose} className="navigation-link" to="/article-creation">Create</Link>
                             </li>
-                            : null
+                            : null : null
                     }
                     {
-                        this.props.user.isLoggedIn
-                            ? <li className="navigation-item" >
+                            this.props.user.model
+                            ? this.props.user.model.groups[0] === 1 ? <li className="navigation-item" >
                                 <Link onClick={this.allMenusClose} className="navigation-link" to="/articles-review">Review</Link>
                             </li>
-                            : null
+                            : null : null
                     }
                     <li className="navigation-item">
                         <Link onClick={this.allMenusClose} className="navigation-link" to="/contact">Contact</Link>
@@ -109,16 +110,16 @@ class Header extends Component {
                         <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/articles">Articles</Link>
                     </li>
                     {
-                        this.props.user.isLoggedIn 
-                        ? <li className="navigation-item-mob">
+                        this.props.user.model 
+                        ? this.props.user.model.groups[0] === 2 ? <li className="navigation-item-mob">
                         <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/article-creation">Create</Link>
-                        </li> : null 
+                        </li> : null : null
                     }
                     {
-                        this.props.user.isLoggedIn 
-                        ? <li className="navigation-item-mob">
+                        this.props.user.model
+                        ? this.props.user.model.groups[0] === 1 ? <li className="navigation-item-mob">
                         <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/articles-review">Review</Link>
-                        </li> : null 
+                        </li> : null : null
                     }
                     <li className="navigation-item-mob">
                         <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/contact">Contact</Link>

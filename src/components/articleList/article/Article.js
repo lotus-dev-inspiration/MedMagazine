@@ -23,9 +23,9 @@ export default class Article extends Component {
                         <span className="info-text-date">{new Date(this.props.data.date).toLocaleDateString()}</span>
                         <span className="info-text-author">{this.props.data.author}</span>
                     </div>
-                    <button className="info-read-more">
+                    <a target="_blank" href={this.props.data.content} className="info-read-more">
                         Read More
-                    </button>
+                    </a>
                 </div>
             </article>
         );
