@@ -4,6 +4,7 @@ import './ArticleCreation.css';
 import Spinner from 'components/spinner/Spinner';
 
 import { createArticle } from 'services/article-service';
+import { fileValidation, fieldLengthValidation, descriptionValidation} from 'services/validation-service';
 
 class ArticleCreation extends Component {
     constructor(props) {
@@ -21,29 +22,50 @@ class ArticleCreation extends Component {
             description: "",
             language: "ua",
             content: "",
-            isArticleLoading: false
+            file: null,
+            isArticleLoading: false,
+            fieldsValid: {
+                name: null,
+                description: null,
+                content: null
+            }
         }
     }
 
     submitArticle(e) {
         e.preventDefault();
-        const article = this.getArticle();
-        this.setState({
-            isArticleLoading: true
-        });        
-        createArticle(article).then((response) => {
-            return response.json();
-        }).then(data => {
-            this.setState({
-                isArticleLoading: false
-            });
-            this.props.history.replace('/account');
-        }).catch((error) => {
-            this.setState({
-                isArticleLoading: false
-            });   
-            console.log(error);
+
+        const dataValidated = !Object.values(this.state.fieldsValid).some(field => {
+            return field !== true;
         });
+
+        if(dataValidated) {
+            const article = this.getArticle();
+            this.setState({
+                isArticleLoading: true
+            });
+            createArticle(article).then((response) => {
+                return response.json();
+            }).then(data => {
+                this.setState({
+                    isArticleLoading: false
+                });
+                this.props.history.replace('/account');
+            }).catch((error) => {
+                this.setState({
+                    isArticleLoading: false
+                });
+                console.log(error);
+            });
+        } else {
+            this.setState({
+                fieldsValid: {
+                    name: fieldLengthValidation(this.state.name),
+                    description: descriptionValidation(this.state.description),
+                    content: fileValidation(this.state.file,'pdf', 10)
+                }
+            })
+        }
     }
 
     getArticle() {
@@ -64,20 +86,17 @@ class ArticleCreation extends Component {
         const file = e.target.files[0]; 
         
         if(file) {
-            // if(file.size > 10000000) {
-            //     console.log("The file must be no more than 5 Mb");
-            //     return;
-            // }
-            // if(!file.type.includes("pdf")) {
-            //     console.log("The file must be in pdf format");
-            //     return;
-            // }
+
+            this.setState({
+                file,
+                fieldsValid: { ...this.state.fieldsValid, content: fileValidation(file, 'pdf', 10) }
+            })
 
             reader.onload = function () {
                 const index = reader.result.indexOf("base64") + 7;
                 const content = reader.result.slice(index);
                 self.setState({
-                    content: content
+                    content
                 })
             }
             reader.readAsDataURL(file);
@@ -95,9 +114,11 @@ class ArticleCreation extends Component {
     }
 
     onNameChange(event) {
+        const name = event.target.value;
         this.setState({
-            name: event.target.value
-        })
+            name,
+            fieldsValid: { ...this.state.fieldsValid, name: fieldLengthValidation(event.target.value) }
+        })   
     }
 
     onThemeChange(event) {
@@ -107,8 +128,10 @@ class ArticleCreation extends Component {
     }
 
     onDescriptionChange(event) {
+        const description = event.target.value;
         this.setState({
-            description: event.target.value
+            description,
+            fieldsValid: { ...this.state.fieldsValid, description: descriptionValidation(description) }
         })
     }
 
@@ -132,7 +155,10 @@ class ArticleCreation extends Component {
                             name="name"
                             value = {this.state.name}
                             onChange={this.onNameChange}
-                            required />
+                            />
+                        {this.state.fieldsValid.name === false ?
+                            <span className="hint-error">Name must be 3 symbols minimal</span> : null
+                        }
                     </div>
                     <div className="input-block">
                         <label className="input-name" htmlFor="theme">Topic</label>
@@ -157,15 +183,17 @@ class ArticleCreation extends Component {
                     <div className="input-block">
                         <label className="input-name" htmlFor="description">Description</label>
                         <textarea
-                            className=""
+                            className="input-description"
                             type="text"
                             id="description"
                             name="description"
                             value={this.state.description}
                             onChange={this.onDescriptionChange}
                             maxLength="3000"
-                            required 
                             />
+                        {this.state.fieldsValid.description === false ?
+                            <span className="hint-error hint-error-description">Description must be more than 500 symbols</span> : null
+                        }
                     </div>
                     <div className="input-block">
                         <label className="input-file-name pointer" 
@@ -180,7 +208,10 @@ class ArticleCreation extends Component {
                             name="article"
                             ref={(input) => { this.article = input }}
                             onChange={this.handleFileUpload}
-                            required />
+                            />
+                        {this.state.fieldsValid.content === false ?
+                            <span className="hint-error hint-error-file">The file must be in pdf format and lower than 10 Mb</span> : null
+                        }
                     </div>
                     <input type="submit" className="btn-submit pointer" value="Submit article" />
                 </form>

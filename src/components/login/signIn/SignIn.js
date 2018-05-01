@@ -29,13 +29,15 @@ class SignIn extends Component {
         userAuthenticate(userCreds).then((response) => {
             return response.json();
         }).then((data) => {
-            this.props.onDefineUser(data.user);
-            setCookie("Authorization", "JWT " + data.token, data.exp_time);
-            setCookie("isUser", true);
+            if(!data.non_field_errors) {
+                this.props.onDefineUser(data.user);
+                setCookie("Authorization", "JWT " + data.token, data.exp_time);
+                setCookie("isUser", true);
+                this.props.history.replace("/articles");
+            }
             this.setState({
                 isUserLoggingIn: false
             });
-            this.props.history.replace("/articles");
         }).catch((error) => {
             this.setState({
                 isUserLoggingIn: false
@@ -84,3 +86,5 @@ class SignIn extends Component {
 }
 
 export default withRouter(SignIn);
+
+
