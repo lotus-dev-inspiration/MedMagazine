@@ -27,7 +27,7 @@ class SignUp extends Component {
                 email: '',
                 is_staff: false,
                 is_active: true,
-                groups: []
+                groups: [3]
             },
             userFieldsValid: {
                 patronymic: null,
@@ -53,6 +53,7 @@ class SignUp extends Component {
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
         this.comparePassword = this.comparePassword.bind(this);
+        this.handleChangeUserStatus = this.handleChangeUserStatus.bind(this);
     }
 
     componentDidMount(){
@@ -63,12 +64,13 @@ class SignUp extends Component {
                 ...this.state,
                 userNames: data.map(el => el.username )
             })
-            console.log(this.state.userNames);
+            console.log(data);
         })
     }
 
     submitUser(e) {
         e.preventDefault();
+        // console.log(this.state);
         this.comparePassword(this.state.user.password, this.repeatPassword.value);
         if(this.state.user.password === this.repeatPassword.value){
            
@@ -248,6 +250,11 @@ class SignUp extends Component {
         }
     }
 
+    handleChangeUserStatus = (event) => {
+        this.setState({...this.state, 
+            user: {...this.state.user, groups: [+event.target.value]}})
+    }
+
     render() {
         return (
             <div className="SignIn">
@@ -399,6 +406,14 @@ class SignUp extends Component {
                         {this.state.isVerified === false ?
                            <span className="hint-error">Password not verified</span> : null    
                         }
+                    </div>
+
+                    <div>
+                        <select onChange={this.handleChangeUserStatus}>
+                           {/* <option value="" disabled selected>Select your status</option> */}
+                           <option value="3" selected>Author</option>
+                           <option value="2">Reviewer</option> 
+                        </select>
                     </div>
 
                     <input type="submit" className="btn-submit" value="Sign up" />
