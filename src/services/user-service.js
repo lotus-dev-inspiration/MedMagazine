@@ -32,3 +32,13 @@ export const userFromToken = (token) => {
         method: 'get'
     })
 }
+
+export const getUsers = () => {
+    return fetch(baseUrl + '/users/', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'get'
+    })
+}

@@ -2,12 +2,12 @@
    .login-wrapper{
     display: flex;
     width:100%;
-    height:100vh;
     flex-direction: row;
         .login-image-wrapper{
          width: 55%;
          background: url('../../assets/img/login/login-image.png') no-repeat;
          background-size: cover;
+         height: 100vh;
         }
         .login-content-wrapper{
          width:45%;
