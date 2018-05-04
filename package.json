@@ -27,5 +27,9 @@
     "eject": "react-scripts eject",
     "postinstall": "npm run build"
 
+  },
+  "engines": {
+    "node":"8.11.1",
+    "npm":"5.6.0"
   }
 }
