@@ -27,7 +27,7 @@ SECRET_KEY = '&q5z71@a9vz8kx41k5bx6uh!)x07*t(dh&_+8_*3kxb$6pw*!1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['medmagazine.herokuapp.com', '127.0.0.1:8000']
 
 
 # Application definition
@@ -158,7 +158,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.gs.GSBotoStorage'
 GS_ACCESS_KEY_ID = os.environ['GS_ACCESS_KEY_ID']

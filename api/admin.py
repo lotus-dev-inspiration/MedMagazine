@@ -6,8 +6,8 @@ class ProfileAdmin(admin.ModelAdmin):
     list_display = ('patronymic', 'company', 'phone',)
 
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('name','theme','author','status','date')
-    list_filter = ('date','theme', 'status',)
+    list_display = ('name','author','status','date')
+    list_filter = ('date', 'status',)
 
 class ArticleStatusAdmin(admin.ModelAdmin):
     list_filter = ('name',)
