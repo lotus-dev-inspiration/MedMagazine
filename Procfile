@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn scientific-magazine.wsgi --log-file -
+web: gunicorn MedMagazine.wsgi --log-file -
