@@ -12,6 +12,7 @@ import ArticlesReviewList from 'components/articles-review/ArticlesReviewList';
 import ArticleReview from 'components/articles-review/articleReview/ArticleReview';
 import Contact from 'components/contact/Contact';
 import Authentication from 'components/authentication/Authentication';
+import Account from 'components/account/Account';
 
 import { userFromToken } from 'services/user-service';
 import { getCookie } from 'services/cookie-service';
@@ -41,7 +42,8 @@ class Main extends Component {
                 <Switch>
                     <Route exact path='/' component={StartPage} />
                     <Route exact path="/articles" component={ArticleList}/>
-                    <Route exact path="/contact" component={Contact} />  
+                    <Route exact path="/contact" component={Contact} />
+                    <Route exact path="/account" component={Account} />  
                     <Route exact path='/login' 
                     render={() => {
                         return this.props.user.isLoggedIn 
