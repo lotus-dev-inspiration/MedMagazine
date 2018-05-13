@@ -33,7 +33,7 @@ export default class ArticlesWrapperPage extends Component {
                     ? < Spinner />
                     : 
                     <Fragment>
-                        <ArticlesFilter />
+                        {/* <ArticlesFilter /> */}
                         <ArticleList articles={this.state.articles} />
                     </Fragment>
                 }
