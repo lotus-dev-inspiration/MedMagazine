@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './ArticlesFilter.css';
+import './MagazinesFilter.css';
 
 export default class ArtilcesFilter extends Component {
     constructor(props) {

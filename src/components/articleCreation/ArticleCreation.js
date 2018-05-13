@@ -30,6 +30,7 @@ class ArticleCreation extends Component {
                 content: null
             }
         }
+
     }
 
     submitArticle(e) {

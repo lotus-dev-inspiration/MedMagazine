@@ -11,6 +11,8 @@ import ArticleCreation from 'components/articleCreation/ArticleCreation';
 import ArticlesReviewList from 'components/articles-review/ArticlesReviewList';
 import ArticleReview from 'components/articles-review/articleReview/ArticleReview';
 import Contact from 'components/contact/Contact';
+import Archive from 'components/archive/Archive';
+import NotFound from 'components/notfound/NotFound';
 import Authentication from 'components/authentication/Authentication';
 
 import { userFromToken } from 'services/user-service';
@@ -41,6 +43,7 @@ class Main extends Component {
                     <Route exact path='/' component={StartPage} />
                     <Route exact path="/articles" component={ArticleWrapperPage}/>
                     <Route exact path="/contact" component={Contact} />  
+                    <Route exact path='/archive' component={Archive} />
                     <Route exact path='/login' 
                     render={() => {
                         return this.props.user.isLoggedIn 
@@ -48,12 +51,12 @@ class Main extends Component {
                     }}
                     />
                     <Authentication>
-                        <Route exact path='/article-creation' render={ () => (<ArticleCreation user={this.props.user}/>)}/>
+                        <Route exact path='/article-creation' render={() => (<ArticleCreation user={this.props.user} />)} />
                         <Route exact path="/logout" component={Logout}/>
                         <Route exact path='/articles-review' component={ArticlesReviewList} />
                         <Route exact path='/articles-review/:number' component={ArticleReview} />
+                        <Route exact path="*" component={NotFound} />
                     </Authentication>
-
                 </Switch>
             </main>
         );
