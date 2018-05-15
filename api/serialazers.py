@@ -56,10 +56,10 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         profile_data = validated_data.pop('profile')
+        articles = profile_data.pop('articles')
         groups = validated_data.pop('groups')
         user = User.objects.create_user(**validated_data)
         user.groups.set(groups)
-        articles = profile_data.pop('articles')
         profile = Profile.objects.create(user=user,**profile_data)
         profile.articles.set(articles)
         return user

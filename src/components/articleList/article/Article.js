@@ -10,22 +10,22 @@ export default class Article extends Component {
     render() {
         return (
             <article className="Article">
-                <h2 className="article-heading">{this.props.data.theme}</h2>
+                <h2 className="article-heading">{this.props.data.name}</h2>
                 <div className="article-content">
                     <div className="content-description-wrapper">
                         <p className="content-description">
-                        {this.props.data.content}
+                        {this.props.data.description}
                         </p>
                     </div>
                 </div>
                 <div className="article-info">
                     <div className="info-text">
-                        <span className="info-text-date">{this.props.data.date}</span>
+                        <span className="info-text-date">{new Date(this.props.data.date).toLocaleDateString()}</span>
                         <span className="info-text-author">{this.props.data.author}</span>
                     </div>
-                    <button className="info-read-more">
+                    <a target="_blank" href={this.props.data.content} className="info-read-more">
                         Read More
-                    </button>
+                    </a>
                 </div>
             </article>
         );

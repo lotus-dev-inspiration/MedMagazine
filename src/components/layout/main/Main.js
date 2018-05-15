@@ -6,7 +6,7 @@ import './Main.css';
 import StartPage from 'components/start-page/StartPage';
 import Login from 'containers/login/Login';
 import Logout from 'components/logout/Logout';
-import ArticleList from 'components/articleList/ArticleList';
+import ArticleWrapperPage from 'components/articles-wrapper-page/ArticlesWrapperPage';
 import ArticleCreation from 'components/articleCreation/ArticleCreation';
 import ArticlesReviewList from 'components/articles-review/ArticlesReviewList';
 import ArticleReview from 'components/articles-review/articleReview/ArticleReview';
@@ -19,7 +19,6 @@ import { getCookie } from 'services/cookie-service';
 class Main extends Component {
     constructor(props) {
         super(props);
-        console.log("Main.js");
     }
     
     componentDidMount() {
@@ -40,7 +39,7 @@ class Main extends Component {
             <main className="Main">
                 <Switch>
                     <Route exact path='/' component={StartPage} />
-                    <Route exact path="/articles" component={ArticleList}/>
+                    <Route exact path="/articles" component={ArticleWrapperPage}/>
                     <Route exact path="/contact" component={Contact} />  
                     <Route exact path='/login' 
                     render={() => {
@@ -49,7 +48,7 @@ class Main extends Component {
                     }}
                     />
                     <Authentication>
-                        <Route exact path='/article-creation' component={ArticleCreation}/>
+                        <Route exact path='/article-creation' render={ () => (<ArticleCreation user={this.props.user}/>)}/>
                         <Route exact path="/logout" component={Logout}/>
                         <Route exact path='/articles-review' component={ArticlesReviewList} />
                         <Route exact path='/articles-review/:number' component={ArticleReview} />

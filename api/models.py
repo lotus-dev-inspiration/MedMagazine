@@ -21,7 +21,7 @@ class ArticleTheme(models.Model):
 class Article(models.Model):
     name = models.CharField(max_length=200)
     theme = models.ForeignKey(ArticleTheme, on_delete=models.NOT_PROVIDED)
-    description = models.CharField(max_length=200, blank=False)
+    description = models.CharField(max_length=3000)
     content = models.FileField(upload_to='pdf/')
     language = models.ForeignKey(Language, on_delete=models.NOT_PROVIDED)
     date = models.DateTimeField(auto_now_add=True)
