@@ -12,19 +12,22 @@ class ArticleStatus(models.Model):
     def __str__(self):
         return self.name
 
+class Language(models.Model):
+    language = models.CharField(max_length=200, primary_key=True, unique = True)
+
+class ArticleTheme(models.Model):
+    theme = models.CharField(max_length=200, primary_key=True, unique = True)
+
 class Article(models.Model):
     name = models.CharField(max_length=200)
-    theme = models.CharField(max_length=200)
+    theme = models.ForeignKey(ArticleTheme, on_delete=models.NOT_PROVIDED)
     description = models.CharField(max_length=200, blank=False)
-    content = models.FileField(upload_to='pdf/', validators=[FileValidator(max_size=24*1024*1024, allowed_extensions=('pdf',))])
+    content = models.FileField(upload_to='pdf/')
+    language = models.ForeignKey(Language, on_delete=models.NOT_PROVIDED)
     date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User,on_delete=models.NOT_PROVIDED)
     reviewers = models.ManyToManyField(User,related_name='reviewers',blank=True)
     status = models.ForeignKey(ArticleStatus, on_delete=models.NOT_PROVIDED,default=1)
-
-    def __str__(self):
-        return self.name
-
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, parent_link=True)

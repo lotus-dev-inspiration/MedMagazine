@@ -1,9 +1,11 @@
-from .models import Profile
 from django.contrib.auth.models import User, Group
+from .models import Article, Comment, Profile
 from rest_framework import serializers
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Article, Comment
+from drf_extra_fields.fields import Base64FileField
+import PyPDF2, io
+
 
 # Serializers define the API representation.
 class ProfileSerializer(serializers.ModelSerializer):
@@ -12,9 +14,19 @@ class ProfileSerializer(serializers.ModelSerializer):
         exclude = ('id',)
         required = False
 
+class PDFBase64FileField(Base64FileField):
+    ALLOWED_TYPES = ['pdf']
 
-        
+    def get_file_extension(self, filename, decoded_file):
+        try:
+            PyPDF2.PdfFileReader(io.BytesIO(decoded_file))
+        except PyPDF2.utils.PdfReadError as e:
+            return 'Erorr, try again'
+        else:
+            return 'pdf'
+
 class ArticleSerializer(serializers.ModelSerializer):
+    content = PDFBase64FileField()
 
     class Meta:
         model = Article
@@ -24,6 +36,8 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         article = Article.objects.create(**validated_data)
+        user = User.objects.get(username=article.author)
+        user.profile.articles.add(article.id)
         reviewers = list(User.objects.filter(groups=1))
         reviewers.sort(key=lambda reviewer: len(list(reviewer.profile.articles.all())))
         article.reviewers.set([reviewers[0].id,reviewers[1].id,reviewers[2].id])
