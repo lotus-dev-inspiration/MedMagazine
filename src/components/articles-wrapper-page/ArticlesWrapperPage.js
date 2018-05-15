@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import ArticlesFilter from 'components/articles-filter/ArticlesFilter';
 import ArticleList from 'components/articleList/ArticleList';
 import { getArticles } from 'services/article-service';
 import Spinner from 'components/spinner/Spinner';
@@ -33,7 +32,6 @@ export default class ArticlesWrapperPage extends Component {
                     ? < Spinner />
                     : 
                     <Fragment>
-                        {/* <ArticlesFilter /> */}
                         <ArticleList articles={this.state.articles} />
                     </Fragment>
                 }

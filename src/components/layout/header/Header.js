@@ -75,8 +75,11 @@ class Header extends Component {
                 <Link onClick={this.allMenusClose} className="logo-link" to="/">Logo</Link>
                 <ul className="navigation-list">
                     <li className="navigation-item">
-                        <Link onClick={this.allMenusClose} className="navigation-link" to="/articles">Articles</Link>
+                        <Link onClick={this.allMenusClose} className="navigation-link" to="/articles">Magazine</Link>
                     </li>
+                        <li className="navigation-item">
+                            <Link onClick={this.allMenusClose} className="navigation-link" to="/archive">Archieve</Link>
+                        </li>
                     {
                             this.props.user.model
                             ? this.props.user.model.groups[0] === 2 ? <li className="navigation-item" >
@@ -107,8 +110,11 @@ class Header extends Component {
                 </ul>
                 <ul className={this.menuClasses.join(" ")}>
                     <li className="navigation-item-mob">
-                        <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/articles">Articles</Link>
+                        <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/articles">Magazine</Link>
                     </li>
+                        <li className="navigation-item-mob">
+                            <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/archive">Archive</Link>
+                        </li>
                     {
                         this.props.user.model 
                         ? this.props.user.model.groups[0] === 2 ? <li className="navigation-item-mob">
