@@ -10,13 +10,16 @@
             color: #4d4d4d;
             font-weight: bold;
         }
+        .hint-error{
+            color:red;
+            font-size:12px;
+        }
         .input-wrapper {
             margin-top: 5px;
             .input-field {
                 width: 70%;
                 height: 20px;
                 border: none;
-                border-bottom: 2px solid var(--main-darkgray-color);
                 outline: none;
                 color: dimgray;
                 font-size: 15px;
@@ -25,7 +28,22 @@
                 transition: border-bottom 1s;
                 background-color: transparent;
             }
-            .input-field:focus {
+            .invalid:focus{
+                border-bottom: 2px solid red;
+              }
+              .invalid{
+                border-bottom: 2px solid red;
+              }
+              .valid{
+                border-bottom: 2px solid green;
+              }
+              .valid:focus{
+                border-bottom: 2px solid green;
+            }
+            .started{
+                border-bottom: 2px solid var(--main-darkgray-color);
+              }
+            .started:focus{
                 border-bottom: 2px solid var(--main-midnightblue-color);
             }
         }
