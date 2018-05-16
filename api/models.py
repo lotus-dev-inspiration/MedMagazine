@@ -12,7 +12,7 @@ class ArticleStatus(models.Model):
 
 class ArticleStage(models.Model):
     name = models.CharField(max_length=150, unique=True, blank=False)
-    statuses_id = models.ManyToManyField(ArticleStatus,on_delete=models.NOT_PROVIDED)
+    statuses_id = models.ManyToManyField(ArticleStatus)
 
     class Meta:
         verbose_name_plural = "Article Stages"
@@ -43,7 +43,7 @@ class Article(models.Model):
     key_words = models.CharField(max_length=3000)
     date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User,on_delete=models.NOT_PROVIDED)
-    collaborators = models.ManyToManyField(Collaborator, on_delete=models.NOT_PROVIDED)
+    collaborators = models.ManyToManyField(Collaborator)
     reviewers = models.ManyToManyField(User,related_name='reviewers',blank=True)
     status = models.ForeignKey(ArticleStatus, on_delete=models.NOT_PROVIDED,default=1)
     stage = models.ForeignKey(ArticleStage,on_delete=models.NOT_PROVIDED, default=1)
@@ -68,5 +68,5 @@ class Comment(models.Model):
 class Journal(models.Model):
     articles = models.ManyToManyField(Article)
     date = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(default = 'Журнал %s' % date)
+    name = models.CharField(max_length=200,default = 'Журнал %s' % date)
     theme = models.ForeignKey(ArticleTheme,on_delete=models.NOT_PROVIDED)

@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group
-from .models import Article, Comment, Profile
+from .models import Article, Comment, Profile, ArticleStage, ArticleStatus, Collaborator, Journal
 from rest_framework import serializers
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
@@ -8,6 +8,26 @@ import PyPDF2, io
 
 
 # Serializers define the API representation.
+class JournalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Journal
+        fields = '__all__'
+
+class ArticleStageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ArticleStage
+        fields = '__all__'
+
+class ArticleStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ArticleStatus
+        fields = '__all__'
+
+class CollaboratorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Collaborator
+        fields = '__all__'
+
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
@@ -35,7 +55,9 @@ class ArticleSerializer(serializers.ModelSerializer):
         required = False
 
     def create(self, validated_data):
+        collaborators = validated_data.pop('collaborators')
         article = Article.objects.create(**validated_data)
+        article.collaborators.set(collaborators)
         user = User.objects.get(username=article.author)
         user.profile.articles.add(article.id)
         # reviewers = list(User.objects.filter(groups=1))
@@ -44,6 +66,11 @@ class ArticleSerializer(serializers.ModelSerializer):
         # for user in reviewers[:3]:
         #     user.profile.articles.add(article.id)
         return article
+
+    # def update(self, instance, validated_data):
+    #     instance.groups.set(validated_data.get('groups', instance.groups))
+    #     instance.save()
+    #     return instance
 
 
 class UserSerializer(serializers.ModelSerializer):

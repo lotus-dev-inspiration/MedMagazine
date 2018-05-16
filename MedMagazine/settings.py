@@ -27,7 +27,7 @@ SECRET_KEY = '&q5z71@a9vz8kx41k5bx6uh!)x07*t(dh&_+8_*3kxb$6pw*!1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['medmagazine.herokuapp.com', '127.0.0.1:8000']
+ALLOWED_HOSTS = ['medmagazine.herokuapp.com', '127.0.0.1','localhost']
 
 
 # Application definition
@@ -97,7 +97,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'MedMagazine.wsgi.application'
 
-ONLINE = True
+ONLINE = False
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
@@ -154,15 +154,16 @@ USE_L10N = True
 
 USE_TZ = True
 
+STATIC_URL = '/static/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-DEFAULT_FILE_STORAGE = 'storages.backends.gs.GSBotoStorage'
-GS_ACCESS_KEY_ID = os.environ['GS_ACCESS_KEY_ID']
-GS_SECRET_ACCESS_KEY = os.environ['GS_SECRET_ACCESS_KEY']
-GS_BUCKET_NAME = os.environ['GS_BUCKET_NAME']
-STATICFILES_STORAGE = 'storages.backends.gs.GSBotoStorage'
+# DEFAULT_FILE_STORAGE = 'storages.backends.gs.GSBotoStorage'
+# GS_ACCESS_KEY_ID = os.environ['GS_ACCESS_KEY_ID']
+# GS_SECRET_ACCESS_KEY = os.environ['GS_SECRET_ACCESS_KEY']
+# GS_BUCKET_NAME = os.environ['GS_BUCKET_NAME']
+# STATICFILES_STORAGE = 'storages.backends.gs.GSBotoStorage'
