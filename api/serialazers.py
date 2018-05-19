@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group
-from .models import Article, Comment, Profile, ArticleStage, ArticleStatus, Collaborator, Journal
+from .models import Article, Comment, Profile, ArticleStage, ArticleStatus, Journal
 from rest_framework import serializers
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
@@ -23,10 +23,11 @@ class ArticleStatusSerializer(serializers.ModelSerializer):
         model = ArticleStatus
         fields = '__all__'
 
-class CollaboratorSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Collaborator
+        model = Comment
         fields = '__all__'
+        required = True
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -51,13 +52,11 @@ class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = '__all__'
-        read_only_fields = ('reviewers',)
+        read_only_fields = ('reviewers','can_edit', 'stage','date','deleted',)
         required = False
 
     def create(self, validated_data):
-        collaborators = validated_data.pop('collaborators')
         article = Article.objects.create(**validated_data)
-        article.collaborators.set(collaborators)
         user = User.objects.get(username=article.author)
         user.profile.articles.add(article.id)
         # reviewers = list(User.objects.filter(groups=1))
@@ -67,11 +66,26 @@ class ArticleSerializer(serializers.ModelSerializer):
         #     user.profile.articles.add(article.id)
         return article
 
-    # def update(self, instance, validated_data):
-    #     instance.groups.set(validated_data.get('groups', instance.groups))
-    #     instance.save()
-    #     return instance
-
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.theme = validated_data.get('theme', instance.theme)
+        instance.description = validated_data.get('description', instance.description)
+        instance.content = validated_data.get('content', instance.content)
+        instance.language = validated_data.get('language', instance.language)
+        instance.udc = validated_data.get('udc', instance.udc)
+        instance.key_words = validated_data.get('key_words', instance.key_words)
+        instance.collaborators = validated_data.get('collaborators', instance.collaborators)
+        instance.number = validated_data.get('number', instance.number)
+        if instance.number == 3:
+            instance.can_edit = False
+        elif instance.number == 4:
+            instance.deleted = True
+        instance.status = validated_data.get('status', instance.status)
+        if instance.status == 4:
+            instance.number = 1
+            instance.can_edit = True
+        instance.save()
+        return instance
 
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
@@ -110,10 +124,4 @@ class UserSerializer(serializers.ModelSerializer):
         instance.groups.set(validated_data.get('groups', instance.groups))
         instance.save()
         return instance
-
-class CommentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Comment
-        fields = '__all__'
-        required = True
 
