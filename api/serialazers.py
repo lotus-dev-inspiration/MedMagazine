@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group
-from .models import Article, Comment, Profile
+from .models import Article, Comment, Profile, ArticleStage, ArticleStatus, Collaborator, Journal
 from rest_framework import serializers
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
@@ -8,6 +8,26 @@ import PyPDF2, io
 
 
 # Serializers define the API representation.
+class JournalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Journal
+        fields = '__all__'
+
+class ArticleStageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ArticleStage
+        fields = '__all__'
+
+class ArticleStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ArticleStatus
+        fields = '__all__'
+
+class CollaboratorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Collaborator
+        fields = '__all__'
+
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
@@ -31,19 +51,26 @@ class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = '__all__'
-        read_only_fields = ('reviewers','status',)
+        read_only_fields = ('reviewers',)
         required = False
 
     def create(self, validated_data):
+        collaborators = validated_data.pop('collaborators')
         article = Article.objects.create(**validated_data)
+        article.collaborators.set(collaborators)
         user = User.objects.get(username=article.author)
         user.profile.articles.add(article.id)
-        reviewers = list(User.objects.filter(groups=1))
-        reviewers.sort(key=lambda reviewer: len(list(reviewer.profile.articles.all())))
-        article.reviewers.set([reviewers[0].id,reviewers[1].id,reviewers[2].id])
-        for user in reviewers[:3]:
-            user.profile.articles.add(article.id)
+        # reviewers = list(User.objects.filter(groups=1))
+        # reviewers.sort(key=lambda reviewer: len(list(reviewer.profile.articles.all())))
+        # article.reviewers.set([reviewers[0].id,reviewers[1].id,reviewers[2].id])
+        # for user in reviewers[:3]:
+        #     user.profile.articles.add(article.id)
         return article
+
+    # def update(self, instance, validated_data):
+    #     instance.groups.set(validated_data.get('groups', instance.groups))
+    #     instance.save()
+    #     return instance
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -70,6 +97,8 @@ class UserSerializer(serializers.ModelSerializer):
         instance.profile.patronymic = profile_data.get('patronymic', instance.profile.patronymic)
         instance.profile.company = profile_data.get('company', instance.profile.company)
         instance.profile.phone = profile_data.get('phone', instance.profile.phone)
+        instance.profile.position = profile_data.get('position', instance.profile.position)
+        instance.profile.grade = profile_data.get('grade', instance.profile.grade)
         instance.profile.articles.set(validated_data.get('articles', instance.profile.articles))
         instance.username = validated_data.get('username', instance.username)
         instance.first_name = validated_data.get('first_name', instance.first_name)
