@@ -59,6 +59,9 @@ class ArticleSerializer(serializers.ModelSerializer):
         article = Article.objects.create(**validated_data)
         user = User.objects.get(username=article.author)
         user.profile.articles.add(article.id)
+        editors = User.objects.filter(groups=2)
+        for editor in editors:
+            editor.profile.articles.add(article.id)
         # reviewers = list(User.objects.filter(groups=1))
         # reviewers.sort(key=lambda reviewer: len(list(reviewer.profile.articles.all())))
         # article.reviewers.set([reviewers[0].id,reviewers[1].id,reviewers[2].id])
