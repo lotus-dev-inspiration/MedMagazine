@@ -12,17 +12,16 @@ export default class ArticlesWrapperPage extends Component {
         };
     }
 
-    componentDidMount() {
-        // getArticles().then(response => {
-        //     return response.json();
-        // }).then(data => {
-        //     this.setState({
-        //         articles: data.results
-        //     })
-        // }).catch(error => {
-        //     console.log(error);
-        // })
-        
+    componentWillMount() {
+        getArticles().then(response => {
+            return response.json();
+        }).then(data => {
+            this.setState({
+                articles: data
+            })
+        }).catch(error => {
+            console.log(error);
+        })
     }
 
     render() {

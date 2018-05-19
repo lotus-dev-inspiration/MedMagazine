@@ -15,6 +15,8 @@ class ArticleCreation extends Component {
         this.onThemeChange = this.onThemeChange.bind(this);
         this.onLanguageChange = this.onLanguageChange.bind(this);
         this.onDescriptionChange = this.onDescriptionChange.bind(this);
+        this.onUdcChange = this.onUdcChange.bind(this);
+        this.onKeyWordsChange = this.onKeyWordsChange.bind(this);
 
         this.state = {
             name: "",
@@ -22,15 +24,17 @@ class ArticleCreation extends Component {
             description: "",
             language: "ua",
             content: "",
-            udc: "testing",
-            key_words: "test",
+            udc: "",
+            key_words: "",
             collaborators: "Petya",
             file: null,
             isArticleLoading: false,
             fieldsValid: {
                 name: null,
                 description: null,
-                content: null
+                content: null,
+                udc: null,
+                key_words: null
             }
         }
 
@@ -128,6 +132,14 @@ class ArticleCreation extends Component {
         })   
     }
 
+    onUdcChange(event){
+        const udc = event.target.value;
+        this.setState({
+            udc,
+            fieldsValid: { ...this.state.fieldsValid, udc: fieldLengthValidation(event.target.value) }
+        })
+    }
+
     onThemeChange(event) {
         this.setState({
             theme: event.target.value
@@ -139,6 +151,14 @@ class ArticleCreation extends Component {
         this.setState({
             description,
             fieldsValid: { ...this.state.fieldsValid, description: descriptionValidation(description) }
+        })
+    }
+
+    onKeyWordsChange(event){
+        const key_words = event.target.value;
+        this.setState({
+            key_words,
+            fieldsValid: { ...this.state.fieldsValid, key_words: fieldLengthValidation(event.target.value) }
         })
     }
 
@@ -179,6 +199,20 @@ class ArticleCreation extends Component {
                         </select>
                     </div>
                     <div className="input-block">
+                        <label className="input-name" htmlFor="udc">UDC</label>
+                        <input
+                            className="input-field"
+                            type="text"
+                            id="udc"
+                            name="udc"
+                            value = {this.state.udc}
+                            onChange={this.onUdcChange}
+                            />
+                        {this.state.fieldsValid.udc === false ?
+                            <span className="hint-error">UDC must be 3 symbols minimal</span> : null
+                        }
+                    </div>
+                    <div className="input-block">
                         <label className="input-name" htmlFor="language">Language</label>
                         <select className="input-field select-field pointer" id="language" name="language" value={this.state.language} onChange={this.onLanguageChange}>
                             <option value="ua">Ukrainian</option>
@@ -200,6 +234,20 @@ class ArticleCreation extends Component {
                             />
                         {this.state.fieldsValid.description === false ?
                             <span className="hint-error hint-error-description">Description must be more than 500 symbols</span> : null
+                        }
+                    </div>
+                    <div className="input-block">
+                        <label className="input-name" htmlFor="key_words">Key words</label>
+                        <textarea
+                            className="input-description"
+                            type="text"
+                            id="keyWords"
+                            name="key_words"
+                            value={this.state.key_words}
+                            onChange={this.onKeyWordsChange}
+                            />
+                        {this.state.fieldsValid.key_words === false ?
+                            <span className="hint-error hint-error-description">Key words must be 3 symbols minimal</span> : null
                         }
                     </div>
                     <div className="input-block">

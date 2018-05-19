@@ -13,12 +13,17 @@ class ArticleReview extends Component {
     constructor(props){
         super(props);
         this.state = {
-            articlesReview: articles 
+            articlesReview: null,
+            stages: null
         }
     }
 
-    componentDidMount(){
-        console.log(this.props);
+    componentWillMount(){
+        this.getReviewArticles();
+        this.getStages();
+    }
+
+    getReviewArticles(){
         fetch(`${baseUrl}/users/${this.props.userInfo.id}/articles`, {
             headers: {
                 'Accept': 'application/json',
@@ -28,7 +33,29 @@ class ArticleReview extends Component {
         }).then(response => {
                 return response.json();
             }).then(data => {
-                console.log(data);
+                this.setState({
+                    ...this.state,
+                    articlesReview: data
+                })
+            }).catch(error => {
+                console.log(error);
+            })
+    }
+
+    getStages(){
+        fetch(`${baseUrl}/stages`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'GET'
+        }).then(response => {
+                return response.json();
+            }).then(data => {
+                this.setState({
+                    ...this.state,
+                    stages: data.objects
+                })
             }).catch(error => {
                 console.log(error);
             })
@@ -38,20 +65,18 @@ class ArticleReview extends Component {
         return(
             <section className="ArticlesReviewList">
               <h1 className="header">Articles, which wait review</h1>
-        
-               <div>
+              {
+                  this.state.articlesReview !== null && this.state.stages !== null ?
+                  <div>
                    {
                        this.state.articlesReview.map((article) => {
                            return(
-                               <ArticleView data={article} key={article.id} />
+                               <ArticleView data={article} key={article.id} stages={this.state.stages} />
                            )
                        })
                    }
-               </div>
-              {/* <object data={docs} type="application/pdf" width="100%" height="450px">
-                    alt: <a href={docs}>It is article</a>
-              </object>
-              <p> <a href={docs} target="_blank">Open file</a></p>  */}
+               </div> : null
+              }
             </section>
         )
     }
