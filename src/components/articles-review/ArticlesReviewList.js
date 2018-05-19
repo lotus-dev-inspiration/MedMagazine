@@ -3,6 +3,11 @@ import docs from 'assets/docs/article-review/test.pdf';
 import './ArticlesReviewList.css';
 import articles from './articlesReview.js';
 import ArticleView from './articleView/ArticleView';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import baseUrl from 'helpers/baseUrl';
+
 
 class ArticleReview extends Component {
     constructor(props){
@@ -11,6 +16,24 @@ class ArticleReview extends Component {
             articlesReview: articles 
         }
     }
+
+    componentDidMount(){
+        console.log(this.props);
+        fetch(`${baseUrl}/users/${this.props.userInfo.id}/articles`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'GET'
+        }).then(response => {
+                return response.json();
+            }).then(data => {
+                console.log(data);
+            }).catch(error => {
+                console.log(error);
+            })
+    }
+
     render(){
         return(
             <section className="ArticlesReviewList">
@@ -34,4 +57,11 @@ class ArticleReview extends Component {
     }
 }
 
-export default ArticleReview;
+const mapStateToProps = state => {
+
+    return {
+        userInfo: state.user.model
+    };
+};
+
+export default withRouter(connect(mapStateToProps, null)(ArticleReview));

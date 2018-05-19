@@ -24,58 +24,58 @@ class Account extends Component {
         console.log(this.props);
         return (
             <div className="Account">
-            {this.props.userInfo !== null ? 
-                <React.Fragment>
-                <h1 className="content-header">Account</h1>
-                <div className="content-wrapper">
-                    <div className="left-block">
-                        <div className="photo-wrapper">
-                            <img className="photo-user" src={photo} />
-                            <h3 className="name-user">{this.props.userInfo.first_name} {this.props.userInfo.last_name}</h3>
-                            <p className="username">Username: <em>{this.props.userInfo.username}</em></p>
-                            <p className="username">Email: <em>{this.props.userInfo.email}</em></p>
-                            <p className="username">Phone: <em>{this.props.userInfo.profile.phone}</em></p>
+                {this.props.userInfo !== null ?
+                    <React.Fragment>
+                        <h1 className="content-header">Account</h1>
+                        <div className="content-wrapper">
+                            <div className="left-block">
+                                <div className="photo-wrapper">
+                                    <img className="photo-user" src={photo} />
+                                    <h3 className="name-user">{this.props.userInfo.first_name} {this.props.userInfo.last_name}</h3>
+                                    <p className="username">Username: <em>{this.props.userInfo.username}</em></p>
+                                    <p className="username">Email: <em>{this.props.userInfo.email}</em></p>
+                                    <p className="username">Phone: <em>{this.props.userInfo.profile.phone}</em></p>
 
+                                </div>
+                            </div>
+                            <div className="right-block">
+                                <h4 className="profile-info-header">Profile Info</h4>
+                                <div className="row">
+                                    <div className="input-field-wrapper">
+                                        <span className="input-heading">Username</span>
+                                        <div className="input-wrapper">
+                                            <input
+                                                className="input-field started"
+                                                type="text"
+                                                name="username"
+                                                value={this.props.userInfo.username} />
+                                        </div>
+                                    </div>
+                                    <div className="input-field-wrapper">
+                                        <span className="input-heading">Email</span>
+                                        <div className="input-wrapper">
+                                            <input
+                                                className="input-field started"
+                                                type="email"
+                                                name="username"
+                                                value={this.props.userInfo.email} />
+                                        </div>
+                                    </div>
+                                    <div className="input-field-wrapper">
+                                        <span className="input-heading">Phone</span>
+                                        <div className="input-wrapper">
+                                            <input
+                                                className="input-field started"
+                                                type="text"
+                                                name="username"
+                                                value={this.props.userInfo.profile.phone} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div className="right-block">
-                        <h4 className="profile-info-header">Profile Info</h4>
-                        <div className="row">
-                            <div className="input-field-wrapper">
-                                <span className="input-heading">Username</span>
-                                <div className="input-wrapper">
-                                    <input
-                                        className="input-field started"
-                                        type="text"
-                                        name="username"
-                                        value={this.props.userInfo.username} />
-                                </div>
-                            </div>
-                            <div className="input-field-wrapper">
-                                <span className="input-heading">Email</span>
-                                <div className="input-wrapper">
-                                    <input
-                                        className="input-field started"
-                                        type="email"
-                                        name="username"
-                                        value={this.props.userInfo.email} />
-                                </div>
-                            </div>
-                            <div className="input-field-wrapper">
-                                <span className="input-heading">Phone</span>
-                                <div className="input-wrapper">
-                                    <input
-                                        className="input-field started"
-                                        type="text"
-                                        name="username"
-                                        value={this.props.userInfo.profile.phone} />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> 
-                </React.Fragment>
-                : null }
+                    </React.Fragment>
+                    : null}
             </div>
         )
     }

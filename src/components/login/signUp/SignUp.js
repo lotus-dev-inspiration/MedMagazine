@@ -28,7 +28,7 @@ class SignUp extends Component {
                 email: '',
                 is_staff: false,
                 is_active: true,
-                groups: [2]
+                groups: []
             },
             userFieldsValid: {
                 patronymic: null,
@@ -63,11 +63,12 @@ class SignUp extends Component {
         getUsers().then(response => {
             return response.json();
         }).then(data => {
-            this.setState({
-                ...this.state,
-                userNames: data.results.map(el => el.username),
-                userEmails: data.results.map(el => el.email)
-            })
+            // this.setState({
+            //     ...this.state,
+            //     userNames: data.results.map(el => el.username),
+            //     userEmails: data.results.map(el => el.email)
+            // })
+            console.log(data);
         })
     }
 
@@ -464,13 +465,6 @@ class SignUp extends Component {
                         {this.state.isVerified === false ?
                             <span className="hint-error">Password not verified</span> : null
                         }
-                    </div>
-
-                    <div>
-                        <select value={this.state.user.groups[0]} onChange={this.handleChangeUserStatus}>
-                            <option value="2">Author</option>
-                            <option value="1">Reviewer</option>
-                        </select>
                     </div>
 
                     <input type="submit" className="btn-submit" value="Sign up" />

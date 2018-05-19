@@ -82,20 +82,20 @@ class Header extends Component {
                         </li>
                     {
                             this.props.user.model
-                            ? this.props.user.model.groups[0] === 2 ? <li className="navigation-item" >
+                            ? this.props.user.model.groups.length === 0 ? <li className="navigation-item" >
                                 <Link onClick={this.allMenusClose} className="navigation-link" to="/article-creation">Create</Link>
                             </li>
                             : null : null
                     }
                     {
                             this.props.user.model
-                            ? this.props.user.model.groups[0] === 1 ? <li className="navigation-item" >
+                            ? this.props.user.model.groups[0] === 2 || this.props.user.model.groups[0] === 1 ? <li className="navigation-item" >
                                 <Link onClick={this.allMenusClose} className="navigation-link" to="/articles-review">Review</Link>
                             </li>
                             : null : null
                     }
                     <li className="navigation-item">
-                        <Link onClick={this.allMenusClose} className="navigation-link" to="/contact">Contact</Link>
+                        <Link onClick={this.allMenusClose} className="navigation-link" to="/contact">General requirements</Link>
                     </li>                 
                     <li className="navigation-item" >
                     {
@@ -117,18 +117,18 @@ class Header extends Component {
                         </li>
                     {
                         this.props.user.model 
-                        ? this.props.user.model.groups[0] === 2 ? <li className="navigation-item-mob">
+                        ? this.props.user.model.groups.length === 0 ? <li className="navigation-item-mob">
                         <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/article-creation">Create</Link>
                         </li> : null : null
                     }
                     {
                         this.props.user.model
-                        ? this.props.user.model.groups[0] === 1 ? <li className="navigation-item-mob">
+                        ? this.props.user.model.groups[0] === 1 || this.props.user.model.groups[0] === 2 ? <li className="navigation-item-mob">
                         <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/articles-review">Review</Link>
                         </li> : null : null
                     }
                     <li className="navigation-item-mob">
-                        <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/contact">Contact</Link>
+                        <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/contact">General requirements</Link>
                     </li>
                 </ul>    
             </nav>

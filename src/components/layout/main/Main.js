@@ -12,7 +12,7 @@ import ArticlesReviewList from 'components/articles-review/ArticlesReviewList';
 import ArticleReview from 'components/articles-review/articleReview/ArticleReview';
 import Contact from 'components/contact/Contact';
 import Archive from 'components/archive/Archive';
-import NotFound from 'components/notfound/NotFound';
+// import NotFound from 'components/notfound/NotFound';
 import Authentication from 'components/authentication/Authentication';
 import Account from 'components/account/Account';
 
@@ -57,7 +57,7 @@ class Main extends Component {
                         <Route exact path="/logout" component={Logout}/>
                         <Route exact path='/articles-review' component={ArticlesReviewList} />
                         <Route exact path='/articles-review/:number' component={ArticleReview} />
-                        <Route exact path="*" component={NotFound} />
+                        {/* <Route exact path="*" component={NotFound} /> */}
                     </Authentication>
                 </Switch>
             </main>

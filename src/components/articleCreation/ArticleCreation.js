@@ -22,6 +22,9 @@ class ArticleCreation extends Component {
             description: "",
             language: "ua",
             content: "",
+            udc: "testing",
+            key_words: "test",
+            collaborators: "Petya",
             file: null,
             isArticleLoading: false,
             fieldsValid: {
@@ -76,6 +79,9 @@ class ArticleCreation extends Component {
             description: this.state.description,
             content: this.state.content,
             language: this.state.language,
+            udc: this.state.udc,
+            key_words: this.state.key_words,
+            collaborators: this.state.collaborators,
             author: this.props.user.model.id
         }
         return article;
