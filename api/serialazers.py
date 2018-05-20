@@ -82,7 +82,7 @@ class ArticleSerializer(serializers.ModelSerializer):
         if instance.status.id == 4:
             instance.number = 0
             instance.can_edit = True
-            instance.stage = 2
+            instance.stage = ArticleStage.objects.get(pk=2)
             reviewers = list(User.objects.filter(groups=1))
             reviewers.sort(key=lambda reviewer: len(list(reviewer.profile.articles.filter(deleted=False))))
             instance.reviewers.set(reviewers[0].id)
@@ -90,7 +90,7 @@ class ArticleSerializer(serializers.ModelSerializer):
         if instance.status.id == 3:
             instance.deleted = True
         if instance.status.id == 5:
-            instance.stage = 3
+            instance.stage = ArticleStage.objects.get(pk=3)
         if instance.status.id == 6:
             editor = User.objects.filter(groups=2)
             editor.profile.articles.remove(instance.id)
