@@ -52,6 +52,7 @@ class ArticleReview extends Component {
         }).then(response => {
                 return response.json();
             }).then(data => {
+                console.log(data);
                 this.setState({
                     ...this.state,
                     stages: data.objects

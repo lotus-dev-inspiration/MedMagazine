@@ -7,7 +7,7 @@ class ArticleView extends Component{
 
     render(){
         let time = new Date(Date.parse(this.props.data.date));
-        
+        console.log(this.props.stages);
         return(
             <section className="ArticleView">
                 <div className="article-data">
@@ -21,13 +21,13 @@ class ArticleView extends Component{
                     <h2 className="article-theme">{this.props.data.name}</h2>
                    <h3 className="article-theme">{this.props.data.theme}</h3>
                    <p className="article-description">{this.props.data.description}</p>
-                   <p className="article-status">Article status : 
+                   {/* <p className="article-status">Article status : 
                         <span className="article-status-changed">
                             {this.props.stages
                                 .find(el => el.stage == this.props.data.stage).statuses
                                 .find(el => el.id == this.props.data.status).name}
                         </span>
-                    </p>
+                    </p> */}
                    <Link to={{ pathname: `/articles-review/${this.props.data.id}`, state: {info: this.props}}}>
                         <button className="btn-review">Review</button>
                     </Link>
