@@ -62,11 +62,6 @@ class ArticleSerializer(serializers.ModelSerializer):
         editors = User.objects.filter(groups=2)
         for editor in editors:
             editor.profile.articles.add(article.id)
-        # reviewers = list(User.objects.filter(groups=1))
-        # reviewers.sort(key=lambda reviewer: len(list(reviewer.profile.articles.all())))
-        # article.reviewers.set([reviewers[0].id,reviewers[1].id,reviewers[2].id])
-        # for user in reviewers[:3]:
-        #     user.profile.articles.add(article.id)
         return article
 
     def update(self, instance, validated_data):
@@ -85,8 +80,20 @@ class ArticleSerializer(serializers.ModelSerializer):
             instance.deleted = True
         instance.status = validated_data.get('status', instance.status)
         if instance.status == 4:
-            instance.number = 1
+            instance.number = 0
             instance.can_edit = True
+            instance.stage = 2
+            reviewers = list(User.objects.filter(groups=1))
+            reviewers.sort(key=lambda reviewer: len(list(reviewer.profile.articles.all())))
+            instance.reviewers.set(reviewers[0].id)
+            reviewers[0].profile.articles.add(instance.id)
+        if instance.status == 3:
+            instance.deleted = True
+        if instance.status == 5:
+            instance.stage = 3
+        if instance.status == 6:
+            editor = User.objects.filter(groups=2)
+            editor.profile.articles.remove(instance.id)
         instance.save()
         return instance
 
