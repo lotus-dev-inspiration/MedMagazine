@@ -107,10 +107,13 @@ class ArticleViewset(mixins.CreateModelMixin,
 
 
     def update(self, request, *args, **kwargs):
-        comment = request.data.pop('comment')
-        serializer = CommentSerializer(data=comment)
-        serializer.is_valid()
-        serializer.save()
+        try:
+            comment = request.data.pop('comment')
+            serializer = CommentSerializer(data=comment)
+            serializer.is_valid()
+            serializer.save()
+        except KeyError:
+            pass
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)

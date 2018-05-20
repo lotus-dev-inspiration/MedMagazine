@@ -74,12 +74,12 @@ class ArticleSerializer(serializers.ModelSerializer):
         instance.key_words = validated_data.get('key_words', instance.key_words)
         instance.collaborators = validated_data.get('collaborators', instance.collaborators)
         instance.number = validated_data.get('number', instance.number)
+        instance.status = validated_data.get('status', instance.status)
         if instance.number == 3:
             instance.can_edit = False
-        elif instance.number == 4:
+        if instance.number == 4:
             instance.deleted = True
-        instance.status = validated_data.get('status', instance.status)
-        if instance.status == 4:
+        if instance.status.id == 4:
             instance.number = 0
             instance.can_edit = True
             instance.stage = 2
@@ -87,11 +87,11 @@ class ArticleSerializer(serializers.ModelSerializer):
             reviewers.sort(key=lambda reviewer: len(list(reviewer.profile.articles.filter(deleted=False))))
             instance.reviewers.set(reviewers[0].id)
             reviewers[0].profile.articles.add(instance.id)
-        if instance.status == 3:
+        if instance.status.id == 3:
             instance.deleted = True
-        if instance.status == 5:
+        if instance.status.id == 5:
             instance.stage = 3
-        if instance.status == 6:
+        if instance.status.id == 6:
             editor = User.objects.filter(groups=2)
             editor.profile.articles.remove(instance.id)
         instance.save()
