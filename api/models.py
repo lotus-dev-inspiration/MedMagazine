@@ -41,7 +41,7 @@ class Article(models.Model):
     reviewers = models.ManyToManyField(User,related_name='reviewers',blank=True)
     status = models.ForeignKey(ArticleStatus, on_delete=models.NOT_PROVIDED,default=1)
     stage = models.ForeignKey(ArticleStage,on_delete=models.NOT_PROVIDED, default=1)
-    number = models.IntegerField(default = 1)
+    number = models.IntegerField(default = 0)
     can_edit = models.BooleanField(default=True)
     deleted = models.BooleanField(default = False)
 
