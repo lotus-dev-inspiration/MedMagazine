@@ -66,7 +66,7 @@ class UserViewset(mixins.CreateModelMixin,
     def articles(self, request, pk=None):
         try:
             profile = Profile.objects.get(pk=pk)
-            queryset = profile.articles.all()
+            queryset = profile.articles.filter(deleted=False)
             content = list()
 
             for article in queryset:
