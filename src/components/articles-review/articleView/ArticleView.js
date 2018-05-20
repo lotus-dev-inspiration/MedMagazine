@@ -7,7 +7,7 @@ class ArticleView extends Component{
 
     render(){
         let time = new Date(Date.parse(this.props.data.date));
-        console.log(this.props.stages);
+        console.log(this.props.data);
         return(
             <section className="ArticleView">
                 <div className="article-data">
@@ -25,7 +25,8 @@ class ArticleView extends Component{
                         <span className="article-status-changed">
                             {this.props.stages
                                 .find(el => el.stage == this.props.data.stage).statuses
-                                .find(el => el.id == this.props.data.status).name}
+                                .find(el => el.id == this.props.data.status).name
+                            }
                         </span>
                     </p> */}
                    <Link to={{ pathname: `/articles-review/${this.props.data.id}`, state: {info: this.props}}}>

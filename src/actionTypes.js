@@ -13,3 +13,4 @@ export const userActionTypes = {
 export const articleActionTypes = {
     ARTICLE_CREATION_REQUEST: ''
 }
+
