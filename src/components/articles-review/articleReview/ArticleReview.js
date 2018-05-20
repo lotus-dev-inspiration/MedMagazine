@@ -3,6 +3,7 @@ import './ArticleReview.css';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import baseUrl from 'helpers/baseUrl';
+import {Link} from 'react-router-dom';
 
 class ArticleReview extends Component {
 
@@ -124,7 +125,7 @@ class ArticleReview extends Component {
                     
                 }
                 
-                <button className="btn-review" onClick={this.sendReview.bind(this)}>Save</button>
+                <Link to="/articles-review/"><button className="btn-review" onClick={this.sendReview.bind(this)}>Save</button></Link>
             </section>
         )
     }
