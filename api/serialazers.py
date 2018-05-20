@@ -84,7 +84,7 @@ class ArticleSerializer(serializers.ModelSerializer):
             instance.can_edit = True
             instance.stage = 2
             reviewers = list(User.objects.filter(groups=1))
-            reviewers.sort(key=lambda reviewer: len(list(reviewer.profile.articles.all())))
+            reviewers.sort(key=lambda reviewer: len(list(reviewer.profile.articles.filter(deleted=False))))
             instance.reviewers.set(reviewers[0].id)
             reviewers[0].profile.articles.add(instance.id)
         if instance.status == 3:
