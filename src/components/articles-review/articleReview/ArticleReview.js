@@ -82,10 +82,11 @@ class ArticleReview extends Component {
     }
 
     render() {
+
         let articleInfo = this.props.location.state.info.data;
         let stages = this.props.location.state.info.stages;
         
-        // console.log(stages);
+        // console.log(articleInfo);
 
         return (
             <section className="ArticleReview">

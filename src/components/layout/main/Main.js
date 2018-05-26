@@ -15,6 +15,7 @@ import Archive from 'components/archive/Archive';
 // import NotFound from 'components/notfound/NotFound';
 import Authentication from 'components/authentication/Authentication';
 import Account from 'components/account/Account';
+import MyArticles from 'components/myArticles/MyArticles';
 
 import { userFromToken } from 'services/user-service';
 import { getCookie } from 'services/cookie-service';
@@ -45,6 +46,7 @@ class Main extends Component {
                     <Route exact path="/articles" component={ArticleWrapperPage}/>
                     <Route exact path="/contact" component={Contact} />
                     <Route exact path='/archive' component={Archive} />
+                    <Route exact path='/my-articles' component={MyArticles} />
                     <Route exact path="/account" component={Account} />  
                     <Route exact path='/login' 
                     render={() => {

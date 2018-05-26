@@ -105,7 +105,7 @@ class SignUp extends Component {
                         this.setState({
                             isUserCreationg: false
                         });
-                        this.props.history.replace("/articles");
+                        this.props.history.replace("/article-creation");
                     }).catch((error) => {
                         this.setState({
                             isUserCreationg: false

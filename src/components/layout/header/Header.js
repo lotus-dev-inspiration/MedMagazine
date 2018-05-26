@@ -74,17 +74,23 @@ class Header extends Component {
                 </button>  
                 <Link onClick={this.allMenusClose} className="logo-link" to="/">Logo</Link>
                 <ul className="navigation-list">
-                    <li className="navigation-item">
+                    {/* <li className="navigation-item">
                         <Link onClick={this.allMenusClose} className="navigation-link" to="/articles">Magazine</Link>
-                    </li>
+                    </li> */}
                         <li className="navigation-item">
                             <Link onClick={this.allMenusClose} className="navigation-link" to="/archive">Archieve</Link>
                         </li>
                     {
-                            this.props.user.model
-                            ? this.props.user.model.groups.length === 0 ? <li className="navigation-item" >
+                            this.props.user.model ? 
+                            this.props.user.model.groups.length === 0 ? 
+                            <React.Fragment>
+                            <li className="navigation-item" >
                                 <Link onClick={this.allMenusClose} className="navigation-link" to="/article-creation">Create</Link>
                             </li>
+                            <li className="navigation-item" >
+                                <Link onClick={this.allMenusClose} className="navigation-link" to="/my-articles">My articles</Link>
+                            </li>
+                            </React.Fragment>
                             : null : null
                     }
                     {
