@@ -80,7 +80,7 @@ class ArticleSerializer(serializers.ModelSerializer):
         if instance.number == 4:
             instance.deleted = True
         if instance.status.id == 4:
-            editors = User.objects.filter(groups=2)
+            editor = User.objects.filter(groups=2)
             editor.profile.articles.remove(instance.id)
             instance.number = 0
             instance.can_edit = True
