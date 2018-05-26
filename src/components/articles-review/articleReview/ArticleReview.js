@@ -110,8 +110,8 @@ class ArticleReview extends Component {
                         </select>
                     </div> : articleInfo.stage == 2 ?
                     <div className="form__select">
-                        <select name="select">
-                            <option value="1">Send to edit</option>
+                        <select name="select" value={this.state.commentReview.status} onChange={this.onStatusChange.bind(this)}>
+                            <option value="5">Send to edit</option>
                             <option value="2">Send to rework</option>
                             <option value="3">Rejected</option>
                         </select>
@@ -119,7 +119,7 @@ class ArticleReview extends Component {
                     <div className="form__select">
                         <select name="select">
                             <option value="1">Acceped</option>
-                            {/* <option value="2">Rejected</option> */}
+                            <option value="2">Rejected</option>
                         </select>
                     </div>
                     
