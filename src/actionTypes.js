@@ -11,6 +11,13 @@ export const userActionTypes = {
 }
 
 export const articleActionTypes = {
-    ARTICLE_CREATION_REQUEST: ''
+    ARTICLE_CREATION_REQUEST: '',
+    GET_ARTICLES: 'GET_ARTICLES',
+    GET_CURRENT_ARTICLE: 'GET_CURRENT_ARTICLE',
+    GET_COMMENTS: 'GET_COMMENTS'
+}
+
+export const stagesActionTypes = {
+    GET_STAGES: 'GET_STAGES'
 }
 

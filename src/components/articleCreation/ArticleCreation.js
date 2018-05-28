@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import {withRouter} from 'react-router';
 import './ArticleCreation.css';
 import Spinner from 'components/spinner/Spinner';
-
+import { connect } from 'react-redux';
 import { createArticle } from 'services/article-service';
 import { fileValidation, fieldLengthValidation, descriptionValidation} from 'services/validation-service';
+import baseUrl from 'helpers/baseUrl';
 
 class ArticleCreation extends Component {
     constructor(props) {
@@ -40,6 +41,32 @@ class ArticleCreation extends Component {
 
     }
 
+    componentWillReceiveProps(nextprops){
+        if(nextprops.article){
+            this.setState({
+                name: nextprops.article.name,
+                theme: nextprops.article.theme,
+                description: nextprops.article.description,
+                language: nextprops.article.language,
+                content: nextprops.article.content,
+                udc: nextprops.article.udc,
+                key_words: nextprops.article.key_words,
+                collaborators: nextprops.article.collaborators
+            })
+        }
+    }
+
+    changeArticle(article){
+        fetch(`${baseUrl}/articles/${this.props.article.id}/`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'PATCH',
+            body: JSON.stringify(article)
+        })
+    }
+
     submitArticle(e) {
         e.preventDefault();
 
@@ -52,19 +79,31 @@ class ArticleCreation extends Component {
             this.setState({
                 isArticleLoading: true
             });
-            createArticle(article).then((response) => {
-                return response.json();
-            }).then(data => {
-                this.setState({
-                    isArticleLoading: false
+            if(this.props.article == undefined){
+                createArticle(article).then((response) => {
+                    return response.json();
+                }).then(data => {
+                    this.setState({
+                        isArticleLoading: false
+                    });
+                    this.props.history.replace('/account');
+                }).catch((error) => {
+                    this.setState({
+                        isArticleLoading: false
+                    });
+                    console.log(error);
                 });
+            }else{
+                let changeArticle = this.getArticle();
+                if(this.props.article.stage == 1){
+                  changeArticle.status = 1  
+                }else{
+                    changeArticle.status = 4
+                }
+                this.changeArticle(changeArticle);
                 this.props.history.replace('/account');
-            }).catch((error) => {
-                this.setState({
-                    isArticleLoading: false
-                });
-                console.log(error);
-            });
+            }
+            
         } else {
             this.setState({
                 fieldsValid: {
@@ -86,7 +125,7 @@ class ArticleCreation extends Component {
             udc: this.state.udc,
             key_words: this.state.key_words,
             collaborators: this.state.collaborators,
-            author: this.props.user.model.id
+            author: this.props.userInfo.id
         }
         return article;
     }
@@ -169,9 +208,14 @@ class ArticleCreation extends Component {
     }
 
     render() {
+        // console.log(this.props.article);
         return (
             <section className="ArticleCreation">
-                <h1 className="section-heading">Fill and submit your article</h1>
+            {this.props.article == undefined ? 
+            <h1 className="section-heading">Fill and submit your article</h1> :
+            <h1 className="section-heading">Change and submit your article</h1>
+        }
+                
                 <form className="form-wrapper" onSubmit={this.submitArticle}>
                     <div className="input-block">
                         <label className="input-name" htmlFor="name">Name</label>
@@ -268,7 +312,11 @@ class ArticleCreation extends Component {
                             <span className="hint-error hint-error-file">The file must be in pdf format and lower than 10 Mb</span> : null
                         }
                     </div>
-                    <input type="submit" className="btn-submit pointer" value="Submit article" />
+                    {this.props.article == undefined ?
+                        <input type="submit" className="btn-submit pointer" value="Submit article" /> :
+                        <input type="submit" className="btn-submit pointer" value="Change article" />
+                    }
+                    
                 </form>
                 {this.state.isArticleLoading ? <Spinner /> : null}
             </section>
@@ -276,4 +324,14 @@ class ArticleCreation extends Component {
     }
 }
 
-export default withRouter(ArticleCreation);
+const mapStateToProps = state => {
+    return {
+        userInfo: state.user.model,
+        articles: state.articles.data,
+        stages: state.stages.data,
+        comments: state.articles.comments,
+        currentArticle: state.articles.currentArticle
+    };
+};
+
+export default withRouter(connect(mapStateToProps, null)(ArticleCreation));

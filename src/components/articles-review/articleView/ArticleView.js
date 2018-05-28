@@ -2,13 +2,15 @@ import React, {Component} from 'react';
 import './ArticleView.css';
 import '../articlesReview.js';
 import {Link} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class ArticleView extends Component{
-
+    
     render(){
         let time = new Date(Date.parse(this.props.data.date));
         let stages = this.props.stages[0].statuses.concat(this.props.stages[1].statuses, this.props.stages[2].statuses);
-        console.log(stages);
+        
         return(
             <section className="ArticleView">
                 <div className="article-data">
@@ -29,13 +31,30 @@ class ArticleView extends Component{
                             }
                         </span>
                     </p>
-                   <Link to={{ pathname: `/articles-review/${this.props.data.id}`, state: {info: this.props}}}>
-                        <button className="btn-review">Review</button>
+                    {this.props.data.status == 2 && this.props.userInfo.groups.length == 0 ?
+                        <Link to={`/article-info/${this.props.data.id}`} >
+                            <button className="btn-review">View</button>
+                        </Link> : 
+                        this.props.data.status != 2 && this.props.userInfo.groups.length == 0 ?
+                        null :
+                        <Link to={`/articles-review/${this.props.data.id}`} >
+                      <button className="btn-review">Review</button>
                     </Link>
+                    }
+                
                 </div>
             </section>
         )
     }
 }
 
-export default ArticleView;
+const mapStateToProps = state => {
+
+    return {
+        userInfo: state.user.model,
+        articles: state.articles.data,
+        stages: state.stages.data
+    };
+};
+
+export default withRouter(connect(mapStateToProps, null)(ArticleView));

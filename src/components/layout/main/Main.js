@@ -15,7 +15,7 @@ import Archive from 'components/archive/Archive';
 // import NotFound from 'components/notfound/NotFound';
 import Authentication from 'components/authentication/Authentication';
 import Account from 'components/account/Account';
-import MyArticles from 'components/myArticles/MyArticles';
+import ArticleInfo from 'components/articleInfo/ArticleInfo';
 
 import { userFromToken } from 'services/user-service';
 import { getCookie } from 'services/cookie-service';
@@ -46,7 +46,7 @@ class Main extends Component {
                     <Route exact path="/articles" component={ArticleWrapperPage}/>
                     <Route exact path="/contact" component={Contact} />
                     <Route exact path='/archive' component={Archive} />
-                    <Route exact path='/my-articles' component={MyArticles} />
+                    {/* <Route exact path='/articles-review' component={ArticlesReviewList} /> */}
                     <Route exact path="/account" component={Account} />  
                     <Route exact path='/login' 
                     render={() => {
@@ -57,6 +57,7 @@ class Main extends Component {
                     <Authentication>
                         <Route exact path='/article-creation' render={() => (<ArticleCreation user={this.props.user} />)} />
                         <Route exact path="/logout" component={Logout}/>
+                        <Route exact path='/article-info/:number' component={ArticleInfo} />
                         <Route exact path='/articles-review' component={ArticlesReviewList} />
                         <Route exact path='/articles-review/:number' component={ArticleReview} />
                         {/* <Route exact path="*" component={NotFound} /> */}

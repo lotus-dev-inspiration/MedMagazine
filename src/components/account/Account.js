@@ -42,18 +42,50 @@ class Account extends Component {
                                 <h4 className="profile-info-header">Profile Info</h4>
                                 <div className="row">
                                     <div className="input-field-wrapper">
-                                        <span className="input-heading">Username</span>
+                                        <span className="input-heading">First name</span>
                                         <div className="input-wrapper">
+                                            <input
+                                                className="input-field started"
+                                                type="text"
+                                                name="first_name"
+                                                value={this.props.userInfo.first_name} />
+                                        </div>
+                                    </div>
+                                    <div className="input-field-wrapper">
+                                        <span className="input-heading">Last name</span>
+                                        <div className="input-wrapper">
+                                            <input
+                                                className="input-field started"
+                                                type="text"
+                                                name="last_name"
+                                                value={this.props.userInfo.last_name} />
+                                        </div>
+                                    </div>
+                                    <div className="input-field-wrapper">
+                                        <span className="input-heading">Patronymic</span>
+                                        <div className="input-wrapper">
+                                            <input
+                                                className="input-field started"
+                                                type="text"
+                                                name="patronymic"
+                                                value={this.props.userInfo.profile.patronymic} />
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="input-field-wrapper">
+                                            <span className="input-heading">Username</span>
+                                            <div className="input-wrapper">
                                             <input
                                                 className="input-field started"
                                                 type="text"
                                                 name="username"
                                                 value={this.props.userInfo.username} />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="input-field-wrapper">
-                                        <span className="input-heading">Email</span>
-                                        <div className="input-wrapper">
+                                        <div className="input-field-wrapper">
+                                            <span className="input-heading">Email</span>
+                                            <div className="input-wrapper">
                                             <input
                                                 className="input-field started"
                                                 type="email"
@@ -69,6 +101,38 @@ class Account extends Component {
                                                 type="text"
                                                 name="username"
                                                 value={this.props.userInfo.profile.phone} />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                        <div className="input-field-wrapper">
+                                            <span className="input-heading">Company</span>
+                                            <div className="input-wrapper">
+                                            <input
+                                                className="input-field started"
+                                                type="text"
+                                                name="company"
+                                                value={this.props.userInfo.profile.company} />
+                                            </div>
+                                        </div>
+                                        <div className="input-field-wrapper">
+                                            <span className="input-heading">Grade</span>
+                                            <div className="input-wrapper">
+                                            <input
+                                                className="input-field started"
+                                                type="text"
+                                                name="grade"
+                                                value={this.props.userInfo.profile.grade} />
+                                        </div>
+                                    </div>
+                                    <div className="input-field-wrapper">
+                                        <span className="input-heading">Position</span>
+                                        <div className="input-wrapper">
+                                            <input
+                                                className="input-field started"
+                                                type="text"
+                                                name="position"
+                                                value={this.props.userInfo.profile.position} />
                                         </div>
                                     </div>
                                 </div>

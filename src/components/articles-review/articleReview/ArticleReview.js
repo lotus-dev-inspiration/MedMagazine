@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import baseUrl from 'helpers/baseUrl';
 import {Link} from 'react-router-dom';
+import {getCurrentArticle} from 'actions';
 
 class ArticleReview extends Component {
 
@@ -23,6 +24,10 @@ class ArticleReview extends Component {
         }
     }
 
+    componentWillMount(){
+        this.getCurrentArticle();
+    }
+
     componentDidMount(){
         this.setState({
             ...this.state,
@@ -30,11 +35,27 @@ class ArticleReview extends Component {
                 ...this.state.commentReview,
                 comment: {
                     ...this.state.commentReview.comment,
-                    article: this.props.location.state.info.data.id,
+                    article: window.location.pathname.split('/')[2],
                     user: this.props.userInfo.id
                 }
             }
         })
+    }
+
+    getCurrentArticle(){
+        fetch(`${baseUrl}/articles/${window.location.pathname.split('/')[2]}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'GET'
+        }).then(response => {
+                return response.json();
+            }).then(data => {
+                this.props.getCurrentArticle(data);
+            }).catch(error => {
+                console.log(error);
+            })
     }
 
     onCommentChange = (event) => {
@@ -61,7 +82,7 @@ class ArticleReview extends Component {
     }
 
     sendReview = () => {
-        console.log(this.state);
+        
         fetch(`${baseUrl}/articles/${this.state.commentReview.comment.article}/`, {
             headers: {
                 'Accept': 'application/json',
@@ -82,19 +103,15 @@ class ArticleReview extends Component {
     }
 
     render() {
-
-        let articleInfo = this.props.location.state.info.data;
-        let stages = this.props.location.state.info.stages;
-        
-        // console.log(articleInfo);
+        let articleInfo = this.props.articles.find(el => el.id == window.location.pathname.split('/')[2]);
 
         return (
             <section className="ArticleReview">
 
-                <object data={articleInfo.content} type="application/pdf" width="100%" height="500px">
-                    alt: <a href={articleInfo.content}>It is article</a>
+                <object data={this.props.currentArticle.content} type="application/pdf" width="100%" height="500px">
+                    alt: <a href={this.props.currentArticle.content}>It is article</a>
                 </object>
-                <div><a href={articleInfo.content} className="btn-review" target="_blank">Open in new window</a></div>
+                <div><a href={this.props.currentArticle.content} className="btn-review" target="_blank">Open in new window</a></div>
                 <h3 className="label-textarea">Comment and whishes about article</h3>
                 <div>
                     <textarea className="article-comments" onChange={this.onCommentChange.bind(this)}>
@@ -102,14 +119,14 @@ class ArticleReview extends Component {
                 </div>
                 <h3 className="label-textarea">Change the status of article</h3>
                 {
-                    articleInfo.stage == 1 ?
+                    this.props.currentArticle.stage == 1 ?
                     <div className="form__select">
                         <select name="select" value={this.state.commentReview.status} onChange={this.onStatusChange.bind(this)}>
                             <option value="2">Send to rework</option>
                             <option value="4">Send to review</option>
                             <option value="3">Rejected</option>
                         </select>
-                    </div> : articleInfo.stage == 2 ?
+                    </div> : this.props.currentArticle.stage == 2 ?
                     <div className="form__select">
                         <select name="select" value={this.state.commentReview.status} onChange={this.onStatusChange.bind(this)}>
                             <option value="5">Send to edit</option>
@@ -120,7 +137,7 @@ class ArticleReview extends Component {
                     <div className="form__select">
                         <select name="select">
                             <option value="1">Acceped</option>
-                            <option value="2">Rejected</option>
+                            <option value="3">Rejected</option>
                         </select>
                     </div>
                     
@@ -135,10 +152,17 @@ class ArticleReview extends Component {
 const mapStateToProps = state => {
 
     return {
-        userInfo: state.user.model
+        userInfo: state.user.model,
+        articles: state.articles.data,
+        stages: state.stages.data,
+        currentArticle: state.articles.currentArticle
     };
 };
 
-export default withRouter(connect(mapStateToProps, null)(ArticleReview));
+const mapDispatchToProps = state => ({
+    getCurrentArticle: getCurrentArticle(state)
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ArticleReview));
 
 

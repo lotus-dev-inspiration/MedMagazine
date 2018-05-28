@@ -88,7 +88,7 @@ class Header extends Component {
                                 <Link onClick={this.allMenusClose} className="navigation-link" to="/article-creation">Create</Link>
                             </li>
                             <li className="navigation-item" >
-                                <Link onClick={this.allMenusClose} className="navigation-link" to="/my-articles">My articles</Link>
+                                <Link onClick={this.allMenusClose} className="navigation-link" to="/articles-review">My articles</Link>
                             </li>
                             </React.Fragment>
                             : null : null

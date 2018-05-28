@@ -1,5 +1,7 @@
 import {
-    userActionTypes
+    userActionTypes,
+    articleActionTypes,
+    stagesActionTypes
 } from 'actionTypes';
 
 export const defineUser = dispatch => user => {
@@ -33,3 +35,31 @@ export const logoutUser = dispatch => state => {
         }
     })
 };
+
+export const getReviewArticles = dispatch => state => {
+    dispatch({
+        type: articleActionTypes.GET_ARTICLES,
+        payload: state
+    })
+}
+
+export const getStages = dispatch => state => {
+    dispatch({
+        type: stagesActionTypes.GET_STAGES,
+        payload: state
+    })
+}
+
+export const getCurrentArticle = dispatch => state => {
+    dispatch({
+        type: articleActionTypes.GET_CURRENT_ARTICLE,
+        payload: state
+    })
+}
+
+export const getComments = dispatch => state => {
+    dispatch({
+        type: articleActionTypes.GET_COMMENTS,
+        payload: state
+    })
+}

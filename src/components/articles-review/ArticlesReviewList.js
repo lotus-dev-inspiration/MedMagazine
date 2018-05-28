@@ -5,17 +5,13 @@ import articles from './articlesReview.js';
 import ArticleView from './articleView/ArticleView';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import {getReviewArticles, getStages} from 'actions';
 import baseUrl from 'helpers/baseUrl';
 
 
 class ArticleReview extends Component {
     constructor(props){
         super(props);
-        this.state = {
-            articlesReview: null,
-            stages: null
-        }
     }
 
     componentWillMount(){
@@ -33,10 +29,7 @@ class ArticleReview extends Component {
         }).then(response => {
                 return response.json();
             }).then(data => {
-                this.setState({
-                    ...this.state,
-                    articlesReview: data
-                })
+                this.props.getReviewArticles(data);
             }).catch(error => {
                 console.log(error);
             })
@@ -52,27 +45,27 @@ class ArticleReview extends Component {
         }).then(response => {
                 return response.json();
             }).then(data => {
-                console.log(data);
-                this.setState({
-                    ...this.state,
-                    stages: data.objects
-                })
+                this.props.getStages(data.objects);
             }).catch(error => {
                 console.log(error);
             })
     }
 
     render(){
+        
         return(
             <section className="ArticlesReviewList">
-              <h1 className="header">Articles, which wait review</h1>
+            {this.props.userInfo.groups.length === 0 ? 
+                <h1 className="header">My articles</h1> : 
+                <h1 className="header">Articles, which wait review</h1>
+            }
               {
-                  this.state.articlesReview !== null && this.state.stages !== null ?
+                  this.props.articles.length !== 0 && this.props.stages.length !== 0 ?
                   <div>
                    {
-                       this.state.articlesReview.map((article) => {
+                       this.props.articles.map((article) => {
                            return(
-                               <ArticleView data={article} key={article.id} stages={this.state.stages} />
+                               <ArticleView data={article} key={article.id} />
                            )
                        })
                    }
@@ -86,8 +79,15 @@ class ArticleReview extends Component {
 const mapStateToProps = state => {
 
     return {
-        userInfo: state.user.model
+        userInfo: state.user.model,
+        articles: state.articles.data,
+        stages: state.stages.data
     };
 };
 
-export default withRouter(connect(mapStateToProps, null)(ArticleReview));
+const mapDispatchToProps = state => ({
+    getReviewArticles: getReviewArticles(state),
+    getStages: getStages(state)
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ArticleReview));
