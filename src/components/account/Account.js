@@ -21,7 +21,6 @@ class Account extends Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <div className="Account">
                 {this.props.userInfo !== null ?

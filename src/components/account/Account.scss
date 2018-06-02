@@ -93,4 +93,19 @@
             }
         }
     }
+    @media(max-width: 900px){
+        .content-wrapper{
+            flex-direction: column;
+            .left-block{
+                width:90%;
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            .right-block{
+                width:90%;
+                margin-left: 0;
+                margin-bottom: 20px;
+            }
+        }
+    }
 }
