@@ -10,15 +10,15 @@
     .article-heading {
         text-align: center;
     }
-    
+
     .article-content {
         display: flex;
         margin-bottom: 30px;
         margin-top: 20px;
-    
+
         .content-description-wrapper {
             margin-left: 15px;
-        
+
             .content-description {
                 text-align: justify;
             }
@@ -29,10 +29,16 @@
         display: flex;
         justify-content: space-between;
         padding: 0 20px;
-    
-        .info-text-author {
-            margin-left: 20px;
-            font-style: italic;
+
+        .info-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            .info-text-author {
+                margin-top: 10px;
+                font-style: italic;
+            }
         }
 
         .info-read-more {
@@ -44,10 +50,10 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 1s;
-        
+
             &:hover {
                 background-color: var(--main-midnightblue-color);
             }
-        } 
+        }
     }
 }
