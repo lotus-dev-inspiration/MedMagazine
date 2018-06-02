@@ -43,10 +43,10 @@ class Main extends Component {
             <main className="Main">
                 <Switch>
                     <Route exact path='/' component={StartPage} />
-                    <Route exact path="/articles" component={ArticleWrapperPage}/>
+                    <Route exact path="/magazine" component={ArticleWrapperPage}/>
                     <Route exact path="/contact" component={Contact} />
                     <Route exact path='/archive' component={Archive} />
-                    {/* <Route exact path='/articles-review' component={ArticlesReviewList} /> */}
+                    <Route exact path='/archive/:number' component={ArticleWrapperPage} />
                     <Route exact path="/account" component={Account} />  
                     <Route exact path='/login' 
                     render={() => {

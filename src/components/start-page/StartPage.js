@@ -7,7 +7,7 @@ class StartPage extends Component {
     render() {
         return (
             <section className="StartPage">
-                <Link className="startpage-link" to="/archive">Start Reading</Link>
+                <Link className="startpage-link" to="/magazine">Start Reading</Link>
             </section>
         );
     }

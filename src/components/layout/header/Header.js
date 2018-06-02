@@ -72,13 +72,13 @@ class Header extends Component {
                     <div className="bar bar2"></div>
                     <div className="bar bar3"></div>
                 </button>  
-                <Link onClick={this.allMenusClose} className="logo-link" to="/">Logo</Link>
+                <Link onClick={this.allMenusClose} className="logo-link" to="/">Scientist</Link>
                 <ul className="navigation-list">
-                    {/* <li className="navigation-item">
-                        <Link onClick={this.allMenusClose} className="navigation-link" to="/articles">Magazine</Link>
-                    </li> */}
                         <li className="navigation-item">
-                            <Link onClick={this.allMenusClose} className="navigation-link" to="/archive">Archieve</Link>
+                            <Link onClick={this.allMenusClose} className="navigation-link" to="/magazine">Magazine</Link>
+                        </li>
+                        <li className="navigation-item">
+                            <Link onClick={this.allMenusClose} className="navigation-link" to="/archive">Archive</Link>
                         </li>
                     {
                             this.props.user.model ? 
@@ -116,7 +116,7 @@ class Header extends Component {
                 </ul>
                 <ul className={this.menuClasses.join(" ")}>
                     <li className="navigation-item-mob">
-                        <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/articles">Magazine</Link>
+                        <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/magazine">Magazine</Link>
                     </li>
                         <li className="navigation-item-mob">
                             <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/archive">Archive</Link>
