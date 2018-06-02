@@ -113,7 +113,7 @@ class ArticleCreation extends Component {
                 }
             })
         }
-    }
+    } 
 
     getArticle() {
         const article = {

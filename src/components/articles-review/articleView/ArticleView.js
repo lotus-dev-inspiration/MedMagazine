@@ -35,11 +35,16 @@ class ArticleView extends Component{
                         <Link to={`/article-info/${this.props.data.id}`} >
                             <button className="btn-review">View</button>
                         </Link> : 
-                        this.props.data.status != 2 && this.props.userInfo.groups.length == 0 ?
-                        null :
+                        this.props.data.status == 4 && this.props.userInfo.groups[0] == 1 ?  
                         <Link to={`/articles-review/${this.props.data.id}`} >
-                      <button className="btn-review">Review</button>
-                    </Link>
+                            <button className="btn-review">Review</button>
+                        </Link> : 
+                        ((this.props.userInfo.groups[0] == 2 && (this.props.data.status == 1 && this.props.data.status == 5)) ||
+                         this.props.userInfo.groups[0] == 2 && this.props.data.status == 5 ||
+                         this.props.userInfo.groups[0] == 2 && this.props.data.status == 1 ) ?
+                        <Link to={`/articles-review/${this.props.data.id}`} >
+                            <button className="btn-review">Review</button>
+                        </Link> : null
                     }
                 
                 </div>

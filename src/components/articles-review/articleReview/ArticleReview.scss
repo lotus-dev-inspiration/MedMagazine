@@ -87,4 +87,76 @@
     .form__select select:hover {
         cursor: pointer;
     }
+    
+    .input-block {
+        display: flex;
+        justify-content: flex-start;
+        position: relative;
+
+        .input-name {
+            width: 33%;
+        }
+
+        .input-field {
+            border: none;
+            border-bottom: 2px solid var(--main-darkgray-color);
+            outline: none;
+            color: var(--main-dimgray-color);
+            font-weight: bold;
+            padding-left: 5px;
+            transition: border-bottom 0.5s;
+            background-color: transparent;
+
+            &:focus {
+                border-bottom: 2px solid var(--main-midnightblue-color);
+            }
+        }
+
+        .input-description {
+            width: 200px;
+        }
+
+        .hint-error {
+            color: var(--main-red-color);
+            font-size: 0.6em;
+            position: absolute;
+            left: 103px;
+            top: 22px;
+        }
+
+        .hint-error-description {
+            top: 35px;
+        }
+
+        .hint-error-file {
+            top: 38px;
+            left: 0;
+        }
+
+        .select-field {
+            width: 177px;
+        }
+
+        .input-file-name {
+            width: 124px;
+            text-align: center;
+            padding: 5px 10px;
+            height: 25px;
+            background: var(--main-lightblue-color);
+            line-height: 25px;
+            transition: background 0.5s;
+
+            &:hover {
+                color: var(--main-white-color);
+            }
+        }
+
+        .input-file {
+            display: none;
+        }
+
+        &:not(:last-of-type) {
+            margin-bottom: 30px;
+        }
+    }
 }
