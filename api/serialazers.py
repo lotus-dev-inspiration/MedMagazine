@@ -95,7 +95,7 @@ class ArticleSerializer(serializers.ModelSerializer):
         if instance.status.id == 5:
             reviewers = list(User.objects.filter(groups=1))
             for reviewer in reviewers:
-                if instance.id in reviewer.profile.articles:
+                if instance.id in reviewer.profile.articles.all():
                     reviewer.profile.articles.remove(instance.id)
             editors = list(User.objects.filter(groups=2))
             for editor in editors:
