@@ -33,6 +33,16 @@ class JournalViewset(mixins.CreateModelMixin,
         if month is not None:
             queryset = queryset.filter(date__month = month)
         return queryset
+    
+    @list_route(methods=['get'])
+    def last(self, request, pk=None):
+        try:
+            journal = Journal.objects.all()
+            serializer = JournalSerializer(journal, many=True, context={'request': request})
+            return Response(serializer.data)
+
+        except ObjectDoesNotExist:
+            return Response({"success": False, "message": "No journals"})
 
 #User simple view
 class UserViewset(mixins.CreateModelMixin,
@@ -219,15 +229,6 @@ class StagesViewModelViewset(mixins.CreateModelMixin,
     queryset = ArticleStage.objects.all()
     serializer_class = ArticleStageSerializer
     
-    # def list(self, request, *args, **kwargs):
-    #     queryset = self.filter_queryset(self.get_queryset())
-    #     stages = self.get_serializer(queryset, many=True)
-    #     statuses = []
-    #     for stage in stages.data:
-    #         for status in stage['statuses_id']:
-    #             statuses.append(ArticleStatusSerializer(ArticleStatus.objects.get(pk=status)).data)
-    #     return Response({'stages': stages.data, 'statuses': statuses})
-
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         stages = self.get_serializer(queryset, many=True)

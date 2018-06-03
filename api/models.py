@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
 class ArticleStatus(models.Model):
     name = models.CharField(max_length=150, unique=True, blank=False)
@@ -44,6 +45,9 @@ class Article(models.Model):
     can_edit = models.BooleanField(default=True)
     deleted = models.BooleanField(default = False)
 
+    # def getAuthorName(self):
+    #     return "Hello"
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, parent_link=True)
     patronymic = models.CharField(max_length=100, default='Not Provided')
@@ -59,8 +63,19 @@ class Comment(models.Model):
     text = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
 
+class JournalManager(models.Manager):
+    def create_journal(self,articles):
+        theme = ArticleTheme.objects.get(theme='it')
+        journal = self.create(theme=theme)
+        for article in articles:
+            journal.articles.add(article)
+        return journal
+
 class Journal(models.Model):
     articles = models.ManyToManyField(Article)
     date = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=200,default = 'Журнал %s' % date)
+    name = models.CharField(max_length=200,default = 'Журнал %s' % datetime.datetime.now())
     theme = models.ForeignKey(ArticleTheme,on_delete=models.NOT_PROVIDED)
+    
+    objects = JournalManager()
+

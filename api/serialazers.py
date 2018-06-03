@@ -8,11 +8,6 @@ import PyPDF2, io
 
 
 # Serializers define the API representation.
-class JournalSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Journal
-        fields = '__all__'
-
 class ArticleStageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ArticleStage
@@ -48,12 +43,16 @@ class PDFBase64FileField(Base64FileField):
 
 class ArticleSerializer(serializers.ModelSerializer):
     content = PDFBase64FileField()
+    author_full_name = serializers.SerializerMethodField()
 
     class Meta:
         model = Article
         fields = '__all__'
         read_only_fields = ('reviewers','can_edit', 'stage','date','deleted',)
         required = False
+
+    def get_author_full_name(self, obj):
+        return obj.author.get_full_name()
 
     def create(self, validated_data):
         article = Article.objects.create(**validated_data)
@@ -78,7 +77,13 @@ class ArticleSerializer(serializers.ModelSerializer):
         if instance.number == 3:
             instance.can_edit = False
         if instance.number == 4:
-            instance.deleted = True
+            #instance.deleted = True
+            reviewers = User.objects.filter(groups=1)
+            for reviewer in reviewers:
+                reviewer.profile.articles.remove(instance.id)
+            editors = User.objects.filter(groups=2)
+            for editor in editors:
+                editor.profile.articles.remove(instance.id)
         if instance.status.id == 4:
             editors = User.objects.filter(groups=2)
             for editor in editors:
@@ -91,7 +96,13 @@ class ArticleSerializer(serializers.ModelSerializer):
             instance.reviewers.add(reviewers[0].id)
             reviewers[0].profile.articles.add(instance.id)
         if instance.status.id == 3:
-            instance.deleted = True
+            #instance.deleted = True
+            reviewers = User.objects.filter(groups=1)
+            for reviewer in reviewers:
+                reviewer.profile.articles.remove(instance.id)
+            editors = User.objects.filter(groups=2)
+            for editor in editors:
+                editor.profile.articles.remove(instance.id)
         if instance.status.id == 5:
             reviewers = list(User.objects.filter(groups=1))
             for reviewer in reviewers:
@@ -107,6 +118,17 @@ class ArticleSerializer(serializers.ModelSerializer):
                 editor.profile.articles.remove(instance.id)
         instance.save()
         return instance
+
+class JournalSerializer(serializers.ModelSerializer):
+    
+    articles = serializers.SerializerMethodField('get_articles_list')
+    
+    class Meta:
+        model = Journal
+        fields = '__all__'
+
+    def get_articles_list(self,obj):
+        return ArticleSerializer(obj.articles.all(),many=True).data
 
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
