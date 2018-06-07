@@ -101,7 +101,7 @@ class Header extends Component {
                             : null : null
                     }
                     <li className="navigation-item">
-                        <Link onClick={this.allMenusClose} className="navigation-link" to="/contact">General requirements</Link>
+                        <Link onClick={this.allMenusClose} className="navigation-link" to="/requirements">General requirements</Link>
                     </li>                 
                     <li className="navigation-item" >
                     {
@@ -134,7 +134,7 @@ class Header extends Component {
                         </li> : null : null
                     }
                     <li className="navigation-item-mob">
-                        <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/contact">General requirements</Link>
+                            <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/requirements">General requirements</Link>
                     </li>
                 </ul>    
             </nav>

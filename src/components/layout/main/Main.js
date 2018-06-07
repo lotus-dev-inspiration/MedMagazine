@@ -11,6 +11,7 @@ import ArticleCreation from 'components/articleCreation/ArticleCreation';
 import ArticlesReviewList from 'components/articles-review/ArticlesReviewList';
 import ArticleReview from 'components/articles-review/articleReview/ArticleReview';
 import Contact from 'components/contact/Contact';
+import Requirements from 'components/requirements/Requirements';
 import Archive from 'components/archive/Archive';
 // import NotFound from 'components/notfound/NotFound';
 import Authentication from 'components/authentication/Authentication';
@@ -45,6 +46,7 @@ class Main extends Component {
                     <Route exact path='/' component={StartPage} />
                     <Route exact path="/magazine" component={ArticleWrapperPage}/>
                     <Route exact path="/contact" component={Contact} />
+                    <Route exact path="/requirements" component={Requirements} />
                     <Route exact path='/archive' component={Archive} />
                     <Route exact path='/archive/:number' component={ArticleWrapperPage} />
                     <Route exact path="/account" component={Account} />  
