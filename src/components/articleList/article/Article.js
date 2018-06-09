@@ -23,9 +23,17 @@ export default class Article extends Component {
                         <span className="info-text-date">{new Date(this.props.data.date).toLocaleDateString()}</span>
                         <span className="info-text-author">{this.props.data.author_full_name}</span>
                     </div>
-                    <a target="_blank" href={this.props.data.content} className="info-read-more">
+                    {
+                        this.props.data.content.includes("http") 
+                        ? <a target="_blank" href={this.props.data.content} className="info-read-more">
                         Read More
-                    </a>
+                        </a>
+                        : <a target="_blank" href={"http://127.0.0.1:8000" + this.props.data.content} className="info-read-more">
+                        Read More
+                        </a>
+                    }
+
+                    
                 </div>
             </article>
         );

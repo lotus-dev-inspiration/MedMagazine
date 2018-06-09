@@ -33,7 +33,7 @@ class SignIn extends Component {
                 this.props.onDefineUser(data.user);
                 setCookie("Authorization", "JWT " + data.token, data.exp_time);
                 setCookie("isUser", true);
-                this.props.history.replace("/account");
+                this.props.history.replace("/articles-review");
             }
             this.setState({
                 isUserLoggingIn: false

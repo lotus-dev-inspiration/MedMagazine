@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import {withRouter} from 'react-router';
+import { withRouter } from 'react-router';
 import './ArticleCreation.css';
 import Spinner from 'components/spinner/Spinner';
 import { connect } from 'react-redux';
 import { createArticle } from 'services/article-service';
-import { fileValidation, fieldLengthValidation, descriptionValidation} from 'services/validation-service';
+import { fileValidation, fieldLengthValidation, descriptionValidation } from 'services/validation-service';
 import baseUrl from 'helpers/baseUrl';
 
 class ArticleCreation extends Component {
@@ -41,8 +41,8 @@ class ArticleCreation extends Component {
 
     }
 
-    componentWillReceiveProps(nextprops){
-        if(nextprops.article){
+    componentWillReceiveProps(nextprops) {
+        if (nextprops.article) {
             this.setState({
                 name: nextprops.article.name,
                 theme: nextprops.article.theme,
@@ -56,7 +56,7 @@ class ArticleCreation extends Component {
         }
     }
 
-    changeArticle(article){
+    changeArticle(article) {
         fetch(`${baseUrl}/articles/${this.props.article.id}/`, {
             headers: {
                 'Accept': 'application/json',
@@ -74,46 +74,46 @@ class ArticleCreation extends Component {
             return field !== true;
         });
 
-        if(dataValidated) {
+        if (dataValidated) {
             const article = this.getArticle();
             this.setState({
                 isArticleLoading: true
             });
-            if(this.props.article == undefined){
+            if (this.props.article == undefined) {
                 createArticle(article).then((response) => {
                     return response.json();
                 }).then(data => {
                     this.setState({
                         isArticleLoading: false
                     });
-                    this.props.history.replace('/account');
+                    this.props.history.replace('/articles-review');
                 }).catch((error) => {
                     this.setState({
                         isArticleLoading: false
                     });
                     console.log(error);
                 });
-            }else{
+            } else {
                 let changeArticle = this.getArticle();
-                if(this.props.article.stage == 1){
-                  changeArticle.status = 1  
-                }else{
+                if (this.props.article.stage == 1) {
+                    changeArticle.status = 1
+                } else {
                     changeArticle.status = 4
                 }
                 this.changeArticle(changeArticle);
-                this.props.history.replace('/account');
+                this.props.history.replace('/articles-review');
             }
-            
+
         } else {
             this.setState({
                 fieldsValid: {
                     name: fieldLengthValidation(this.state.name),
                     description: descriptionValidation(this.state.description),
-                    content: fileValidation(this.state.file,'pdf', 10)
+                    content: fileValidation(this.state.file, 'pdf', 10)
                 }
             })
         }
-    } 
+    }
 
     getArticle() {
         const article = {
@@ -133,9 +133,9 @@ class ArticleCreation extends Component {
     handleFileUpload(e) {
         const self = this;
         const reader = new FileReader();
-        const file = e.target.files[0]; 
-        
-        if(file) {
+        const file = e.target.files[0];
+
+        if (file) {
 
             this.setState({
                 file,
@@ -152,15 +152,15 @@ class ArticleCreation extends Component {
             reader.readAsDataURL(file);
 
             const fileLabelName = file.name.split("").map((letter, idx, letArr) => {
-                if(idx > 10) {
+                if (idx > 10) {
                     return "";
                 } else {
                     return letter;
                 }
             }).join("") + "...";
-    
+
             this.fileLabel.innerText = fileLabelName;
-        } 
+        }
     }
 
     onNameChange(event) {
@@ -168,10 +168,10 @@ class ArticleCreation extends Component {
         this.setState({
             name,
             fieldsValid: { ...this.state.fieldsValid, name: fieldLengthValidation(event.target.value) }
-        })   
+        })
     }
 
-    onUdcChange(event){
+    onUdcChange(event) {
         const udc = event.target.value;
         this.setState({
             udc,
@@ -193,7 +193,7 @@ class ArticleCreation extends Component {
         })
     }
 
-    onKeyWordsChange(event){
+    onKeyWordsChange(event) {
         const key_words = event.target.value;
         this.setState({
             key_words,
@@ -208,14 +208,13 @@ class ArticleCreation extends Component {
     }
 
     render() {
-        // console.log(this.props.article);
         return (
             <section className="ArticleCreation">
-            {this.props.article == undefined ? 
-            <h1 className="section-heading">Fill and submit your article</h1> :
-            <h1 className="section-heading">Change and submit your article</h1>
-        }
-                
+                {this.props.article == undefined ?
+                    <h1 className="section-heading">Fill and submit your article</h1> :
+                    <h1 className="section-heading">Change and submit your article</h1>
+                }
+
                 <form className="form-wrapper" onSubmit={this.submitArticle}>
                     <div className="input-block">
                         <label className="input-name" htmlFor="name">Name</label>
@@ -224,9 +223,9 @@ class ArticleCreation extends Component {
                             type="text"
                             id="name"
                             name="name"
-                            value = {this.state.name}
+                            value={this.state.name}
                             onChange={this.onNameChange}
-                            />
+                        />
                         {this.state.fieldsValid.name === false ?
                             <span className="hint-error">Name must be 3 symbols minimal</span> : null
                         }
@@ -234,12 +233,7 @@ class ArticleCreation extends Component {
                     <div className="input-block">
                         <label className="input-name" htmlFor="theme">Topic</label>
                         <select className="input-field select-field pointer" id="theme" name="language" value={this.state.theme} onChange={this.onThemeChange}>
-                            <option value="electronics">Electronics</option>
                             <option value="it">Information technology</option>
-                            <option value="medicine">Medicine</option>
-                            <option value="physics">Physics</option>
-                            <option value="math">Mathematics</option>
-                            <option value="other">Other...</option>
                         </select>
                     </div>
                     <div className="input-block">
@@ -249,9 +243,9 @@ class ArticleCreation extends Component {
                             type="text"
                             id="udc"
                             name="udc"
-                            value = {this.state.udc}
+                            value={this.state.udc}
                             onChange={this.onUdcChange}
-                            />
+                        />
                         {this.state.fieldsValid.udc === false ?
                             <span className="hint-error">UDC must be 3 symbols minimal</span> : null
                         }
@@ -275,7 +269,7 @@ class ArticleCreation extends Component {
                             value={this.state.description}
                             onChange={this.onDescriptionChange}
                             maxLength="3000"
-                            />
+                        />
                         {this.state.fieldsValid.description === false ?
                             <span className="hint-error hint-error-description">Description must be more than 500 symbols</span> : null
                         }
@@ -289,15 +283,16 @@ class ArticleCreation extends Component {
                             name="key_words"
                             value={this.state.key_words}
                             onChange={this.onKeyWordsChange}
-                            />
+                        />
                         {this.state.fieldsValid.key_words === false ?
                             <span className="hint-error hint-error-description">Key words must be 3 symbols minimal</span> : null
                         }
                     </div>
                     <div className="input-block">
-                        <label className="input-file-name pointer" 
-                        htmlFor="article" 
-                        ref={(fileLabel) => this.fileLabel = fileLabel}>
+                        <label className="input-file-name pointer"
+                            htmlFor="article"
+                            ref={(fileLabel) => this.fileLabel = fileLabel}
+                            >
                             <i className="fa fa-upload"></i> Choose a file...
                         </label>
                         <input
@@ -307,7 +302,7 @@ class ArticleCreation extends Component {
                             name="article"
                             ref={(input) => { this.article = input }}
                             onChange={this.handleFileUpload}
-                            />
+                        />
                         {this.state.fieldsValid.content === false ?
                             <span className="hint-error hint-error-file">The file must be in pdf format and lower than 10 Mb</span> : null
                         }
@@ -316,7 +311,7 @@ class ArticleCreation extends Component {
                         <input type="submit" className="btn-submit pointer" value="Submit article" /> :
                         <input type="submit" className="btn-submit pointer" value="Change article" />
                     }
-                    
+
                 </form>
                 {this.state.isArticleLoading ? <Spinner /> : null}
             </section>

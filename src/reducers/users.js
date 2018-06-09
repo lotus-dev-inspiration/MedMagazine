@@ -2,7 +2,7 @@ import {
     userActionTypes
 } from 'actionTypes';
 
-const initialState = {model: null, isLoggedIn: false};
+const initialState = { model: null, isLoggedIn: false, initialState: true};
 
 export const user = (state = initialState, {type, payload}) => {
     if( type === userActionTypes.DEFINE_USER_SUCCESS || 

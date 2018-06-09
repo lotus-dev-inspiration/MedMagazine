@@ -1,26 +1,27 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import docs from 'assets/docs/article-review/test.pdf';
 import './ArticlesReviewList.css';
-import articles from './articlesReview.js';
 import ArticleView from './articleView/ArticleView';
-import {getTime} from 'helpers/date-helper';
+import { getTime } from 'helpers/date-helper';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {getReviewArticles, getStages} from 'actions';
+import { getReviewArticles, getStages } from 'actions';
 import baseUrl from 'helpers/baseUrl';
+import Spinner from 'components/spinner/Spinner';
+
 
 
 class ArticleReview extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
-    componentWillMount(){
+    componentWillMount() {
         this.getReviewArticles();
         this.getStages();
     }
 
-    getReviewArticles(){
+    getReviewArticles() {
         fetch(`${baseUrl}/users/${this.props.userInfo.id}/articles`, {
             headers: {
                 'Accept': 'application/json',
@@ -28,15 +29,15 @@ class ArticleReview extends Component {
             },
             method: 'GET'
         }).then(response => {
-                return response.json();
-            }).then(data => {
-                this.props.getReviewArticles(data);
-            }).catch(error => {
-                console.log(error);
-            })
+            return response.json();
+        }).then(data => {
+            this.props.getReviewArticles(data);
+        }).catch(error => {
+            console.log(error);
+        })
     }
 
-    getStages(){
+    getStages() {
         fetch(`${baseUrl}/stages`, {
             headers: {
                 'Accept': 'application/json',
@@ -44,34 +45,39 @@ class ArticleReview extends Component {
             },
             method: 'GET'
         }).then(response => {
-                return response.json();
-            }).then(data => {
-                this.props.getStages(data.objects);
-            }).catch(error => {
-                console.log(error);
-            })
+            return response.json();
+        }).then(data => {
+            this.props.getStages(data.objects);
+        }).catch(error => {
+            console.log(error);
+        })
     }
 
-    render(){
-        
-        return(
+    render() {
+
+        return (
             <section className="ArticlesReviewList">
-            {this.props.userInfo.groups.length === 0 ? 
-                <h1 className="header">My articles</h1> : 
-                <h1 className="header">Articles, which wait review</h1>
-            }
-              {
-                  this.props.articles.length !== 0 && this.props.stages.length !== 0 ?
-                  <div>
-                   {
-                       this.props.articles.sort((a,b) => {return getTime(b.date) - getTime(a.date)}).map((article) => {
-                           return(
-                               <ArticleView data={article} key={article.id} />
-                           )
-                       })
-                   }
-               </div> : null
-              }
+                {
+                    this.props.articles && this.props.articles.length ?
+                    this.props.userInfo.groups.length === 0 ?
+                    <h1 className="header">My articles</h1> :
+                    <h1 className="header">Articles that are awaiting a review</h1>
+                        : <h1 className="header">No available articles</h1>
+                }
+                {
+                    this.props.articles && this.props.articles.length  ?
+                        this.props.stages.length ?
+                        <div>
+                            {
+                                this.props.articles.sort((a, b) => { return getTime(b.date) - getTime(a.date) }).map((article) => {
+                                    return (
+                                        <ArticleView data={article} key={article.id} />
+                                    )
+                                })
+                            }
+                        </div> : <Spinner/>
+                        : null
+                }
             </section>
         )
     }

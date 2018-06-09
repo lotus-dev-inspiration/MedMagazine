@@ -12,7 +12,8 @@ export const defineUser = dispatch => user => {
             type: userActionTypes.DEFINE_USER_SUCCESS,
             payload: {
                 model: user,
-                isLoggedIn: true
+                isLoggedIn: true,
+                initialState: false
             }
         })
     } else {
@@ -20,7 +21,8 @@ export const defineUser = dispatch => user => {
             type: userActionTypes.DEFINE_USER_FAILURE,
             payload: {
                 model: null,
-                isLoggedIn: false
+                isLoggedIn: false,
+                initialState: false
             }
         })
     }

@@ -49,9 +49,9 @@ class ArticleInfo extends Component {
         return(
             <div className="ArticleInfo">
                 <div className="article-comments">
-                    <h3>Comments</h3>
-                    {this.props.comments.map(el => {
-                        return <p className="comment-item">{el.text}</p>
+                    <h3 className="comments-heading">Comments</h3>
+                    {this.props.comments.map((el, index) => {
+                        return <p key={el.id} className="comment-item">{index+1 + ". " + el.text}</p>
                     })
                     }
                 </div>

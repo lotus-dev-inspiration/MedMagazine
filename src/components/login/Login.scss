@@ -19,6 +19,14 @@
                 top:-55px;
                 left:140px;
                 width: 125px;
+
+                @media (max-width: 768px) {
+                    left: 0;
+                    top: 0;
+                    margin: 0 auto;
+                    text-align: center;
+                }
+
                 .btn-pass-wrapper{
                     margin-top:24px;
                     .btn-pass{
@@ -27,6 +35,10 @@
                         font-size:14px;
                         margin-left:60px;
                         height:40px;
+
+                        @media (max-width: 768px) {
+                            margin-left: 0;
+                        }
                     }
                 }
               }
