@@ -121,12 +121,19 @@ class Header extends Component {
                         <li className="navigation-item-mob">
                             <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/archive">Archive</Link>
                         </li>
-                    {
-                        this.props.user.model 
-                        ? this.props.user.model.groups.length === 0 ? <li className="navigation-item-mob">
-                        <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/article-creation">Create</Link>
-                        </li> : null : null
-                    }
+                        {
+                            this.props.user.model ?
+                                this.props.user.model.groups.length === 0 ?
+                                    <React.Fragment>
+                                        <li className="navigation-item-mob" >
+                                            <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/article-creation">Create</Link>
+                                        </li>
+                                        <li className="navigation-item-mob" >
+                                            <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/articles-review">My articles</Link>
+                                        </li>
+                                    </React.Fragment>
+                                    : null : null
+                        }
                     {
                         this.props.user.model
                         ? this.props.user.model.groups[0] === 1 || this.props.user.model.groups[0] === 2 ? <li className="navigation-item-mob">

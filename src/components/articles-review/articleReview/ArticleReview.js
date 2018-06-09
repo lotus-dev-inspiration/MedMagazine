@@ -59,6 +59,31 @@ class ArticleReview extends Component {
             return response.json();
         }).then(data => {
             this.props.getCurrentArticle(data);
+            
+            let statusToSetDefault = 2;
+            let number = data.number;
+
+            if(data.number === 2 && data.stage === 1) {
+                statusToSetDefault = 4;
+            } else if (data.number === 2 && data.stage === 2) {
+                statusToSetDefault = 5;
+            }
+
+            console.log(number);
+
+            if(statusToSetDefault === 2) {
+                number = ++number;
+                console.log(number);
+            }
+
+            this.setState({
+                ...this.state,
+                commentReview: {
+                    ...this.state.commentReview,
+                    number: number,
+                    status: statusToSetDefault
+                }
+            })
         }).catch(error => {
             console.log(error);
         })
@@ -120,7 +145,6 @@ class ArticleReview extends Component {
     }
 
     sendReview = () => {
-
         fetch(`${baseUrl}/articles/${this.state.commentReview.comment.article}/`, {
             headers: {
                 'Accept': 'application/json',
@@ -206,15 +230,23 @@ class ArticleReview extends Component {
                     this.props.currentArticle.stage == 1 ?
                         <div className="form__select">
                             <select name="select" value={this.state.commentReview.status} onChange={this.onStatusChange.bind(this)}>
-                                <option value="2">Send to rework</option>
+                                {
+                                    this.props.currentArticle.number !== 2 ?
+                                        <option value="2">Send to rework</option>
+                                        : null
+                                }
                                 <option value="4">Send to review</option>
                                 <option value="3">Rejected</option>
                             </select>
                         </div> : this.props.currentArticle.stage == 2 ?
                             <div className="form__select">
                                 <select name="select" value={this.state.commentReview.status} onChange={this.onStatusChange.bind(this)}>
+                                    {
+                                        this.props.currentArticle.number !== 2 ?
+                                            <option value="2">Send to rework</option>
+                                            : null
+                                    }
                                     <option value="5">Send to editor</option>
-                                    <option value="2">Send to rework</option>
                                     <option value="3">Rejected</option>
                                 </select>
                             </div> : null

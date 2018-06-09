@@ -30,9 +30,9 @@ class ArticleView extends Component {
                             }
                         </span>
                     </p>
-                    {this.props.data.status == 2 && this.props.userInfo.groups.length == 0 ?
+                    {this.props.data.status == 2 && this.props.userInfo.groups.length == 0 && this.props.data.can_edit ?
                         <Link to={`/article-info/${this.props.data.id}`} >
-                            <button className="btn-review">View</button>
+                            <button className="btn-review">Open</button>
                         </Link> :
                         this.props.data.status == 4 && this.props.userInfo.groups[0] == 1 ?
                             <Link to={`/articles-review/${this.props.data.id}`} >

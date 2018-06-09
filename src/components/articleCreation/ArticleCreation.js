@@ -18,6 +18,7 @@ class ArticleCreation extends Component {
         this.onDescriptionChange = this.onDescriptionChange.bind(this);
         this.onUdcChange = this.onUdcChange.bind(this);
         this.onKeyWordsChange = this.onKeyWordsChange.bind(this);
+        this.changeArticleSubmit = this.changeArticleSubmit.bind(this);
 
         this.state = {
             name: "",
@@ -27,8 +28,9 @@ class ArticleCreation extends Component {
             content: "",
             udc: "",
             key_words: "",
-            collaborators: "Petya",
+            collaborators: "",
             file: null,
+            number: 0,
             isArticleLoading: false,
             fieldsValid: {
                 name: null,
@@ -51,7 +53,8 @@ class ArticleCreation extends Component {
                 content: nextprops.article.content,
                 udc: nextprops.article.udc,
                 key_words: nextprops.article.key_words,
-                collaborators: nextprops.article.collaborators
+                collaborators: nextprops.article.collaborators,
+                number: nextprops.article.number
             })
         }
     }
@@ -67,6 +70,18 @@ class ArticleCreation extends Component {
         })
     }
 
+    changeArticleSubmit(e) {
+        this.setState({
+            fieldsValid: {
+                name: fieldLengthValidation(this.state.name),
+                description: descriptionValidation(this.state.description),
+                content: fileValidation(this.state.file, 'pdf', 10),
+                udc: fieldLengthValidation(this.state.udc),
+                key_words: fieldLengthValidation(this.state.key_words)
+            }
+        })
+    }
+
     submitArticle(e) {
         e.preventDefault();
 
@@ -75,11 +90,11 @@ class ArticleCreation extends Component {
         });
 
         if (dataValidated) {
-            const article = this.getArticle();
+            const article = this.getArticle();           
             this.setState({
                 isArticleLoading: true
             });
-            if (this.props.article == undefined) {
+            if (this.props.article === undefined) {
                 createArticle(article).then((response) => {
                     return response.json();
                 }).then(data => {
@@ -95,12 +110,13 @@ class ArticleCreation extends Component {
                 });
             } else {
                 let changeArticle = this.getArticle();
-                if (this.props.article.stage == 1) {
+                if (this.props.article.stage === 1) {
                     changeArticle.status = 1
                 } else {
                     changeArticle.status = 4
                 }
                 this.changeArticle(changeArticle);
+                console.log(changeArticle);
                 this.props.history.replace('/articles-review');
             }
 
@@ -125,7 +141,8 @@ class ArticleCreation extends Component {
             udc: this.state.udc,
             key_words: this.state.key_words,
             collaborators: this.state.collaborators,
-            author: this.props.userInfo.id
+            author: this.props.userInfo.id,
+            number: this.state.number
         }
         return article;
     }
@@ -307,9 +324,10 @@ class ArticleCreation extends Component {
                             <span className="hint-error hint-error-file">The file must be in pdf format and lower than 10 Mb</span> : null
                         }
                     </div>
-                    {this.props.article == undefined ?
+                    {
+                        this.props.article == undefined ?
                         <input type="submit" className="btn-submit pointer" value="Submit article" /> :
-                        <input type="submit" className="btn-submit pointer" value="Change article" />
+                        <input type="submit" className="btn-submit pointer" value="Change article" onClick={this.changeArticleSubmit} />
                     }
 
                 </form>
