@@ -8,11 +8,9 @@ class Authentication extends Component {
     }
 
     componentDidMount() {
-        setTimeout(() => {
-            if(!this.props.isLoggedIn) {
-                this.props.history.replace("/login");
-            }
-        }, 1000);
+        if (!this.props.isLoggedIn && this.props.isInitialState) {
+            this.props.history.replace("/login");
+        } 
     }
 
     render() {
@@ -27,9 +25,11 @@ class Authentication extends Component {
 const mapStateToProps = state => {
 
     const isLoggedIn = state.user.isLoggedIn;
+    const isInitialState = state.user.isInitialState;
 
     return {
-        isLoggedIn
+        isLoggedIn,
+        isInitialState
     };
 };
 

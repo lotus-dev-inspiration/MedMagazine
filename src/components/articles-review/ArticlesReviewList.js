@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import docs from 'assets/docs/article-review/test.pdf';
 import './ArticlesReviewList.css';
 import ArticleView from './articleView/ArticleView';
@@ -14,6 +14,10 @@ import Spinner from 'components/spinner/Spinner';
 class ArticleReview extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isArticlesLoading: true,
+            isStagesLoading: true
+        }
     }
 
     componentWillMount() {
@@ -32,6 +36,9 @@ class ArticleReview extends Component {
             return response.json();
         }).then(data => {
             this.props.getReviewArticles(data);
+            this.setState({
+                isArticlesLoading: false
+            })
         }).catch(error => {
             console.log(error);
         })
@@ -48,6 +55,9 @@ class ArticleReview extends Component {
             return response.json();
         }).then(data => {
             this.props.getStages(data.objects);
+            this.setState({
+                isStagesLoading: false
+            })
         }).catch(error => {
             console.log(error);
         })
@@ -58,25 +68,29 @@ class ArticleReview extends Component {
         return (
             <section className="ArticlesReviewList">
                 {
-                    this.props.articles && this.props.articles.length ?
-                    this.props.userInfo.groups.length === 0 ?
-                    <h1 className="header">My articles</h1> :
-                    <h1 className="header">Articles that are awaiting a review</h1>
-                        : <h1 className="header">No available articles</h1>
-                }
-                {
-                    this.props.articles && this.props.articles.length  ?
-                        this.props.stages.length ?
-                        <div>
+                    this.state.isArticlesLoading || this.state.isStagesLoading ?
+                        <Spinner />
+                        : <Fragment>
                             {
-                                this.props.articles.sort((a, b) => { return getTime(b.date) - getTime(a.date) }).map((article) => {
-                                    return (
-                                        <ArticleView data={article} key={article.id} />
-                                    )
-                                })
+                                this.props.articles.length ?
+                                    this.props.userInfo.groups.length === 0 ?
+                                        <h1 className="header">My articles</h1> :
+                                        <h1 className="header">Articles that are awaiting a review</h1>
+                                    : <h1 className="header">No available articles</h1>
                             }
-                        </div> : <Spinner/>
-                        : null
+                            {
+                                this.props.articles.length && this.props.stages.length ?
+                                    <div>
+                                        {
+                                            this.props.articles.sort((a, b) => { return getTime(b.date) - getTime(a.date) }).map((article) => {
+                                                return (
+                                                    <ArticleView data={article} key={article.id} />
+                                                )
+                                            })
+                                        }
+                                    </div> : null
+                            }
+                        </Fragment>
                 }
             </section>
         )

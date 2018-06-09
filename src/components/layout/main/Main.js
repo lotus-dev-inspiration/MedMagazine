@@ -17,6 +17,8 @@ import Archive from 'components/archive/Archive';
 import Authentication from 'components/authentication/Authentication';
 import Account from 'components/account/Account';
 import ArticleInfo from 'components/articleInfo/ArticleInfo';
+import Spinner from 'components/spinner/Spinner';
+
 
 import { userFromToken } from 'services/user-service';
 import { getCookie } from 'services/cookie-service';
@@ -24,46 +26,60 @@ import { getCookie } from 'services/cookie-service';
 class Main extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isUserGotten: false
+        }
     }
-    
+
     componentDidMount() {
         const token = getCookie("Authorization");
-        if(token) {
+        if (token) {
             userFromToken(token).then(response => {
                 return response.json();
             }).then(data => {
                 this.props.defineUser(data.user);
+                this.setState({
+                    isUserGotten: true
+                })
             }).catch(error => {
                 console.log(error);
             })
+        } else {
+            this.setState({
+                isUserGotten: true
+            })
         }
     }
-    
+
     render() {
         return (
             <main className="Main">
                 <Switch>
                     <Route exact path='/' component={StartPage} />
-                    <Route exact path="/magazine" component={ArticleWrapperPage}/>
+                    <Route exact path="/magazine" component={ArticleWrapperPage} />
                     <Route exact path="/contact" component={Contact} />
                     <Route exact path="/requirements" component={Requirements} />
                     <Route exact path='/archive' component={Archive} />
                     <Route exact path='/archive/:number' component={ArticleWrapperPage} />
-                    <Route exact path="/account" component={Account} />  
-                    <Route exact path='/login' 
-                    render={() => {
-                        return this.props.user.isLoggedIn 
-                        ? <Redirect to="/"/> : <Login/>
-                    }}
+                    <Route exact path="/account" component={Account} />
+                    <Route exact path='/login'
+                        render={() => {
+                            return this.props.user.isLoggedIn
+                                ? <Redirect to="/" /> : <Login />
+                        }}
                     />
-                    <Authentication>
-                        <Route exact path='/article-creation' render={() => (<ArticleCreation user={this.props.user} />)} />
-                        <Route exact path="/logout" component={Logout}/>
-                        <Route exact path='/article-info/:number' component={ArticleInfo} />
-                        <Route exact path='/articles-review' component={ArticlesReviewList} />
-                        <Route exact path='/articles-review/:number' component={ArticleReview} />
-                        {/* <Route exact path="*" component={NotFound} /> */}
-                    </Authentication>
+                    {
+                        this.state.isUserGotten ?
+                            <Authentication>
+                                <Route exact path='/article-creation' render={() => (<ArticleCreation user={this.props.user} />)} />
+                                <Route exact path="/logout" component={Logout} />
+                                <Route exact path='/article-info/:number' component={ArticleInfo} />
+                                <Route exact path='/articles-review' component={ArticlesReviewList} />
+                                <Route exact path='/articles-review/:number' component={ArticleReview} />
+                                {/* <Route exact path="*" component={NotFound} /> */}
+                            </Authentication>
+                            : <Spinner />
+                    }
                 </Switch>
             </main>
         );

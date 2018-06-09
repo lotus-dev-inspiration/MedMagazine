@@ -5,7 +5,6 @@ import {
 } from 'actionTypes';
 
 export const defineUser = dispatch => user => {
-    dispatch({ type: userActionTypes.DEFINE_USER_REQUEST})
 
     if(user) {
         dispatch({
@@ -13,7 +12,7 @@ export const defineUser = dispatch => user => {
             payload: {
                 model: user,
                 isLoggedIn: true,
-                initialState: false
+                isInitialState: false
             }
         })
     } else {
@@ -22,7 +21,7 @@ export const defineUser = dispatch => user => {
             payload: {
                 model: null,
                 isLoggedIn: false,
-                initialState: false
+                isInitialState: false
             }
         })
     }
@@ -33,7 +32,8 @@ export const logoutUser = dispatch => state => {
         type: userActionTypes.LOGOUT_USER,
         payload: {
             model: state,
-            isLoggedIn: false
+            isLoggedIn: false,
+            isInitialState: true
         }
     })
 };

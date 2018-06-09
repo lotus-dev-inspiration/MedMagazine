@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import MagazinesFilter from 'components/magazines-filter/MagazinesFilter';
 import './Archive.css';
 import { getMagazines } from 'services/magazine-service';
@@ -13,7 +13,8 @@ class Archive extends Component {
         super(props);
         this.state = {
             articles: null,
-            magazines: null
+            magazines: null,
+            isMagazinesLoading: true
         }
     }
 
@@ -29,7 +30,8 @@ class Archive extends Component {
             });
 
             this.setState({
-                magazines: magazines
+                magazines: magazines,
+                isMagazinesLoading: false
             });
         });
 
@@ -40,25 +42,30 @@ class Archive extends Component {
         return (
             <section className="Archive">
                 {
-                    this.state.magazines && this.state.magazines.length 
-                    ? <h1 className="archive-heading">Magazines' Archieve</h1>
-                        : <h1 className="archive-heading">No available Archieves</h1>
-                }
-                {
-                    this.state.magazines ?
-                        this.state.magazines.map(magazine => {
-                            return <article key={magazine.id} className="archive-magazine">
-                                <h2>{magazine.name}</h2>
-                                <p>Direction: {magazine.theme}</p>
-                                <div>
-                                    Date: &nbsp;
+                    this.state.isMagazinesLoading
+                        ? <Spinner />
+                        : <Fragment>
+                            {
+                                this.state.magazines && this.state.magazines.length
+                                    ? <h1 className="archive-heading">Magazines' Archieve</h1>
+                                    : <h1 className="archive-heading">No available Archieves</h1>
+                            }
+                            {
+                                this.state.magazines.map(magazine => {
+                                    return <article key={magazine.id} className="archive-magazine">
+                                        <h2>{magazine.name}</h2>
+                                        <p>Direction: {magazine.theme}</p>
+                                        <div>
+                                            Date: &nbsp;
                                 <span>{getDate(magazine.date)} </span>
-                                    <span>{getMonthName(magazine.date)}, </span>
-                                    <span>{getYear(magazine.date)}</span>
-                                </div>
-                                <a className="info-read-more" href={"archive/" + magazine.id}>View magazine</a>
-                            </article>;
-                        }) : <Spinner />
+                                            <span>{getMonthName(magazine.date)}, </span>
+                                            <span>{getYear(magazine.date)}</span>
+                                        </div>
+                                        <a className="info-read-more" href={"archive/" + magazine.id}>View magazine</a>
+                                    </article>;
+                                })
+                            }
+                        </Fragment>
                 }
             </section>
         );
