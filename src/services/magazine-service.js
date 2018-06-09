@@ -14,7 +14,7 @@ export const getMagazines = () => {
 } 
 
 export const getMagazine = (id) => {
-    return fetch(baseUrl + '/journals/' + id,  {
+    return fetch(baseUrl + '/journals/' + id + "/",  {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'

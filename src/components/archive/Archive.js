@@ -20,37 +20,15 @@ class Archive extends Component {
         getMagazines().then(response => {
             return response.json();
         }).then(data => {
-            this.setState({
-                magazines: data
+            
+            let magazines = data; 
+
+            magazines.sort((a, b) => {
+                return getTime(a.date) < getTime(b.date);
             });
 
-            getArticles().then(response => {
-                return response.json();
-            }).then(data => {
-                this.setState({
-                    articles: data
-                });
-
-                const magazines = [...this.state.magazines];
-
-                magazines.forEach(magazine => {
-
-                    let articles = magazine.articles.map(articleId => {
-                        return this.state.articles.find(article => article.id === articleId);
-                    });
-
-                    articles = articles.filter(article => article);
-
-                    magazine.articles = articles;
-                });
-
-                magazines.sort((a, b) => {
-                    return getTime(a.date) < getTime(b.date);
-                });
-
-                this.setState({
-                    magazines: magazines
-                })
+            this.setState({
+                magazines: magazines
             });
         });
 

@@ -12,14 +12,13 @@ class ArticlesWrapperPage extends Component {
         const path = this.props.location.pathname.split("/");
         let archiveId = null;
         if(path.length < 3) {
-            archiveId = 5;
+            archiveId = 6;
         } else {
             archiveId = +path[path.length - 1];
         }
         this.state = {
             articles: null,
-            archiveId: archiveId,
-            magazine: null
+            archiveId: archiveId
         };
     }
 
@@ -28,32 +27,8 @@ class ArticlesWrapperPage extends Component {
             return response.json();
         }).then(data => {
             this.setState({
-                magazine: data
+                articles: data.articles
             })
-
-            getArticles().then(response => {
-                return response.json();
-            }).then(data => {
-                this.setState({
-                    articles: data
-                })
-
-                const magazine = this.state.magazine;
-
-                let articles = magazine.articles.map(articleId => {
-                    return this.state.articles.find(article => article.id === articleId);
-                });
-
-                articles = articles.filter(article => article);
-
-                magazine.articles = articles;
-
-
-                this.setState({
-                    magazine: magazine
-                })
-
-            });
         });
     }
 
@@ -61,9 +36,9 @@ class ArticlesWrapperPage extends Component {
         return (
             <section className="ArticlesWrapperPage">
                 {
-                    (!this.state.magazine || !this.state.articles)
+                    (!this.state.articles)
                         ? < Spinner />
-                        : <ArticleList articles={this.state.magazine.articles} />
+                        : <ArticleList articles={this.state.articles} />
                 }
             </section>
         )
