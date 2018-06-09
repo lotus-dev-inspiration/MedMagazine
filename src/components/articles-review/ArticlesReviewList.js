@@ -3,6 +3,7 @@ import docs from 'assets/docs/article-review/test.pdf';
 import './ArticlesReviewList.css';
 import articles from './articlesReview.js';
 import ArticleView from './articleView/ArticleView';
+import {getTime} from 'helpers/date-helper';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {getReviewArticles, getStages} from 'actions';
@@ -63,7 +64,7 @@ class ArticleReview extends Component {
                   this.props.articles.length !== 0 && this.props.stages.length !== 0 ?
                   <div>
                    {
-                       this.props.articles.map((article) => {
+                       this.props.articles.sort((a,b) => {return getTime(b.date) - getTime(a.date)}).map((article) => {
                            return(
                                <ArticleView data={article} key={article.id} />
                            )
