@@ -224,6 +224,8 @@ class ArticleCreation extends Component {
                     <h1 className="section-heading">Change and submit your article</h1>
                 }
 
+                <p className="times-to-submit">(Left times to submit the article on this stage: <span>{3 - this.state.number}</span>)</p>
+
                 <form className="form-wrapper" onSubmit={this.submitArticle}>
                     <div className="input-block">
                         <label className="input-name" htmlFor="name">Name</label>

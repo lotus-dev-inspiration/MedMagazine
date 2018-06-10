@@ -14,12 +14,27 @@
         text-align: justify;
         margin-bottom: 20px;
 
-        @media(max-width: 768px) {
+        @media (max-width: 768px) {
             width: 86%;
         }
 
-        .requirements {
+        .pay-attention {
+            margin-bottom: 20px;
 
+            &__heading {
+                text-align: center;
+                font-size: 1.3em;
+                font-weight: 700;
+                margin-bottom: 20px;
+            }
+
+            &__item {
+                margin-bottom: 5px;
+                list-style: disc;
+            }
+        }
+
+        .requirements {
             &__item {
                 margin-bottom: 25px;
             }
@@ -34,7 +49,6 @@
                 margin-top: 10px;
                 font-size: 0.9em;
             }
-
         }
     }
 }

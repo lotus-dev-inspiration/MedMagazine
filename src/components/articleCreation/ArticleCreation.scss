@@ -3,7 +3,17 @@
 
     .section-heading {
         text-align: center;
+    }
+
+    .times-to-submit {
+        font-size: 0.8em;
+        text-align: center;
         margin-bottom: 30px;
+        font-weight: 600;
+
+        span {
+            font-size: 1.2em;
+        }
     }
 
     .form-wrapper {

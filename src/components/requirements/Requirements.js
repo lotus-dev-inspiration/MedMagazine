@@ -4,6 +4,16 @@ import './Requirements.css';
 const Requirements = () => {
     return <section className="Requirements">
         <div className="content">
+            <div className="pay-attention">
+                <p className="pay-attention__heading">Pay attantion, please !!!</p>
+                <ul className="pay-attention__list">
+                    <li className="pay-attention__item">To submit an article you need to be signed up on the site,</li>
+                    <li className="pay-attention__item">The article by itself must not contain any mentioning about authors' names, another way the article will be rejected,</li>
+                    <li className="pay-attention__item">There is 2 stages, when your article can be sent to rework: 1. By editor, 2.By reviewer,</li>
+                    <li className="pay-attention__item">It's possible just submit the article 3 times per each of the stages mentioned above, another way it will be rejected,</li>
+                    <li className="pay-attention__item">If the article contains more than 15 percent of plagiarism, it will be rejected.</li>
+                </ul>
+            </div>
             <h1 className="heading">Rules of articles formalization</h1>
             <ol className="requirements__list">
                 <li className="requirements__item">The volume of the completed article must be at least 3 pages of A4 format (including sources list) and no more than 15 pages of A4 format (including sources list).
