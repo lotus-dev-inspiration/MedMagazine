@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import './Login.css';
+import 'react-notifications/lib/notifications.css';
 import SignUp from './signUp/SignUp';
 import SignIn from './signIn/SignIn';
 import { getCookie } from 'services/cookie-service';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 class Login extends Component {
     constructor(props) {

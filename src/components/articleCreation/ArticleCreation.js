@@ -64,7 +64,7 @@ class ArticleCreation extends Component {
             },
             method: 'PATCH',
             body: JSON.stringify(article)
-        })
+        }).then(response => this.props.history.replace('/articles-review'))
     }
 
     submitArticle(e) {
@@ -86,7 +86,7 @@ class ArticleCreation extends Component {
                     this.setState({
                         isArticleLoading: false
                     });
-                    this.props.history.replace('/account');
+                    this.props.history.replace('/articles-review');
                 }).catch((error) => {
                     this.setState({
                         isArticleLoading: false
@@ -101,7 +101,6 @@ class ArticleCreation extends Component {
                     changeArticle.status = 4
                 }
                 this.changeArticle(changeArticle);
-                this.props.history.replace('/account');
             }
             
         } else {
@@ -109,6 +108,8 @@ class ArticleCreation extends Component {
                 fieldsValid: {
                     name: fieldLengthValidation(this.state.name),
                     description: descriptionValidation(this.state.description),
+                    key_words: fieldLengthValidation(this.state.key_words),
+                    udc: fieldLengthValidation(this.state.udc),
                     content: fileValidation(this.state.file,'pdf', 10)
                 }
             })

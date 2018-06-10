@@ -6,6 +6,9 @@ import baseUrl from 'helpers/baseUrl';
 import { Link } from 'react-router-dom';
 import { getCurrentArticle } from 'actions';
 import { fileValidation} from 'services/validation-service';
+import NotificationSystem from 'react-notification-system';
+
+let _notificationSystem = null;
 
 class ArticleReview extends Component {
 
@@ -30,11 +33,21 @@ class ArticleReview extends Component {
         }
     }
 
+    _addNotification = (message, status) => {
+    
+        this._notificationSystem.addNotification({
+          message: message,
+          level: status,
+          autoDismiss: 20
+        });
+      };
+
     componentWillMount() {
         this.getCurrentArticle();
     }
 
     componentDidMount() {
+        this._notificationSystem = this.refs.notificationSystem;
         this.setState({
             ...this.state,
             commentReview: {
@@ -120,7 +133,7 @@ class ArticleReview extends Component {
     }
 
     sendReview = () => {
-
+    
         fetch(`${baseUrl}/articles/${this.state.commentReview.comment.article}/`, {
             headers: {
                 'Accept': 'application/json',
@@ -128,14 +141,14 @@ class ArticleReview extends Component {
             },
             method: 'PATCH',
             body: JSON.stringify(this.state.commentReview)
-        }).then(response => {
+        })
+        .then(response => {
             return response.json();
         }).then(data => {
-            this.setState({
-                ...this.state,
-                articlesReview: data
-            })
-        }).catch(error => {
+            this.props.history.push('/articles-review');
+        })
+        .catch(error => {
+            this._addNotification('Fill all fields, please', 'error')
             console.log(error);
         })
     }
@@ -151,8 +164,9 @@ class ArticleReview extends Component {
         }).then(response => {
             return response.json();
         }).then(data => {
-            console.log(data);
+            this.props.history.push('/articles-review');
         }).catch(error => {
+            this._addNotification('Fill all fields, please', 'error')
             console.log(error);
         })
         
@@ -164,6 +178,10 @@ class ArticleReview extends Component {
         return (
             <section className="ArticleReview">
 
+                <h3 style={{marginBottom: "20px"}}>{this.props.currentArticle.name}</h3>
+                <h4 style={{marginBottom: "10px"}}>Description:</h4> 
+                <p>{this.props.currentArticle.description}</p>
+                <h4 style={{marginTop: "20px", marginBottom: "20px"}}>Key words : <span>{this.props.currentArticle.key_words}</span></h4>
                 <object data={this.props.currentArticle.content} type="application/pdf" width="100%" height="500px">
                     alt: <a href={this.props.currentArticle.content}>It is article</a>
                 </object>
@@ -221,9 +239,10 @@ class ArticleReview extends Component {
                 }
 
                 {this.props.currentArticle.stage == 3 ?
-                    <Link to="/articles-review/"><button className="btn-review" onClick={this.sendToPublish.bind(this)}>Send to publish</button></Link> :
-                    <Link to="/articles-review/"><button className="btn-review" onClick={this.sendReview.bind(this)}>Save</button></Link>
+                    <button className="btn-review" onClick={this.sendToPublish.bind(this)}>Send to publish</button> :
+                    <button className="btn-review" onClick={this.sendReview.bind(this)}>Save</button>
                 }
+                <NotificationSystem ref="notificationSystem" />
             </section>
         )
     }

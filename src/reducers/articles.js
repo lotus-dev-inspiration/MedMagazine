@@ -27,5 +27,6 @@ export const articles = (state = initialState, {type, payload}) => {
             comments: payload
         }
     }
+   
     return state;
 }
