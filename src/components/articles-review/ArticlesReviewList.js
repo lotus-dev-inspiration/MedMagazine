@@ -99,75 +99,82 @@ class ArticlesReviewList extends Component {
     render() {
         return (
             <section className="ArticlesReviewList">
-                {!this.props.articles == undefined ? <Spinner /> : null}
                 {this.props.userInfo.groups.length === 0 ?
                     <h1 className="header">My articles</h1> :
                     <h1 className="header">Articles, which wait review</h1>
                 }
-                {this.props.userInfo.groups[0] === 2 ?
-                    <React.Fragment>
-                        <Tabs selected={1}>
-                            <Panel title="Test">
-                                {
-                                    this.props.articles.length !== 0 && this.props.stages.length !== 0 ?
-                                        <div>
-                                            {
-                                                this.props.articles.sort((a, b) => { return getTime(b.date) - getTime(a.date) })
-                                                .filter(article => article.status === 1).map((article) => {
-                                                    return (
-                                                        <ArticleView data={article} key={article.id} />
-                                                    )
-                                                })
-                                            }
-                                        </div> : null
-                                }
-                            </Panel>
-                            <Panel title="Editing">
-                            {
-                                    this.props.articles.length !== 0 && this.props.stages.length !== 0 ?
-                                        <div>
-                                            {
-                                                this.props.articles.sort((a, b) => { return getTime(b.date) - getTime(a.date) })
-                                                .filter(article => article.status === 5).map((article) => {
-                                                    return (
-                                                        <ArticleView data={article} key={article.id} />
-                                                    )
-                                                })
-                                            }
-                                        </div> : null
-                                }
-                            </Panel>
-                            <Panel title="Rework">
-                            {
-                                    this.props.articles.length !== 0 && this.props.stages.length !== 0 ?
-                                        <div>
-                                            {
-                                                this.props.articles.sort((a, b) => { return getTime(b.date) - getTime(a.date) })
-                                                .filter(article => article.status === 2).map((article) => {
-                                                    return (
-                                                        <ArticleView data={article} key={article.id} />
-                                                    )
-                                                })
-                                            }
-                                        </div> : null
-                                }
-                            </Panel>
-                        </Tabs>
-                    </React.Fragment> :
-                    <React.Fragment>
-                        {
-                            this.props.articles.length !== 0 && this.props.stages.length !== 0 ?
-                                <div>
-                                    {
-                                        this.props.articles.sort((a, b) => { return getTime(b.date) - getTime(a.date) }).map((article) => {
-                                            return (
-                                                <ArticleView data={article} key={article.id} />
-                                            )
-                                        })
-                                    }
-                                </div> : null
-                        }
-                    </React.Fragment>
+                {
+                    this.state.isArticlesLoading || this.state.isStagesLoading ?
+                    <Spinner/> :
+                    <Fragment>
+                    {
+                                this.props.userInfo.groups[0] === 2 ?
+                                    <React.Fragment>
+                                        <Tabs selected={0}>
+                                            <Panel title="Test">
+                                                {
+                                                    this.props.articles.length !== 0 && this.props.stages.length !== 0 ?
+                                                        <div>
+                                                            {
+                                                                this.props.articles.sort((a, b) => { return getTime(b.date) - getTime(a.date) })
+                                                                    .filter(article => article.status === 1).map((article) => {
+                                                                        return (
+                                                                            <ArticleView data={article} key={article.id} />
+                                                                        )
+                                                                    })
+                                                            }
+                                                        </div> : null
+                                                }
+                                            </Panel>
+                                            <Panel title="Editing">
+                                                {
+                                                    this.props.articles.length !== 0 && this.props.stages.length !== 0 ?
+                                                        <div>
+                                                            {
+                                                                this.props.articles.sort((a, b) => { return getTime(b.date) - getTime(a.date) })
+                                                                    .filter(article => article.status === 5).map((article) => {
+                                                                        return (
+                                                                            <ArticleView data={article} key={article.id} />
+                                                                        )
+                                                                    })
+                                                            }
+                                                        </div> : null
+                                                }
+                                            </Panel>
+                                            <Panel title="Rework">
+                                                {
+                                                    this.props.articles.length !== 0 && this.props.stages.length !== 0 ?
+                                                        <div>
+                                                            {
+                                                                this.props.articles.sort((a, b) => { return getTime(b.date) - getTime(a.date) })
+                                                                    .filter(article => article.status === 2).map((article) => {
+                                                                        return (
+                                                                            <ArticleView data={article} key={article.id} />
+                                                                        )
+                                                                    })
+                                                            }
+                                                        </div> : null
+                                                }
+                                            </Panel>
+                                        </Tabs>
+                                    </React.Fragment> :
+                                    <React.Fragment>
+                                        {
+                                            this.props.articles.length !== 0 && this.props.stages.length !== 0 ?
+                                                <div>
+                                                    {
+                                                        this.props.articles.sort((a, b) => { return getTime(b.date) - getTime(a.date) }).map((article) => {
+                                                            return (
+                                                                <ArticleView data={article} key={article.id} />
+                                                            )
+                                                        })
+                                                    }
+                                                </div> : null
+                                        }
+                                    </React.Fragment>
+                    }
+                    </Fragment>
+                    
                 }
             </section>
         )
