@@ -37,7 +37,7 @@ class JournalViewset(mixins.CreateModelMixin,
     @list_route(methods=['get'])
     def last(self, request, pk=None):
         try:
-            journal = Journal.objects.all()
+            journal = Journal.objects.all().order_by('-date')[:1]
             serializer = JournalSerializer(journal, many=True, context={'request': request})
             return Response(serializer.data)
 

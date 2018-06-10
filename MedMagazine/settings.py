@@ -27,7 +27,7 @@ SECRET_KEY = '&q5z71@a9vz8kx41k5bx6uh!)x07*t(dh&_+8_*3kxb$6pw*!1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['medmagazine.herokuapp.com', '127.0.0.1','localhost']
+ALLOWED_HOSTS = ['medmagazine.herokuapp.com', '127.0.0.1','localhost', '192.168.0.101']
 
 
 # Application definition
