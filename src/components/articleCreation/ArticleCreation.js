@@ -3,9 +3,8 @@ import { withRouter } from 'react-router';
 import './ArticleCreation.css';
 import Spinner from 'components/spinner/Spinner';
 import { connect } from 'react-redux';
-import { createArticle } from 'services/article-service';
+import { createArticle, changeArticle } from 'services/article-service';
 import { fileValidation, fieldLengthValidation, descriptionValidation } from 'services/validation-service';
-import baseUrl from 'helpers/baseUrl';
 
 class ArticleCreation extends Component {
     constructor(props) {
@@ -28,7 +27,7 @@ class ArticleCreation extends Component {
             content: "",
             udc: "",
             key_words: "",
-            collaborators: "",
+            collaborators: "Petya",
             file: null,
             number: 0,
             isArticleLoading: false,
@@ -57,17 +56,6 @@ class ArticleCreation extends Component {
                 number: nextprops.article.number
             })
         }
-    }
-
-    changeArticle(article) {
-        fetch(`${baseUrl}/articles/${this.props.article.id}/`, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'PATCH',
-            body: JSON.stringify(article)
-        })
     }
 
     changeArticleSubmit(e) {
@@ -109,14 +97,16 @@ class ArticleCreation extends Component {
                     console.log(error);
                 });
             } else {
-                let changeArticle = this.getArticle();
+                let changedArticle = this.getArticle();
+
                 if (this.props.article.stage === 1) {
-                    changeArticle.status = 1
+                    changedArticle.status = 1
                 } else {
-                    changeArticle.status = 4
+                    changedArticle.status = 4
                 }
-                this.changeArticle(changeArticle);
-                console.log(changeArticle);
+                changedArticle.id = this.props.article.id;
+                
+                changeArticle(changedArticle);
                 this.props.history.replace('/articles-review');
             }
 
@@ -125,7 +115,9 @@ class ArticleCreation extends Component {
                 fieldsValid: {
                     name: fieldLengthValidation(this.state.name),
                     description: descriptionValidation(this.state.description),
-                    content: fileValidation(this.state.file, 'pdf', 10)
+                    content: fileValidation(this.state.file, 'pdf', 10),
+                    udc: fieldLengthValidation(this.state.udc),
+                    key_words: fieldLengthValidation(this.state.key_words)
                 }
             })
         }

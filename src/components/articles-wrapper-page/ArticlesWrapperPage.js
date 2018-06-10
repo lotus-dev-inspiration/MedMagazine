@@ -12,7 +12,7 @@ class ArticlesWrapperPage extends Component {
         const path = this.props.location.pathname.split("/");
         let archiveId = null;
         if(path.length < 3) {
-            archiveId = 6;
+            archiveId = 'last';
         } else {
             archiveId = +path[path.length - 1];
         }
@@ -26,9 +26,15 @@ class ArticlesWrapperPage extends Component {
         getMagazine(this.state.archiveId).then(response => {
             return response.json();
         }).then(data => {
-            this.setState({
-                articles: data.articles
-            })
+            if(data.length) {
+                this.setState({
+                    articles: data[0].articles
+                })
+            } else {
+                this.setState({
+                    articles: data.articles
+                })
+            }
         });
     }
 

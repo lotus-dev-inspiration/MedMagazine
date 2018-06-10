@@ -28,6 +28,7 @@ class ArticleReview extends Component {
                 content: null
             }
         }
+
     }
 
     componentWillMount() {
@@ -69,11 +70,10 @@ class ArticleReview extends Component {
                 statusToSetDefault = 5;
             }
 
-            console.log(number);
-
             if(statusToSetDefault === 2) {
                 number = ++number;
-                console.log(number);
+            } else {
+                number = 0;
             }
 
             this.setState({
@@ -191,7 +191,7 @@ class ArticleReview extends Component {
                 <object data={this.props.currentArticle.content} type="application/pdf" width="100%" height="500px">
                     alt: <a href={this.props.currentArticle.content}>It is article</a>
                 </object>
-                <div><a href={this.props.currentArticle.content} className="btn-review" target="_blank">Open in new window</a></div>
+                <div><a href={this.props.currentArticle.content} className="btn-review" target="_blank">Open in a new window</a></div>
                 {
                     this.props.currentArticle.stage == 3 ?
                         <div style={{ marginTop: '35px', marginBottom: '30px' }}>

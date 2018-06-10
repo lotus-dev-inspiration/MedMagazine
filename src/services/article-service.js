@@ -24,3 +24,14 @@ export const getArticles = () => {
         method: 'GET'
     })
 } 
+
+export const changeArticle = (article) => {
+    return fetch(`${baseUrl}/articles/${article.id}/`, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'PATCH',
+        body: JSON.stringify(article)
+    })
+}
