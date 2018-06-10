@@ -1,19 +1,36 @@
 import React, { Component } from 'react';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import "./SignIn.css";
 import Spinner from 'components/spinner/Spinner';
 import { userAuthenticate } from 'services/user-service';
-import {setCookie} from 'services/cookie-service';
+import { setCookie } from 'services/cookie-service';
+import NotificationSystem from 'react-notification-system';
+
+let _notificationSystem = null;
 
 class SignIn extends Component {
     constructor(props) {
         super(props);
         this.loginUser = this.loginUser.bind(this);
         this.state = {
-            isUserLoggingIn: false
+            isUserLoggingIn: false,
+           
         }
     }
+
+  _addNotification = (message, status) => {
+    
+    this._notificationSystem.addNotification({
+      message: message,
+      level: status,
+      autoDismiss: 20
+    });
+  };
+
+  componentDidMount() {
+    this._notificationSystem = this.refs.notificationSystem;
+  };
 
     loginUser(e) {
         e.preventDefault();
@@ -23,13 +40,14 @@ class SignIn extends Component {
 
         const userCreds = {
             username: this.username.value,
-            password: this.password.value 
+            password: this.password.value
         }
 
         userAuthenticate(userCreds).then((response) => {
             return response.json();
         }).then((data) => {
-            if(!data.non_field_errors) {
+            // this._addNotification('hello', 'success');
+            if (!data.non_field_errors) {
                 this.props.onDefineUser(data.user);
                 setCookie("Authorization", "JWT " + data.token, data.exp_time);
                 setCookie("isUser", true);
@@ -38,10 +56,12 @@ class SignIn extends Component {
             this.setState({
                 isUserLoggingIn: false
             });
-        }).catch((error) => {
+        }).then((error) => this._addNotification('Username or password is not valid', 'error'))
+        .catch((error) => {  
             this.setState({
                 isUserLoggingIn: false
             });
+            
             console.log(error);
         })
     }
@@ -75,10 +95,11 @@ class SignIn extends Component {
                         </div>
                     </div>
 
-                    <input className="btn-submit" type="submit" value="Sign in"/>
+                    <input className="btn-submit" type="submit" value="Sign in" />
                 </form>
+                <NotificationSystem ref="notificationSystem" />
                 {
-                    this.state.isUserLoggingIn ? <Spinner /> : null                   
+                    this.state.isUserLoggingIn ? <Spinner /> : null
                 }
             </div>
         )

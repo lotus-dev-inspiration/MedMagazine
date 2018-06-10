@@ -14,7 +14,8 @@ export const articleActionTypes = {
     ARTICLE_CREATION_REQUEST: '',
     GET_ARTICLES: 'GET_ARTICLES',
     GET_CURRENT_ARTICLE: 'GET_CURRENT_ARTICLE',
-    GET_COMMENTS: 'GET_COMMENTS'
+    GET_COMMENTS: 'GET_COMMENTS',
+    CHANGE_ARTICLE: 'CHANGE_ARTICLE'
 }
 
 export const stagesActionTypes = {

@@ -106,8 +106,7 @@ class ArticleCreation extends Component {
                 }
                 changedArticle.id = this.props.article.id;
                 
-                changeArticle(changedArticle);
-                this.props.history.replace('/articles-review');
+                changeArticle(changedArticle).then(() => this.props.history.replace('/articles-review'));
             }
 
         } else {

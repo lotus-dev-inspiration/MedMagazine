@@ -18,6 +18,8 @@ class SignUp extends Component {
                 profile: {
                     patronymic: '',
                     company: '',
+                    position: '',
+                    grade: '',
                     phone: 0,
                     articles: []
                 },
@@ -33,6 +35,8 @@ class SignUp extends Component {
             userFieldsValid: {
                 patronymic: null,
                 company: null,
+                position: null,
+                grade: null,
                 phone: null,
                 password: null,
                 username: null,
@@ -233,6 +237,58 @@ class SignUp extends Component {
         }
     }
 
+    handleChangePosition = (event) => {
+        if (fieldLengthValidation(event.target.value)) {
+            this.setState({
+                ...this.state,
+                user: {
+                    ...this.state.user, profile: {
+                        ...this.state.user.profile,
+                        position: event.target.value
+                    }
+                },
+                userFieldsValid: { ...this.state.userFieldsValid, position: true }
+            });
+        } else {
+            this.setState({
+                ...this.state,
+                user: {
+                    ...this.state.user, profile: {
+                        ...this.state.user.profile,
+                        position: event.target.value
+                    }
+                },
+                userFieldsValid: { ...this.state.userFieldsValid, position: false }
+            });
+        }
+    }
+
+    handleChangeGrade = (event) => {
+        if (fieldLengthValidation(event.target.value)) {
+            this.setState({
+                ...this.state,
+                user: {
+                    ...this.state.user, profile: {
+                        ...this.state.user.profile,
+                        grade: event.target.value
+                    }
+                },
+                userFieldsValid: { ...this.state.userFieldsValid, grade: true }
+            });
+        } else {
+            this.setState({
+                ...this.state,
+                user: {
+                    ...this.state.user, profile: {
+                        ...this.state.user.profile,
+                        grade: event.target.value
+                    }
+                },
+                userFieldsValid: { ...this.state.userFieldsValid, grade: false }
+            });
+        }
+    }
+
     handleChangeEmail = (event) => {
         if (emailValidation(event.target.value)) {
             if (!this.state.userEmails.includes(event.target.value)) {
@@ -417,6 +473,40 @@ class SignUp extends Component {
                                 required />
                         </div>
                         {this.state.userFieldsValid.company === false ?
+                            <span className="hint-error">The field must be at least 3 characters long</span> : null
+                        }
+                    </div>
+
+                    <div className="input-field-wrapper">
+                        <span className="input-heading">Position</span>
+                        <div className="input-wrapper">
+                            <input
+                                className={this.state.userFieldsValid.position === null ?
+                                    'input-field started' : this.state.userFieldsValid.position === false ?
+                                        'input-field invalid' : 'input-field valid'}
+                                type="text"
+                                name="position"
+                                onChange={this.handleChangePosition}
+                                required />
+                        </div>
+                        {this.state.userFieldsValid.position === false ?
+                            <span className="hint-error">The field must be at least 3 characters long</span> : null
+                        }
+                    </div>
+
+                    <div className="input-field-wrapper">
+                        <span className="input-heading">Grade</span>
+                        <div className="input-wrapper">
+                            <input
+                                className={this.state.userFieldsValid.grade === null ?
+                                    'input-field started' : this.state.userFieldsValid.grade === false ?
+                                        'input-field invalid' : 'input-field valid'}
+                                type="text"
+                                name="grade"
+                                onChange={this.handleChangeGrade}
+                                required />
+                        </div>
+                        {this.state.userFieldsValid.grade === false ?
                             <span className="hint-error">The field must be at least 3 characters long</span> : null
                         }
                     </div>
