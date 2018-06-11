@@ -1,9 +1,23 @@
 import React from 'react';
 import './Footer.css';
 
-const Footer = () => {
+import { translate, Trans } from 'react-i18next';
+
+const Footer = (props) => {
+    
+    const { t, i18n } = props;
+
+    const changeLanguage = (lng) => {
+        i18n.changeLanguage(lng);
+    };
+
     return (
         <footer className="Footer">
+            <div className="footer-languages">
+                <i class="fa fa-globe globe"></i>
+                <button className="footer-language" onClick={() => changeLanguage('ua')}>ua</button>
+                <button className="footer-language" onClick={() => changeLanguage('en')}>en</button>
+            </div>
             <p className="footer-content">
                 <span className="footer-madeby">Made by</span> 
                 <a className="footer-link" href="https://github.com/Spyrot" target="_blank"> Spyrot</a>
@@ -14,4 +28,4 @@ const Footer = () => {
     );
 }
 
-export default Footer;
+export default translate('translations')(Footer);

@@ -101,7 +101,7 @@ class ArticlesReviewList extends Component {
             <section className="ArticlesReviewList">
                 {this.props.userInfo.groups.length === 0 ?
                     <h1 className="header">My articles</h1> :
-                    <h1 className="header">Articles, which wait review</h1>
+                    <h1 className="header">Articles that are awaiting a review</h1>
                 }
                 {
                     this.state.isArticlesLoading || this.state.isStagesLoading ?

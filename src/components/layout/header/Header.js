@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 import './Header.css';
 
 class Header extends Component {
@@ -19,7 +20,6 @@ class Header extends Component {
         this.menuOpen = this.menuOpen.bind(this);
         this.allMenusClose = this.allMenusClose.bind(this);
     }
-
 
     settingsOpen() {
         
@@ -64,6 +64,8 @@ class Header extends Component {
     }
     
     render() {
+        const { t } = this.props
+
         return (
         <header className="Header">
             <nav className="header-navigation-wrapper">
@@ -72,7 +74,7 @@ class Header extends Component {
                     <div className="bar bar2"></div>
                     <div className="bar bar3"></div>
                 </button>  
-                <Link onClick={this.allMenusClose} className="logo-link" to="/">Scientist</Link>
+                <Link onClick={this.allMenusClose} className="logo-link" to="/">{t('scientist')}</Link>
                 <ul className="navigation-list">
                         <li className="navigation-item">
                             <Link onClick={this.allMenusClose} className="navigation-link" to="/magazine">Magazine</Link>
@@ -175,4 +177,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, null)(Header);
+export default translate('translations')(connect(mapStateToProps, null)(Header));
