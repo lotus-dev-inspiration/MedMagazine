@@ -1,5 +1,5 @@
 import baseUrl from 'helpers/baseUrl';
-import {getCookie} from 'services/cookie-service';
+import { getCookie } from 'services/cookie-service';
 
 const token = getCookie("Authorization");
 
@@ -23,7 +23,7 @@ export const getArticles = () => {
         },
         method: 'GET'
     })
-} 
+}
 
 export const changeArticle = (article) => {
     return fetch(`${baseUrl}/articles/${article.id}/`, {
@@ -33,5 +33,15 @@ export const changeArticle = (article) => {
         },
         method: 'PATCH',
         body: JSON.stringify(article)
+    })
+}
+
+export const getArticleComments = (articleId) => {
+    return fetch(`${baseUrl}/articles/${articleId}/comments/`, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'GET'
     })
 }

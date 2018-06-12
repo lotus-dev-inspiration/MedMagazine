@@ -3,12 +3,12 @@ import './ArticleReview.css';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import baseUrl from 'helpers/baseUrl';
-import { Link } from 'react-router-dom';
 import { getCurrentArticle } from 'actions';
-import { fileValidation} from 'services/validation-service';
+import { fileValidation } from 'services/validation-service';
+import { getArticleComments } from 'services/article-service';
 import NotificationSystem from 'react-notification-system';
+import {getDate,getYear,getMonthNumber} from 'helpers/date-helper';
 
-let _notificationSystem = null;
 
 class ArticleReview extends Component {
 
@@ -29,25 +29,27 @@ class ArticleReview extends Component {
             file: null,
             fieldsValid: {
                 content: null
-            }
+            },
+            comments: []
         }
 
     }
 
     _addNotification = (message, status) => {
-    
+
         this._notificationSystem.addNotification({
-          message: message,
-          level: status,
-          autoDismiss: 20
+            message: message,
+            level: status,
+            autoDismiss: 20
         });
-      };
+    };
 
     componentWillMount() {
         this.getCurrentArticle();
     }
 
     componentDidMount() {
+        const userId = this.props.userInfo.id;
         this._notificationSystem = this.refs.notificationSystem;
         this.setState({
             ...this.state,
@@ -58,6 +60,21 @@ class ArticleReview extends Component {
                     article: window.location.pathname.split('/')[2],
                     user: this.props.userInfo.id
                 }
+            }
+        }, () => {
+            const articleId = +this.state.commentReview.comment.article;
+            if (articleId) {
+                getArticleComments(articleId).then((response) => {
+                    return response.json();
+                }).then(data => {
+                    if (data && data.length) {
+                        let comments = this.state.comments;
+                        comments = comments.concat(data).filter((comment => comment.user === userId));
+                        this.setState({
+                            comments
+                        })
+                    }
+                })
             }
         })
     }
@@ -73,17 +90,17 @@ class ArticleReview extends Component {
             return response.json();
         }).then(data => {
             this.props.getCurrentArticle(data);
-            
+
             let statusToSetDefault = 2;
             let number = data.number;
 
-            if(data.number === 2 && data.stage === 1) {
+            if (data.number === 2 && data.stage === 1) {
                 statusToSetDefault = 4;
             } else if (data.number === 2 && data.stage === 2) {
                 statusToSetDefault = 5;
             }
 
-            if(statusToSetDefault === 2) {
+            if (statusToSetDefault === 2) {
                 number = ++number;
             } else {
                 number = 0;
@@ -158,43 +175,51 @@ class ArticleReview extends Component {
     }
 
     sendReview = () => {
-    
-        fetch(`${baseUrl}/articles/${this.state.commentReview.comment.article}/`, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'PATCH',
-            body: JSON.stringify(this.state.commentReview)
-        })
-        .then(response => {
-            return response.json();
-        }).then(data => {
-            this.props.history.push('/articles-review');
-        })
-        .catch(error => {
+
+        if (this.state.commentReview.comment.text) {
+            fetch(`${baseUrl}/articles/${this.state.commentReview.comment.article}/`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: 'PATCH',
+                body: JSON.stringify(this.state.commentReview)
+            })
+                .then(response => {
+                    return response.json();
+                }).then(data => {
+                    this.props.history.push('/articles-review');
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        } else {
             this._addNotification('Fill all fields, please', 'error')
-            console.log(error);
-        })
+        }
     }
 
     sendToPublish = () => {
-        fetch(`${baseUrl}/articles/${this.state.commentReview.comment.article}/`, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'PATCH',
-            body: JSON.stringify({ status: 6, content: this.state.content })
-        }).then(response => {
-            return response.json();
-        }).then(data => {
-            this.props.history.push('/articles-review');
-        }).catch(error => {
-            this._addNotification('Fill all fields, please', 'error')
-            console.log(error);
-        })
-        
+
+        if (this.state.file) {
+            fetch(`${baseUrl}/articles/${this.state.commentReview.comment.article}/`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: 'PATCH',
+                body: JSON.stringify({ status: 6, content: this.state.content })
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                this.props.history.push('/articles-review');
+            }).catch(error => {
+                console.log(error);
+            })
+        } else {
+            this._addNotification('Upload the file, please', 'error')
+        }
+
+
     }
 
     render() {
@@ -203,10 +228,10 @@ class ArticleReview extends Component {
         return (
             <section className="ArticleReview">
 
-                <h3 style={{marginBottom: "20px"}}>{this.props.currentArticle.name}</h3>
-                <h4 style={{marginBottom: "10px"}}>Description:</h4> 
+                <h3 style={{ marginBottom: "20px" }}>{this.props.currentArticle.name}</h3>
+                <h4 style={{ marginBottom: "10px" }}>Description:</h4>
                 <p>{this.props.currentArticle.description}</p>
-                <h4 style={{marginTop: "20px", marginBottom: "20px"}}>Key words : <span>{this.props.currentArticle.key_words}</span></h4>
+                <h4 style={{ marginTop: "20px", marginBottom: "20px" }}>Key words : <span>{this.props.currentArticle.key_words}</span></h4>
                 <object data={this.props.currentArticle.content} type="application/pdf" width="100%" height="500px">
                     alt: <a href={this.props.currentArticle.content}>It is article</a>
                 </object>
@@ -236,6 +261,19 @@ class ArticleReview extends Component {
                         </div>
                         :
                         <div>
+                            
+                            {
+                                this.state.comments.length ?
+                                    <div className="previousComments">
+                                        <h3 className="label-textarea">Your previous comments about this article</h3>
+                                        {
+                                            this.state.comments.map((comment, id) => {
+                                                return <p><b>{id + 1}.</b> {comment.text} - <b><i>{getDate(comment.date) + "/" + getMonthNumber(comment.date) + "/" +  getYear(comment.date)}</i></b></p>
+                                            })
+                                        }
+                                    </div>
+                                    : null
+                            }
                             <h3 className="label-textarea">Comment and whishes about article</h3>
                             <div>
                                 <textarea className="article-comments" onChange={this.onCommentChange.bind(this)}>

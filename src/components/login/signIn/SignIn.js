@@ -34,9 +34,9 @@ class SignIn extends Component {
 
     loginUser(e) {
         e.preventDefault();
-        this.setState({
-            isUserLoggingIn: true
-        });
+        // this.setState({
+        //     isUserLoggingIn: true
+        // });
 
         const userCreds = {
             username: this.username.value,

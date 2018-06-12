@@ -14,7 +14,7 @@ const Footer = (props) => {
     return (
         <footer className="Footer">
             <div className="footer-languages">
-                <i class="fa fa-globe globe"></i>
+                <i className="fa fa-globe globe"></i>
                 <button className="footer-language" onClick={() => changeLanguage('ua')}>ua</button>
                 <button className="footer-language" onClick={() => changeLanguage('en')}>en</button>
             </div>

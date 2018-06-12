@@ -74,7 +74,7 @@ class Header extends Component {
                     <div className="bar bar2"></div>
                     <div className="bar bar3"></div>
                 </button>  
-                <Link onClick={this.allMenusClose} className="logo-link" to="/">{t('scientist')}</Link>
+                <Link onClick={this.allMenusClose} className="logo-link" to="/">{t('logo')}</Link>
                 <ul className="navigation-list">
                         <li className="navigation-item">
                             <Link onClick={this.allMenusClose} className="navigation-link" to="/magazine">Magazine</Link>
