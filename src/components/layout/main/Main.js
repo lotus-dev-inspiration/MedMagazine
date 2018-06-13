@@ -76,10 +76,10 @@ class Main extends Component {
                                 <Route exact path='/article-info/:number' component={ArticleInfo} />
                                 <Route exact path='/articles-review' component={ArticlesReviewList} />
                                 <Route exact path='/articles-review/:number' component={ArticleReview} />
-                                {/* <Route exact path="*" component={NotFound} /> */}
                             </Authentication>
                             : <Spinner />
                     }
+                    {/* <Route path="*" component={NotFound} /> */}
                 </Switch>
             </main>
         );

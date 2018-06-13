@@ -1,0 +1,64 @@
+.MagazineContent {
+    position: fixed;
+    padding: 20px 0;
+    top: 100px;
+    left: 0;
+    background: var(--main-white-color);
+    border: 1px solid var(--main-black-color);
+    border-left: none;
+    text-align: center;
+    max-height: 400px;
+    display: flex;
+
+    .content-link {
+        display: block;
+        margin-top: 20px;
+    }
+
+    .arrow {
+        font-size: 1.5em;
+        cursor: pointer;
+        writing-mode: tb-rl;
+        width: 40px;
+        text-align: center;
+        font-size: 2em;
+        align-self: center;
+        height: 100%;
+        padding-left: 10px;
+
+        .arrow-text {
+            margin-bottom: 20px;
+            font-size: 1em;
+        }
+    }
+}
+
+.MagazineContent.hide {
+    width: 40px;
+    overflow: hidden;
+    transition: all 1s;
+
+    .content {
+        width: 0;
+        overflow: hidden;
+        transition: all 1s;
+    }
+}
+
+.MagazineContent.show {
+    width: 220px;
+
+    .content {
+        width: 180px;
+        overflow: auto;
+    }
+
+    @media (max-width: 768px) {
+        width: 100vw;
+        height: 100vh;
+
+        .content {
+            width: calc(100vw - 40px);
+        }
+    }
+}

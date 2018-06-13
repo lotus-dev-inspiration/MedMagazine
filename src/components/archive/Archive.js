@@ -53,6 +53,9 @@ class Archive extends Component {
                             {
                                 this.state.magazines.map(magazine => {
                                     return <article key={magazine.id} className="archive-magazine">
+                                        <div className="pc-img">
+                                        </div>
+                                        <div>
                                         <h2>{magazine.name}</h2>
                                         <p>Direction: {magazine.theme}</p>
                                         <div>
@@ -62,6 +65,7 @@ class Archive extends Component {
                                             <span>{getYear(magazine.date)}</span>
                                         </div>
                                         <a className="info-read-more" href={"archive/" + magazine.id}>View magazine</a>
+                                        </div>
                                     </article>;
                                 })
                             }

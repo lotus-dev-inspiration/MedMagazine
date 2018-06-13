@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import ArticleList from 'components/articleList/ArticleList';
-import { getArticles } from 'services/article-service';
 import { getMagazine } from 'services/magazine-service';
 import Spinner from 'components/spinner/Spinner';
 import './ArticlesWrapperPage.css';
+import MagazineContent from 'components/magazineContent/MagazineContent';
 
 class ArticlesWrapperPage extends Component {
     constructor(props) {
@@ -18,7 +18,8 @@ class ArticlesWrapperPage extends Component {
         }
         this.state = {
             articles: null,
-            archiveId: archiveId
+            archiveId: archiveId,
+            magazineName: ''
         };
     }
 
@@ -28,11 +29,14 @@ class ArticlesWrapperPage extends Component {
         }).then(data => {
             if(data.length) {
                 this.setState({
-                    articles: data[0].articles
+                    articles: data[0].articles,
+                    magazineName: data[0].name
                 })
+                console.log(data);
             } else {
                 this.setState({
-                    articles: data.articles
+                    articles: data.articles,
+                    magazineName: data.name
                 })
             }
         });
@@ -44,7 +48,11 @@ class ArticlesWrapperPage extends Component {
                 {
                     (!this.state.articles)
                         ? < Spinner />
-                        : <ArticleList articles={this.state.articles} />
+                        : 
+                        <div className="magazine-wrapper">
+                            <MagazineContent articles={this.state.articles}/>
+                            <ArticleList magazineName={this.state.magazineName} articles={this.state.articles} />
+                        </div>
                 }
             </section>
         )
