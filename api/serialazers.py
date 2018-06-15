@@ -1,10 +1,13 @@
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
 from .models import Article, Comment, Profile, ArticleStage, ArticleStatus, Journal
 from rest_framework import serializers
-from rest_framework.response import Response
-from django.core.exceptions import ObjectDoesNotExist
-from drf_extra_fields.fields import Base64FileField
-import PyPDF2, io
+from rest_framework.fields import FileField
+import base64
+import binascii
+from django.utils import six
+from django.core.exceptions import ValidationError
+from django.core.files.base import ContentFile
+import uuid
 
 
 # Serializers define the API representation.
@@ -30,19 +33,80 @@ class ProfileSerializer(serializers.ModelSerializer):
         exclude = ('id',)
         required = False
 
-class PDFBase64FileField(Base64FileField):
-    ALLOWED_TYPES = ['pdf']
+class Base64FieldMixin(object):
+    ALLOWED_TYPES = NotImplemented
+    INVALID_FILE_MESSAGE = NotImplemented
+    INVALID_TYPE_MESSAGE = NotImplemented
+    EMPTY_VALUES = (None, '', [], (), {})
 
-    def get_file_extension(self, filename, decoded_file):
-        try:
-            PyPDF2.PdfFileReader(io.BytesIO(decoded_file))
-        except PyPDF2.utils.PdfReadError as e:
-            return 'Erorr, try again'
+    def __init__(self, *args, **kwargs):
+        self.represent_in_base64 = kwargs.pop('represent_in_base64', False)
+        super(Base64FieldMixin, self).__init__(*args, **kwargs)
+
+    def to_internal_value(self, base64_data):
+        # Check if this is a base64 string
+        if base64_data in self.EMPTY_VALUES:
+            return None
+
+        if isinstance(base64_data, six.string_types):
+            # Strip base64 header.
+            if ';base64,' in base64_data:
+                header, base64_data = base64_data.split(';base64,')
+
+            # Try to decode the file. Return validation error if it fails.
+            try:
+                decoded_file = base64.b64decode(base64_data)
+            except (TypeError, binascii.Error, ValueError):
+                raise ValidationError(self.INVALID_FILE_MESSAGE)
+            # Generate file name:
+            file_name = str(uuid.uuid4())[:12]  # 12 characters are more than enough.
+            # Get the file name extension:
+            file_extension = self.get_file_extension(file_name, decoded_file, header)
+            if file_extension not in self.ALLOWED_TYPES:
+                raise ValidationError(self.INVALID_TYPE_MESSAGE)
+            complete_file_name = file_name + "." + file_extension
+            data = ContentFile(decoded_file, name=complete_file_name)
+            return super(Base64FieldMixin, self).to_internal_value(data)
+        raise ValidationError(_('This is not an base64 string'))
+
+    def get_file_extension(self, filename, decoded_file, header):
+        raise NotImplemented
+
+    def to_representation(self, file):
+        if self.represent_in_base64:
+            try:
+                with open(file.path, 'rb') as f:
+                    return base64.b64encode(f.read()).decode()
+            except Exception:
+                raise IOError("Error encoding file")
         else:
-            return 'pdf'
+            return super(Base64FieldMixin, self).to_representation(file)
+
+class Base64FileField(Base64FieldMixin, FileField):
+    """
+    A django-rest-framework field for handling file-uploads through raw post data.
+    It uses base64 for en-/decoding the contents of the file.
+    """
+    ALLOWED_TYPES = NotImplementedError('List allowed file extensions')
+    INVALID_FILE_MESSAGE = ("Please upload a valid file.")
+    INVALID_TYPE_MESSAGE = ("The type of the file couldn't be determined.")
+
+    def get_file_extension(self, filename, decoded_file, header):
+        raise NotImplemented('Implement file validation and return matching extension.')
+
+
+class MyBase64FileField(Base64FileField):
+    ALLOWED_TYPES = ['pdf', 'doc', 'docx']
+
+    def get_file_extension(self, filename, decoded_file, header):
+        extension = header
+        print(extension)
+        if extension in self.ALLOWED_TYPES :
+            return extension
+
 
 class ArticleSerializer(serializers.ModelSerializer):
-    content = PDFBase64FileField()
+    content = MyBase64FileField()
     author_full_name = serializers.SerializerMethodField()
 
     class Meta:
