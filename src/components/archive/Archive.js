@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import MagazinesFilter from 'components/magazines-filter/MagazinesFilter';
 import './Archive.css';
 import { getMagazines } from 'services/magazine-service';
-import { getArticles } from 'services/article-service';
 import { getYear, getDate, getMonthName, getTime } from 'helpers/date-helper';
 import Spinner from 'components/spinner/Spinner';
+import { translate } from 'react-i18next';
+
 
 
 class Archive extends Component {
@@ -39,6 +39,8 @@ class Archive extends Component {
 
 
     render() {
+        const { t } = this.props
+
         return (
             <section className="Archive">
                 {
@@ -47,8 +49,8 @@ class Archive extends Component {
                         : <Fragment>
                             {
                                 this.state.magazines && this.state.magazines.length
-                                    ? <h1 className="archive-heading">Magazines' Archieve</h1>
-                                    : <h1 className="archive-heading">No available Archieves</h1>
+                                    ? <h1 className="archive-heading">{t('archive.archive')}</h1>
+                                    : <h1 className="archive-heading">{t('archive.noavail')}</h1>
                             }
                             {
                                 this.state.magazines.map(magazine => {
@@ -57,14 +59,14 @@ class Archive extends Component {
                                         </div>
                                         <div>
                                         <h2>{magazine.name}</h2>
-                                        <p>Direction: {magazine.theme}</p>
+                                            <p>{t('archive.direction')}: {magazine.theme}</p>
                                         <div>
-                                            Date: &nbsp;
+                                                {t('archive.date')}: &nbsp;
                                 <span>{getDate(magazine.date)} </span>
                                             <span>{getMonthName(magazine.date)}, </span>
                                             <span>{getYear(magazine.date)}</span>
                                         </div>
-                                        <a className="info-read-more" href={"archive/" + magazine.id}>View magazine</a>
+                                            <a className="info-read-more" href={"archive/" + magazine.id}>{t('archive.view')}</a>
                                         </div>
                                     </article>;
                                 })
@@ -76,4 +78,4 @@ class Archive extends Component {
     }
 }
 
-export default Archive;
+export default translate('translations')(Archive);

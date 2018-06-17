@@ -5,6 +5,7 @@ import Spinner from 'components/spinner/Spinner';
 import { connect } from 'react-redux';
 import { createArticle, changeArticle } from 'services/article-service';
 import { fileValidation, fieldLengthValidation, descriptionValidation } from 'services/validation-service';
+import { translate } from 'react-i18next';
 
 class ArticleCreation extends Component {
     constructor(props) {
@@ -216,18 +217,20 @@ class ArticleCreation extends Component {
     }
 
     render() {
+        const { t } = this.props
+
         return (
             <section className="ArticleCreation">
                 {this.props.article == undefined ?
-                    <h1 className="section-heading">Fill and submit your article</h1> :
-                    <h1 className="section-heading">Change and submit your article</h1>
+                    <h1 className="section-heading">{t('articleCreation.fill')}</h1> :
+                    <h1 className="section-heading">{t('articleCreation.change')}</h1>
                 }
 
-                <p className="times-to-submit">(Left times to submit the article on this stage: <span>{3 - this.state.number}</span>)</p>
+                <p className="times-to-submit">({t('articleCreation.left')}: <span>{3 - this.state.number}</span>)</p>
 
                 <form className="form-wrapper" onSubmit={this.submitArticle}>
                     <div className="input-block">
-                        <label className="input-name" htmlFor="name">Name</label>
+                        <label className="input-name" htmlFor="name">{t('articleCreation.name')}:</label>
                         <input
                             className="input-field"
                             type="text"
@@ -237,17 +240,17 @@ class ArticleCreation extends Component {
                             onChange={this.onNameChange}
                         />
                         {this.state.fieldsValid.name === false ?
-                            <span className="hint-error">Name must be 3 symbols minimal</span> : null
+                            <span className="hint-error">{t('articleCreation.nameMust')}</span> : null
                         }
                     </div>
                     <div className="input-block">
-                        <label className="input-name" htmlFor="theme">Topic</label>
+                        <label className="input-name" htmlFor="theme">{t('articleCreation.topic')}:</label>
                         <select className="input-field select-field pointer" id="theme" name="language" value={this.state.theme} onChange={this.onThemeChange}>
-                            <option value="it">Information technology</option>
+                            <option value="it">{t('articleCreation.it')}</option>
                         </select>
                     </div>
                     <div className="input-block">
-                        <label className="input-name" htmlFor="udc">UDC</label>
+                        <label className="input-name" htmlFor="udc">{t('articleCreation.udc')}:</label>
                         <input
                             className="input-field"
                             type="text"
@@ -257,20 +260,20 @@ class ArticleCreation extends Component {
                             onChange={this.onUdcChange}
                         />
                         {this.state.fieldsValid.udc === false ?
-                            <span className="hint-error">UDC must be 3 symbols minimal</span> : null
+                            <span className="hint-error">{t('articleCreation.udcMust')}</span> : null
                         }
                     </div>
                     <div className="input-block">
-                        <label className="input-name" htmlFor="language">Language</label>
+                        <label className="input-name" htmlFor="language">{t('articleCreation.language')}:</label>
                         <select className="input-field select-field pointer" id="language" name="language" value={this.state.language} onChange={this.onLanguageChange}>
-                            <option value="ua">Ukrainian</option>
-                            <option value="ru">Russian</option>
-                            <option value="en">English</option>
-                            <option value="other">Other...</option>
+                            <option value="ua">{t('articleCreation.ua')}</option>
+                            <option value="ru">{t('articleCreation.ru')}</option>
+                            <option value="en">{t('articleCreation.en')}</option>
+                            <option value="other">{t('articleCreation.other')}</option>
                         </select>
                     </div>
                     <div className="input-block">
-                        <label className="input-name" htmlFor="description">Description</label>
+                        <label className="input-name" htmlFor="description">{t('articleCreation.description')}:</label>
                         <textarea
                             className="input-description"
                             type="text"
@@ -281,11 +284,11 @@ class ArticleCreation extends Component {
                             maxLength="3000"
                         />
                         {this.state.fieldsValid.description === false ?
-                            <span className="hint-error hint-error-description">Description must be more than 500 symbols</span> : null
+                            <span className="hint-error hint-error-description">{t('articleCreation.descriptionMust')}</span> : null
                         }
                     </div>
                     <div className="input-block">
-                        <label className="input-name" htmlFor="key_words">Key words</label>
+                        <label className="input-name" htmlFor="key_words">{t('articleCreation.keywords')}:</label>
                         <textarea
                             className="input-description"
                             type="text"
@@ -295,7 +298,7 @@ class ArticleCreation extends Component {
                             onChange={this.onKeyWordsChange}
                         />
                         {this.state.fieldsValid.key_words === false ?
-                            <span className="hint-error hint-error-description">Key words must be 3 symbols minimal</span> : null
+                            <span className="hint-error hint-error-description">{t('articleCreation.keywordsMust')}</span> : null
                         }
                     </div>
                     <div className="input-block">
@@ -303,7 +306,7 @@ class ArticleCreation extends Component {
                             htmlFor="article"
                             ref={(fileLabel) => this.fileLabel = fileLabel}
                             >
-                            <i className="fa fa-upload"></i> Choose a file...
+                            <i className="fa fa-upload"></i> {t('articleCreation.file')}
                         </label>
                         <input
                             className="input-file"
@@ -314,13 +317,13 @@ class ArticleCreation extends Component {
                             onChange={this.handleFileUpload}
                         />
                         {this.state.fieldsValid.content === false ?
-                            <span className="hint-error hint-error-file">The file must be in pdf format and lower than 10 Mb</span> : null
+                            <span className="hint-error hint-error-file">{t('articleCreation.fileMust')}</span> : null
                         }
                     </div>
                     {
                         this.props.article == undefined ?
-                        <input type="submit" className="btn-submit pointer" value="Submit article" /> :
-                        <input type="submit" className="btn-submit pointer" value="Change article" onClick={this.changeArticleSubmit} />
+                            <input type="submit" className="btn-submit pointer" value={t('articleCreation.submit')} /> :
+                            <input type="submit" className="btn-submit pointer" value={t('articleCreation.submitChange')} onClick={this.changeArticleSubmit} />
                     }
 
                 </form>
@@ -340,4 +343,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default withRouter(connect(mapStateToProps, null)(ArticleCreation));
+export default translate('translations')(withRouter(connect(mapStateToProps, null)(ArticleCreation)));

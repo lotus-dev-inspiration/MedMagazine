@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 import './Account.css';
 import photo from '../../assets/img/account/user.png';
 
@@ -21,27 +22,29 @@ class Account extends Component {
     }
 
     render() {
+        const { t } = this.props
+
         return (
             <div className="Account">
                 {this.props.userInfo !== null ?
                     <React.Fragment>
-                        <h1 className="content-header">Account</h1>
+                        <h1 className="content-header">{t('account.account')}</h1>
                         <div className="content-wrapper">
                             <div className="left-block">
                                 <div className="photo-wrapper">
                                     <img className="photo-user" src={photo} />
                                     <h3 className="name-user">{this.props.userInfo.first_name} {this.props.userInfo.last_name}</h3>
-                                    <p className="username">Username: <em>{this.props.userInfo.username}</em></p>
-                                    <p className="username">Email: <em>{this.props.userInfo.email}</em></p>
-                                    <p className="username">Phone: <em>{this.props.userInfo.profile.phone}</em></p>
+                                    <p className="username">{t('account.username')}: <em>{this.props.userInfo.username}</em></p>
+                                    <p className="username">{t('account.email')}: <em>{this.props.userInfo.email}</em></p>
+                                    <p className="username">{t('account.phone')}: <em>{this.props.userInfo.profile.phone}</em></p>
 
                                 </div>
                             </div>
                             <div className="right-block">
-                                <h4 className="profile-info-header">Profile Info</h4>
+                                <h4 className="profile-info-header">{t('account.profile')}</h4>
                                 <div className="row">
                                     <div className="input-field-wrapper">
-                                        <span className="input-heading">First name</span>
+                                        <span className="input-heading">{t('account.fname')}</span>
                                         <div className="input-wrapper">
                                             <input
                                                 className="input-field started"
@@ -51,7 +54,7 @@ class Account extends Component {
                                         </div>
                                     </div>
                                     <div className="input-field-wrapper">
-                                        <span className="input-heading">Last name</span>
+                                        <span className="input-heading">{t('account.lname')}</span>
                                         <div className="input-wrapper">
                                             <input
                                                 className="input-field started"
@@ -61,7 +64,7 @@ class Account extends Component {
                                         </div>
                                     </div>
                                     <div className="input-field-wrapper">
-                                        <span className="input-heading">Patronymic</span>
+                                        <span className="input-heading">{t('account.patronymic')}</span>
                                         <div className="input-wrapper">
                                             <input
                                                 className="input-field started"
@@ -73,7 +76,7 @@ class Account extends Component {
                                     </div>
                                     <div className="row">
                                         <div className="input-field-wrapper">
-                                            <span className="input-heading">Username</span>
+                                        <span className="input-heading">{t('account.username')}</span>
                                             <div className="input-wrapper">
                                             <input
                                                 className="input-field started"
@@ -83,7 +86,7 @@ class Account extends Component {
                                             </div>
                                         </div>
                                         <div className="input-field-wrapper">
-                                            <span className="input-heading">Email</span>
+                                        <span className="input-heading">{t('account.email')}</span>
                                             <div className="input-wrapper">
                                             <input
                                                 className="input-field started"
@@ -93,7 +96,7 @@ class Account extends Component {
                                         </div>
                                     </div>
                                     <div className="input-field-wrapper">
-                                        <span className="input-heading">Phone</span>
+                                        <span className="input-heading">{t('account.phone')}</span>
                                         <div className="input-wrapper">
                                             <input
                                                 className="input-field started"
@@ -105,7 +108,7 @@ class Account extends Component {
                                 </div>
                                 <div className="row">
                                         <div className="input-field-wrapper">
-                                            <span className="input-heading">Company</span>
+                                        <span className="input-heading">{t('account.company')}</span>
                                             <div className="input-wrapper">
                                             <input
                                                 className="input-field started"
@@ -115,7 +118,7 @@ class Account extends Component {
                                             </div>
                                         </div>
                                         <div className="input-field-wrapper">
-                                            <span className="input-heading">Grade</span>
+                                        <span className="input-heading">{t('account.grade')}</span>
                                             <div className="input-wrapper">
                                             <input
                                                 className="input-field started"
@@ -125,7 +128,7 @@ class Account extends Component {
                                         </div>
                                     </div>
                                     <div className="input-field-wrapper">
-                                        <span className="input-heading">Position</span>
+                                        <span className="input-heading">{t('account.position')}</span>
                                         <div className="input-wrapper">
                                             <input
                                                 className="input-field started"
@@ -151,4 +154,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default withRouter(connect(mapStateToProps, null)(Account));
+export default translate('translations')(withRouter(connect(mapStateToProps, null)(Account)));

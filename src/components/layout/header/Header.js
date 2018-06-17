@@ -74,23 +74,23 @@ class Header extends Component {
                     <div className="bar bar2"></div>
                     <div className="bar bar3"></div>
                 </button>  
-                <Link onClick={this.allMenusClose} className="logo-link" to="/">{t('logo')}</Link>
+                <Link onClick={this.allMenusClose} className="logo-link" to="/">Scientist</Link>
                 <ul className="navigation-list">
                         <li className="navigation-item">
-                            <Link onClick={this.allMenusClose} className="navigation-link" to="/magazine">Magazine</Link>
+                            <Link onClick={this.allMenusClose} className="navigation-link" to="/magazine">{t('header.magazine')}</Link>
                         </li>
                         <li className="navigation-item">
-                            <Link onClick={this.allMenusClose} className="navigation-link" to="/archive">Archive</Link>
+                            <Link onClick={this.allMenusClose} className="navigation-link" to="/archive">{t('header.archive')}</Link>
                         </li>
                     {
                             this.props.user.model ? 
                             this.props.user.model.groups.length === 0 ? 
                             <React.Fragment>
                             <li className="navigation-item" >
-                                <Link onClick={this.allMenusClose} className="navigation-link" to="/article-creation">Create</Link>
+                                            <Link onClick={this.allMenusClose} className="navigation-link" to="/article-creation">{t('header.create')}</Link>
                             </li>
                             <li className="navigation-item" >
-                                <Link onClick={this.allMenusClose} className="navigation-link" to="/articles-review">My articles</Link>
+                                            <Link onClick={this.allMenusClose} className="navigation-link" to="/articles-review">{t('header.articles')}</Link>
                             </li>
                             </React.Fragment>
                             : null : null
@@ -98,12 +98,12 @@ class Header extends Component {
                     {
                             this.props.user.model
                             ? this.props.user.model.groups[0] === 2 || this.props.user.model.groups[0] === 1 ? <li className="navigation-item" >
-                                <Link onClick={this.allMenusClose} className="navigation-link" to="/articles-review">Review</Link>
+                                    <Link onClick={this.allMenusClose} className="navigation-link" to="/articles-review">{t('header.reviewe')}</Link>
                             </li>
                             : null : null
                     }
                     <li className="navigation-item">
-                        <Link onClick={this.allMenusClose} className="navigation-link" to="/requirements">General requirements</Link>
+                            <Link onClick={this.allMenusClose} className="navigation-link" to="/requirements">{t('header.requirements')}</Link>
                     </li>                 
                     <li className="navigation-item" >
                     {
@@ -112,26 +112,26 @@ class Header extends Component {
                             {this.props.user.model.username + ' '}
                             <i className="fa fa-angle-down"></i>
                         </span>
-                        : <Link onClick={this.allMenusClose} className="navigation-link" to="/login">Log In</Link> 
+                                    : <Link onClick={this.allMenusClose} className="navigation-link" to="/login">{t('header.login')}</Link> 
                     }
                     </li>
                 </ul>
                 <ul className={this.menuClasses.join(" ")}>
                     <li className="navigation-item-mob">
-                        <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/magazine">Magazine</Link>
+                            <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/magazine">{t('header.magazine')}</Link>
                     </li>
                         <li className="navigation-item-mob">
-                            <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/archive">Archive</Link>
+                            <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/archive">{t('header.archive')}</Link>
                         </li>
                         {
                             this.props.user.model ?
                                 this.props.user.model.groups.length === 0 ?
                                     <React.Fragment>
                                         <li className="navigation-item-mob" >
-                                            <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/article-creation">Create</Link>
+                                            <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/article-creation">{t('header.create')}</Link>
                                         </li>
                                         <li className="navigation-item-mob" >
-                                            <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/articles-review">My articles</Link>
+                                            <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/articles-review">{t('header.articles')}</Link>
                                         </li>
                                     </React.Fragment>
                                     : null : null
@@ -139,11 +139,11 @@ class Header extends Component {
                     {
                         this.props.user.model
                         ? this.props.user.model.groups[0] === 1 || this.props.user.model.groups[0] === 2 ? <li className="navigation-item-mob">
-                        <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/articles-review">Review</Link>
+                                    <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/articles-review">{t('header.review')}</Link>
                         </li> : null : null
                     }
                     <li className="navigation-item-mob">
-                            <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/requirements">General requirements</Link>
+                            <Link onClick={this.allMenusClose} className="navigation-link-mob" to="/requirements">{t('header.requirements')}</Link>
                     </li>
                 </ul>    
             </nav>
@@ -153,10 +153,10 @@ class Header extends Component {
                 <div className={this.userSettingsWrapperClasses.join(' ')}>
                     <ul className="user-settings-list">
                         <li className="user-settings-item">
-                            <Link onClick={this.allMenusClose} className="user-settings-link" to="/account">Account</Link>
+                                    <Link onClick={this.allMenusClose} className="user-settings-link" to="/account">{t('header.account')}</Link>
                         </li>
                         <li className="user-settings-item">
-                            <Link onClick={this.allMenusClose} className="user-settings-link" to="/logout">Log Out</Link>
+                                    <Link onClick={this.allMenusClose} className="user-settings-link" to="/logout">{t('header.logout')}</Link>
                         </li>
                     </ul>
                 </div>
