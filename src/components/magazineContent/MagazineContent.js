@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router';
+import { translate } from 'react-i18next';
+
 import {Link, Router} from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import './MagazineContent.css';
@@ -33,6 +35,8 @@ class MagazineContent extends Component {
     }
 
     render() {
+        const { t } = this.props
+
         return (
             <section className={this.contentClasses.join(" ")}>
                 <div className="content">
@@ -45,7 +49,7 @@ class MagazineContent extends Component {
                     }
                 </div>
                 <div onClick={this.showContent} className="arrow">
-                    <span class="arrow-text">Content</span>
+                    <span class="arrow-text">{t('content.content')}</span>
                     <i className={this.angleClasses.join(" ")}></i>   
                 </div>
                 
@@ -54,4 +58,4 @@ class MagazineContent extends Component {
     }
 }
 
-export default withRouter(MagazineContent);
+export default translate('translations') (withRouter(MagazineContent));

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { translate } from 'react-i18next';
+
 
 import "./SignIn.css";
 import Spinner from 'components/spinner/Spinner';
@@ -67,12 +69,14 @@ class SignIn extends Component {
     }
 
     render() {
+        const { t } = this.props
+
         return (
             <div className="SignIn">
-                <h1 className="content-heading">Sign In</h1>
+                <h1 className="content-heading">{t('signin.signIn')}</h1>
                 <form onSubmit={this.loginUser}>
                     <div className="input-field-wrapper">
-                        <span className="input-heading">Username</span>
+                        <span className="input-heading">{t('signin.username')}</span>
                         <div className="input-wrapper">
                             <input
                                 className="input-field started"
@@ -84,7 +88,7 @@ class SignIn extends Component {
                     </div>
 
                     <div className="input-field-wrapper">
-                        <span className="input-heading">Password</span>
+                        <span className="input-heading">{t('signin.password')}</span>
                         <div className="input-wrapper">
                             <input
                                 className="input-field started"
@@ -95,7 +99,7 @@ class SignIn extends Component {
                         </div>
                     </div>
 
-                    <input className="btn-submit" type="submit" value="Sign in" />
+                    <input className="btn-submit" type="submit" value={t('signin.signinNow')} />
                 </form>
                 <NotificationSystem ref="notificationSystem" />
                 {
@@ -106,6 +110,6 @@ class SignIn extends Component {
     }
 }
 
-export default withRouter(SignIn);
+export default translate('translations')(withRouter(SignIn));
 
 

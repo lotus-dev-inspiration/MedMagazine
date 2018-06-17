@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import ScrollableAchor from 'react-scrollable-anchor';
+import { translate } from 'react-i18next';
 
 import './ArticleList.css';
 import Article from './article/Article';
 
 
 
-export default class ArticleList extends Component {
+class ArticleList extends Component {
     constructor(props) {
         super(props);
     }
 
 
     render() {
+        const { t } = this.props
+
         return (
                 <section className="articles-wrapper">
                     {
@@ -35,3 +38,5 @@ export default class ArticleList extends Component {
         );
     }
 }
+
+export default translate('translations') (ArticleList);

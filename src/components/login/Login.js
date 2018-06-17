@@ -4,6 +4,7 @@ import 'react-notifications/lib/notifications.css';
 import SignUp from './signUp/SignUp';
 import SignIn from './signIn/SignIn';
 import { getCookie } from 'services/cookie-service';
+import { translate } from 'react-i18next';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 class Login extends Component {
@@ -21,6 +22,8 @@ class Login extends Component {
     }
     
     render() {
+        const { t } = this.props
+
         return (
             <div className="Login">
                 <div className="login-wrapper">
@@ -33,7 +36,7 @@ class Login extends Component {
                             <div className="login-button-wrapper">
 
                                 <div className="btn-pass-wrapper">
-                                    <a href="#" className="btn-pass" onClick={this.handlePass.bind(this)}>{this.state.isUser ? "Sign up ->" : "Sign in ->"}</a>
+                                    <a href="#" className="btn-pass" onClick={this.handlePass.bind(this)}>{this.state.isUser ? t('login.signup') + " ->" : t('login.signin') + " ->"}</a>
                                 </div>
                             </div>
 
@@ -45,4 +48,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default translate('translations')(Login);

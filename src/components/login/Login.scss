@@ -1,68 +1,73 @@
-.Login{
-   .login-wrapper{
-    display: flex;
-    width:100%;
-    flex-direction: row;
-        .login-image-wrapper{
-         width: 55%;
-        background: url('../../assets/img/login/it_backgraund.jpg') no-repeat;
-         background-size: cover;
-         height: 100vh;
+.Login {
+    .login-wrapper {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+
+        .login-image-wrapper {
+            width: 55%;
+            background: url("../../assets/img/login/it_backgraund.jpg") no-repeat;
+            background-size: cover;
+            height: 100vh;
         }
-        .login-content-wrapper{
-         width:45%;
-            .login-content-main-wrapper{
-             width:75%;
-             margin:15px auto;
-             .login-button-wrapper{
-                position: relative;
-                top:-55px;
-                left:140px;
-                width: 125px;
 
-                @media (max-width: 768px) {
-                    left: 0;
-                    top: 0;
-                    margin: 0 auto;
-                    text-align: center;
-                }
+        .login-content-wrapper {
+            width: 45%;
 
-                .btn-pass-wrapper{
-                    margin-top:24px;
-                    .btn-pass{
-                        color:#4d4d4d;
-                        text-decoration:none;
-                        font-size:14px;
-                        margin-left:60px;
-                        height:40px;
+            .login-content-main-wrapper {
+                width: 75%;
+                margin: 15px auto;
 
-                        @media (max-width: 768px) {
-                            margin-left: 0;
+                .login-button-wrapper {
+                    position: relative;
+                    top: -55px;
+                    left: 140px;
+                    width: 125px;
+
+                    @media (max-width: 768px) {
+                        left: 0;
+                        top: 0;
+                        margin: 0 auto;
+                        text-align: center;
+                    }
+
+                    .btn-pass-wrapper {
+                        margin-top: 24px;
+
+                        .btn-pass {
+                            color: #4d4d4d;
+                            text-decoration: none;
+                            font-size: 14px;
+                            height: 40px;
+
+                            @media (max-width: 768px) {
+                                margin-left: 0;
+                            }
                         }
                     }
                 }
-              }
-             }
-
-
-}
-.notifications-tr{
-    margin-top: 50px;
-}
-.notification-message{
-    margin-left: 40px !important;
-}
-}
-
-@media(max-width:768px){
-    .login-wrapper{
-        .login-image-wrapper{
-            display:none;
-            width:0;
+            }
         }
-        .login-content-wrapper{
-            width:100%;
+
+        .notifications-tr {
+            margin-top: 50px;
         }
-    } 
-}
+
+        .notification-message {
+            margin-left: 40px !important;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .login-wrapper {
+            .login-image-wrapper {
+                display: none;
+                width: 0;
+            }
+
+            .login-content-wrapper {
+                width: 100%;
+            }
+        }
+    }
 }

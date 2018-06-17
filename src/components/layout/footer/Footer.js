@@ -19,7 +19,7 @@ const Footer = (props) => {
                 <button className="footer-language" onClick={() => changeLanguage('en')}>en</button>
             </div>
             <p className="footer-content">
-                <span className="footer-madeby">Made by</span> 
+                <span className="footer-madeby">{t('footer.madeby')}</span> 
                 <a className="footer-link" href="https://github.com/Spyrot" target="_blank"> Spyrot</a>
                 <a className="footer-link" href="https://github.com/vladshyrinov" target="_blank"> Vlad.Shyrinov</a>
                 <a className="footer-link" href="https://github.com/valentine1004" target="_blank"> Valentine1004</a> 

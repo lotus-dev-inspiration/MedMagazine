@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Redirect } from "react-router";
 import { withRouter } from 'react-router-dom';
+import { translate } from 'react-i18next';
+
 
 import "../signIn/SignIn";
 import Spinner from 'components/spinner/Spinner';
@@ -371,12 +372,14 @@ class SignUp extends Component {
     }
 
     render() {
+        const { t } = this.props
+
         return (
             <div className="SignIn">
-                <h1 className="content-heading">Sign Up</h1>
+                <h1 className="content-heading">{t('signup.signUp')}</h1>
                 <form onSubmit={this.submitUser}>
                     <div className="input-field-wrapper">
-                        <span className="input-heading">First Name</span>
+                        <span className="input-heading">{t('signup.fname')}</span>
                         <div className="input-wrapper">
                             <input
                                 className={this.state.userFieldsValid.first_name === null ?
@@ -388,12 +391,12 @@ class SignUp extends Component {
                                 required />
                         </div>
                         {this.state.userFieldsValid.first_name === false ?
-                            <span className="hint-error">The field must be at least 3 characters long</span> : null
+                            <span className="hint-error">{t('signup.fieldMust')}</span> : null
                         }
                     </div>
 
                     <div className="input-field-wrapper">
-                        <span className="input-heading">Last Name</span>
+                        <span className="input-heading">{t('signup.lname')}</span>
                         <div className="input-wrapper">
                             <input
                                 className={this.state.userFieldsValid.last_name === null ?
@@ -405,12 +408,12 @@ class SignUp extends Component {
                                 required />
                         </div>
                         {this.state.userFieldsValid.last_name === false ?
-                            <span className="hint-error">The field must be at least 3 characters long</span> : null
+                            <span className="hint-error">{t('signup.fieldMust')}</span> : null
                         }
                     </div>
 
                     <div className="input-field-wrapper">
-                        <span className="input-heading">Patronymic</span>
+                        <span className="input-heading">{t('signup.patronymic')}</span>
                         <div className="input-wrapper">
                             <input
                                 className={this.state.userFieldsValid.patronymic === null ?
@@ -422,12 +425,12 @@ class SignUp extends Component {
                                 required />
                         </div>
                         {this.state.userFieldsValid.patronymic === false ?
-                            <span className="hint-error">The field must be at least 3 characters long</span> : null
+                            <span className="hint-error">{t('signup.fieldMust')}</span> : null
                         }
                     </div>
 
                     <div className="input-field-wrapper">
-                        <span className="input-heading">Username</span>
+                        <span className="input-heading">{t('signup.username')}</span>
                         <div className="input-wrapper">
                             <input
                                 className={this.state.userFieldsValid.username === null ?
@@ -439,12 +442,12 @@ class SignUp extends Component {
                                 required />
                         </div>
                         {this.state.userFieldsValid.username === false ?
-                            <span className="hint-error">This username already exists or you use forbidden symbol @</span> : null
+                            <span className="hint-error">{t('signup.usernameExists')}</span> : null
                         }
                     </div>
 
                     <div className="input-field-wrapper">
-                        <span className="input-heading">Email</span>
+                        <span className="input-heading">{t('signup.email')}</span>
                         <div className="input-wrapper">
                             <input
                                 className={this.state.userFieldsValid.email === null ?
@@ -456,12 +459,12 @@ class SignUp extends Component {
                                 required />
                         </div>
                         {this.state.userFieldsValid.email === false ?
-                            <span className="hint-error">Wrong email or already exists</span> : null
+                            <span className="hint-error">{t('signup.emailWrong')}</span> : null
                         }
                     </div>
 
                     <div className="input-field-wrapper">
-                        <span className="input-heading">Company</span>
+                        <span className="input-heading">{t('signup.company')}</span>
                         <div className="input-wrapper">
                             <input
                                 className={this.state.userFieldsValid.company === null ?
@@ -473,12 +476,12 @@ class SignUp extends Component {
                                 required />
                         </div>
                         {this.state.userFieldsValid.company === false ?
-                            <span className="hint-error">The field must be at least 3 characters long</span> : null
+                            <span className="hint-error">{t('signup.fieldMust')}</span> : null
                         }
                     </div>
 
                     <div className="input-field-wrapper">
-                        <span className="input-heading">Position</span>
+                        <span className="input-heading">{t('signup.position')}</span>
                         <div className="input-wrapper">
                             <input
                                 className={this.state.userFieldsValid.position === null ?
@@ -490,12 +493,12 @@ class SignUp extends Component {
                                 required />
                         </div>
                         {this.state.userFieldsValid.position === false ?
-                            <span className="hint-error">The field must be at least 3 characters long</span> : null
+                            <span className="hint-error">{t('signup.fieldMust')}</span> : null
                         }
                     </div>
 
                     <div className="input-field-wrapper">
-                        <span className="input-heading">Grade</span>
+                        <span className="input-heading">{t('signup.grade')}</span>
                         <div className="input-wrapper">
                             <input
                                 className={this.state.userFieldsValid.grade === null ?
@@ -507,12 +510,12 @@ class SignUp extends Component {
                                 required />
                         </div>
                         {this.state.userFieldsValid.grade === false ?
-                            <span className="hint-error">The field must be at least 3 characters long</span> : null
+                            <span className="hint-error">{t('signup.fieldMust')}</span> : null
                         }
                     </div>
 
                     <div className="input-field-wrapper">
-                        <span className="input-heading">Phone (example: 0950562394)</span>
+                        <span className="input-heading">{t('signup.phoneExample')}</span>
                         <div className="input-wrapper">
                             <input
                                 className={this.state.userFieldsValid.phone === null ?
@@ -524,12 +527,12 @@ class SignUp extends Component {
                                 required />
                         </div>
                         {this.state.userFieldsValid.phone === false ?
-                            <span className="hint-error">Expected number</span> : null
+                            <span className="hint-error">{t('signup.expectedNumber')}</span> : null
                         }
                     </div>
 
                     <div className="input-field-wrapper">
-                        <span className="input-heading">Password</span>
+                        <span className="input-heading">{t('signup.password')}</span>
                         <div className="input-wrapper">
                             <input
                                 className={this.state.userFieldsValid.password === null ?
@@ -543,7 +546,7 @@ class SignUp extends Component {
                     </div>
 
                     <div className="input-field-wrapper">
-                        <span className="input-heading">Repeat password</span>
+                        <span className="input-heading">{t('signup.passwordRepeat')}</span>
                         <div className="input-wrapper">
                             <input
                                 className="input-field started"
@@ -553,11 +556,11 @@ class SignUp extends Component {
                                 required />
                         </div>
                         {this.state.isVerified === false ?
-                            <span className="hint-error">Password not verified</span> : null
+                            <span className="hint-error">{t('signup.passwordNotVerified')}</span> : null
                         }
                     </div>
 
-                    <input type="submit" className="btn-submit" value="Sign up" />
+                    <input type="submit" className="btn-submit" value={t('signup.signupNow')} />
 
                 </form>
                 {
@@ -568,4 +571,4 @@ class SignUp extends Component {
     }
 }
 
-export default withRouter(SignUp);
+export default translate('translations')(withRouter(SignUp));

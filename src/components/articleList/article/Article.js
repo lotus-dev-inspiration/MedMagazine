@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
+import { translate } from 'react-i18next';
+
 
 import './Article.css';
 
-export default class Article extends Component {
+class Article extends Component {
     constructor(props) {
         super(props);
     }
 
     render() {
+        const { t } = this.props
+
         return (
             <article className="Article">
                 <h2 className="article-heading">{this.props.data.name}</h2>
@@ -26,10 +30,10 @@ export default class Article extends Component {
                     {
                         this.props.data.content.includes("http") 
                         ? <a target="_blank" href={this.props.data.content} className="info-read-more">
-                        Read More
+                        {t('article.readMore')}
                         </a>
                         : <a target="_blank" href={"http://127.0.0.1:8000" + this.props.data.content} className="info-read-more">
-                        Read More
+                        {t('article.readMore')}
                         </a>
                     }
 
@@ -39,3 +43,5 @@ export default class Article extends Component {
         );
     }
 }
+
+export default translate('translations')(Article);

@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import baseUrl from 'helpers/baseUrl';
 import './ArticleInfo.css';
+import { translate } from 'react-i18next';
 import {getComments, getCurrentArticle} from 'actions';
 
 class ArticleInfo extends Component {
@@ -46,10 +47,12 @@ class ArticleInfo extends Component {
     }
 
     render(){
+        const { t } = this.props
+
         return(
             <div className="ArticleInfo">
                 <div className="article-comments">
-                    <h3 className="comments-heading">Comments</h3>
+                    <h3 className="comments-heading">{t('articleInfo.comments')}</h3>
                     {this.props.comments.map((el, index) => {
                         return <p key={el.id} className="comment-item">{index+1 + ". " + el.text}</p>
                     })
@@ -78,4 +81,4 @@ const mapDispatchToProps = state => ({
     getCurrentArticle: getCurrentArticle(state)
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ArticleInfo));
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(ArticleInfo)));

@@ -98,7 +98,7 @@ class Header extends Component {
                     {
                             this.props.user.model
                             ? this.props.user.model.groups[0] === 2 || this.props.user.model.groups[0] === 1 ? <li className="navigation-item" >
-                                    <Link onClick={this.allMenusClose} className="navigation-link" to="/articles-review">{t('header.reviewe')}</Link>
+                                    <Link onClick={this.allMenusClose} className="navigation-link" to="/articles-review">{t('header.review')}</Link>
                             </li>
                             : null : null
                     }
