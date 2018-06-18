@@ -9,10 +9,34 @@ import { translate } from 'react-i18next';
 class ArticleView extends Component {
 
     render() {
+        const { t, i18n } = this.props
         let time = new Date(Date.parse(this.props.data.date));
         let stages = this.props.stages[0].statuses.concat(this.props.stages[1].statuses, this.props.stages[2].statuses);
-        const { t } = this.props
+        let currentLanguage = i18n.language;
 
+        const statuses = {
+            'en': {
+                "Editing": "Editing",
+                "Published": "Published",
+                "Waiting for publication": "Waiting for publication",
+                "Rejected": "Rejected",
+                "Checking": "Checking",
+                "Needed rework": "Needed rework",
+                "Reviewing": "Reviewing" 
+            },
+            'ua': {
+                "Editing": "На редагуванні",
+                "Published": "Опубліковано",
+                "Waiting for publication": "Очікує на публікацію",
+                "Rejected": "Відхилено",
+                "Checking": "На перевірці",
+                "Needed rework": "На доопрацюванні",
+                "Reviewing": "На рецензуванні" 
+            }
+        }
+
+        const status = stages.find(el => el.id == this.props.data.status).name;
+        const statusToShow = statuses[currentLanguage][status];
 
         return (
             <section className="ArticleView">
@@ -29,8 +53,8 @@ class ArticleView extends Component {
                     <p className="article-description">{this.props.data.description}</p>
                     <p className="article-status">{t('articleView.status')}:&nbsp;
                         <span className="article-status-changed">
-                            {stages
-                                .find(el => el.id == this.props.data.status).name
+                            {
+                                statusToShow
                             }
                         </span>
                     </p>

@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getReviewArticles, getStages } from 'actions';
 import baseUrl from 'helpers/baseUrl';
+import { translate } from 'react-i18next';
 import Spinner from 'components/spinner/Spinner';
 
 
@@ -21,6 +22,8 @@ class Tabs extends Component {
     }
 
     render() {
+        const { t } = this.props
+
         return (
             <div>
                 <ul className="inline">
@@ -97,11 +100,16 @@ class ArticlesReviewList extends Component {
     }
 
     render() {
+        const { t } = this.props
+
         return (
             <section className="ArticlesReviewList">
-                {this.props.userInfo.groups.length === 0 ?
-                    <h1 className="header">My articles</h1> :
-                    <h1 className="header">Articles that are awaiting a review</h1>
+                {
+                    this.props.articles.length ?
+                    this.props.userInfo.groups.length === 0 ?
+                            <h1 className="header">{t('articlesReviewList.myarticles')}</h1> :
+                            <h1 className="header">{t('articlesReviewList.review')}</h1>
+                        : <p className="no-avail">{t('articlesReviewList.noavail')}</p>
                 }
                 {
                     this.state.isArticlesLoading || this.state.isStagesLoading ?
@@ -111,7 +119,7 @@ class ArticlesReviewList extends Component {
                                 this.props.userInfo.groups[0] === 2 ?
                                     <React.Fragment>
                                         <Tabs selected={0}>
-                                            <Panel title="Test">
+                                            <Panel title={t('articlesReviewList.test')}>
                                                 {
                                                     this.props.articles.length !== 0 && this.props.stages.length !== 0 ?
                                                         <div>
@@ -123,10 +131,10 @@ class ArticlesReviewList extends Component {
                                                                         )
                                                                     })
                                                             }
-                                                        </div> : <p className="no-avail">No available articles</p>
+                                                        </div> : null
                                                 }
                                             </Panel>
-                                            <Panel title="Editing">
+                                            <Panel title={t('articlesReviewList.editing')}>
                                                 {
                                                     this.props.articles.length !== 0 && this.props.stages.length !== 0 ?
                                                         <div>
@@ -138,10 +146,10 @@ class ArticlesReviewList extends Component {
                                                                         )
                                                                     })
                                                             }
-                                                        </div> : <p className="no-avail">No available articles</p>
+                                                        </div> : null
                                                 }
                                             </Panel>
-                                            <Panel title="Rework">
+                                            <Panel title={t('articlesReviewList.rework')}>
                                                 {
                                                     this.props.articles.length !== 0 && this.props.stages.length !== 0 ?
                                                         <div>
@@ -153,7 +161,7 @@ class ArticlesReviewList extends Component {
                                                                         )
                                                                     })
                                                             }
-                                                        </div> : <p className="no-avail">No available articles</p>
+                                                        </div> : null
                                                 }
                                             </Panel>
                                         </Tabs>
@@ -169,7 +177,7 @@ class ArticlesReviewList extends Component {
                                                             )
                                                         })
                                                     }
-                                                </div> : <p className="no-avail">No available articles</p>
+                                                </div> : null
                                         }
                                     </React.Fragment>
                     }
@@ -195,4 +203,4 @@ const mapDispatchToProps = state => ({
     getStages: getStages(state)
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ArticlesReviewList));
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(ArticlesReviewList)));

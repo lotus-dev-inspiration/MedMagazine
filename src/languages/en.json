@@ -102,5 +102,12 @@
     "requirements.rulesItem2Subitem7": "All illustrations and tables should be numbered and provided with names under them",
     "requirements.rulesItem2Subitem8": "Picture",
     "requirements.rulesItem2Subitem9": "Mathtype (version 5.0 or higher)",
-    "requirements.rulesItem2Subitem10": "The article must be in .pdf format"
+    "requirements.rulesItem2Subitem10": "The article must be in .pdf format",
+    "articlesReviewList.test": "Cheking",
+    "articlesReviewList.noavail": "Currently, you have no available articles",
+    "articlesReviewList.editing": "Editing",
+    "articlesReviewList.rework": "Rework",
+    "articlesReviewList.myarticles": "My articles",
+    "articlesReviewList.review": "Articles that are awaiting a review"
+
 }

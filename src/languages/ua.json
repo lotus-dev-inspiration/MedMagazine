@@ -102,5 +102,11 @@
     "requirements.rulesItem2Subitem7": "Всі ілюстрації та таблиці пронумеровані та підписані",
     "requirements.rulesItem2Subitem8": "Картинки",
     "requirements.rulesItem2Subitem9": "Mathtype (версія 5.0 чи вище)",
-    "requirements.rulesItem2Subitem10": "Формат статті - pdf"
+    "requirements.rulesItem2Subitem10": "Формат статті - pdf",
+    "articlesReviewList.test": "Перевірка",
+    "articlesReviewList.noavail": "На даний момент, Ви не маєте доступних статей",
+    "articlesReviewList.editing": "Редагування",
+    "articlesReviewList.rework": "Доопрацювання",
+    "articlesReviewList.myarticles": "Мої статті",
+    "articlesReviewList.review": "Статті, що чекають на рев'ю"
 }

@@ -32,7 +32,7 @@ class ArticleList extends Component {
                                     }) 
                                 }
                             </React.Fragment>
-                            : <h2>Sorry, currently there are no available articles.</h2>
+                        : <h2>{t('articleList.sorry')}</h2>
                     }
                 </section>
         );
