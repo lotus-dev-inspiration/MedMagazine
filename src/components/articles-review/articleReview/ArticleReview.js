@@ -7,7 +7,8 @@ import { getCurrentArticle } from 'actions';
 import { fileValidation } from 'services/validation-service';
 import { getArticleComments } from 'services/article-service';
 import NotificationSystem from 'react-notification-system';
-import {getDate,getYear,getMonthNumber} from 'helpers/date-helper';
+import { getDate, getYear, getMonthNumber } from 'helpers/date-helper';
+import { translate } from 'react-i18next';
 
 
 class ArticleReview extends Component {
@@ -33,6 +34,12 @@ class ArticleReview extends Component {
             comments: []
         }
 
+    }
+
+    // reviewComment = `${this.relevance.value}`;
+
+    test = () => {
+        console.log(this.relevance.value);
     }
 
     _addNotification = (message, status) => {
@@ -175,27 +182,66 @@ class ArticleReview extends Component {
     }
 
     sendReview = () => {
+        let reviewComment = '';
+        if (this.props.userInfo.groups[0] === 1) {
+            if (this.novelty.value === "" || this.relevance.value === "" || this.methods.value === "" || this.theoria.value === "" || this.practical.value === "" || this.literature.value === "" || this.publications.value === "" || this.wish.value === "") {
 
-        if (this.state.commentReview.comment.text) {
-            fetch(`${baseUrl}/articles/${this.state.commentReview.comment.article}/`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                method: 'PATCH',
-                body: JSON.stringify(this.state.commentReview)
-            })
-                .then(response => {
-                    return response.json();
-                }).then(data => {
-                    this.props.history.push('/articles-review');
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        } else {
-            this._addNotification('Fill all fields, please', 'error')
+                this._addNotification('Fill all fields, please', 'error');
+            } else {
+                reviewComment = `${this.props.t('articleReview.relevanceProblem')}: ${this.relevance.value} 
+            ${this.props.t('articleReview.novelty')}: ${this.novelty.value} 
+            ${this.props.t('articleReview.usedResearchMethods')}: ${this.methods.value} 
+            ${this.props.t('articleReview.theoretical')}: ${this.theoria.value} 
+            ${this.props.t('articleReview.practical')}: ${this.practical.value} 
+            ${this.props.t('articleReview.levelLiterature')}: ${this.literature.value} 
+            ${this.props.t('articleReview.publications')}: ${this.publications.value} 
+            ${this.wish.value}`;
+
+            }
+        } else if (this.props.userInfo.groups[0] === 2 && this.props.currentArticle.stage == 1) {
+
+            if (this.design.value === "" || this.conclusion.value === "" || this.degree.value === "" || this.quality.value === "" ) {
+
+                this._addNotification('Fill all fields, please', 'error');
+            } else {
+                reviewComment = ` 
+            ${this.props.t('articleReview.design')}: ${this.design.value} 
+            ${this.props.t('articleReview.conclusion')}: ${this.conclusion.value} 
+            ${this.props.t('articleReview.degreeWork')}: ${this.degree.value} 
+            ${this.props.t('articleReview.quality')}: ${this.quality.value} 
+            ${this.wish.value}`;
+
         }
+    }
+        console.log(reviewComment);
+        this.state.commentReview.comment.text = reviewComment;
+        // this.setState({
+        //     ...this.state,
+        //     commentReview: {
+        //         ...this.state.commentReview,
+        //         comment: {
+        //             ...this.state.commentReview.comment,
+        //             text: reviewComment
+        //         }
+
+        //     }
+        // })
+        fetch(`${baseUrl}/articles/${this.state.commentReview.comment.article}/`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'PATCH',
+            body: JSON.stringify(this.state.commentReview)
+        })
+            .then(response => {
+                return response.json();
+            }).then(data => {
+                this.props.history.push('/articles-review');
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     sendToPublish = () => {
@@ -218,11 +264,10 @@ class ArticleReview extends Component {
         } else {
             this._addNotification('Upload the file, please', 'error')
         }
-
-
     }
 
     render() {
+        const { t } = this.props;
         let articleInfo = this.props.articles.find(el => el.id == window.location.pathname.split('/')[2]);
 
         return (
@@ -261,22 +306,167 @@ class ArticleReview extends Component {
                         </div>
                         :
                         <div>
-                            
+
                             {
                                 this.state.comments.length ?
                                     <div className="previousComments">
                                         <h3 className="label-textarea">Your previous comments about this article</h3>
                                         {
                                             this.state.comments.map((comment, id) => {
-                                                return <p><b>{id + 1}.</b> {comment.text} - <b><i>{getDate(comment.date) + "/" + getMonthNumber(comment.date) + "/" +  getYear(comment.date)}</i></b></p>
+                                                return <p><b>{id + 1}.</b> {comment.text} - <b><i>{getDate(comment.date) + "/" + getMonthNumber(comment.date) + "/" + getYear(comment.date)}</i></b></p>
                                             })
                                         }
                                     </div>
                                     : null
                             }
+                            {this.props.userInfo.groups[0] === 1 ?
+                                <React.Fragment>
+                                    <h3 style={{ marginTop: '30px' }}>{t('articleReview.rateArticle')}</h3>
+                                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+                                        <div className="question">
+                                            <div className="input-field-wrapper">
+                                                <span className="input-heading">{t('articleReview.relevanceProblem')}</span>
+                                                <div className="input-wrapper">
+                                                    <input
+                                                        className="input-field started"
+                                                        type="text"
+                                                        name="relevance"
+                                                        ref={(input) => this.relevance = input}
+                                                        required />
+                                                </div>
+                                            </div>
+                                            <div className="input-field-wrapper">
+                                                <span className="input-heading">{t('articleReview.novelty')}</span>
+                                                <div className="input-wrapper">
+                                                    <input
+                                                        className="input-field started"
+                                                        type="text"
+                                                        name="novelty"
+                                                        ref={(input) => this.novelty = input}
+                                                        required />
+                                                </div>
+                                            </div>
+                                            <div className="input-field-wrapper">
+                                                <span className="input-heading">{t('articleReview.usedResearchMethods')}</span>
+                                                <div className="input-wrapper">
+                                                    <input
+                                                        className="input-field started"
+                                                        type="text"
+                                                        name="methods"
+                                                        ref={(input) => this.methods = input}
+                                                        required />
+                                                </div>
+                                            </div>
+                                            <div className="input-field-wrapper">
+                                                <span className="input-heading">{t('articleReview.theoretical')}</span>
+                                                <div className="input-wrapper">
+                                                    <input
+                                                        className="input-field started"
+                                                        type="text"
+                                                        name="theoria"
+                                                        ref={(input) => this.theoria = input}
+                                                        required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="answer">
+                                            <div className="input-field-wrapper">
+                                                <span className="input-heading">{t('articleReview.practical')}</span>
+                                                <div className="input-wrapper">
+                                                    <input
+                                                        className="input-field started"
+                                                        type="text"
+                                                        name="practical"
+                                                        ref={(input) => this.practical = input}
+                                                        required />
+                                                </div>
+                                            </div>
+                                            <div className="input-field-wrapper">
+                                                <span className="input-heading">{t('articleReview.levelLiterature')}</span>
+                                                <div className="input-wrapper">
+                                                    <input
+                                                        className="input-field started"
+                                                        type="text"
+                                                        name="literature"
+                                                        ref={(input) => this.literature = input}
+                                                        required />
+                                                </div>
+                                            </div>
+                                            <div className="input-field-wrapper">
+                                                <span className="input-heading">{t('articleReview.publications')}</span>
+                                                <div className="input-wrapper">
+                                                    <input
+                                                        className="input-field started"
+                                                        type="text"
+                                                        name="publications"
+                                                        ref={(input) => this.publications = input}
+                                                        required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </React.Fragment> : (this.props.userInfo.groups[0] === 2 && this.props.currentArticle.stage === 1) ?
+                                    <React.Fragment>
+                                        <h3 style={{ marginTop: '30px' }}>{t('articleReview.rateArticle')}</h3>
+                                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+                                            <div className="question">
+                                                <div className="input-field-wrapper">
+                                                    <span className="input-heading">{t('articleReview.design')}</span>
+                                                    <div className="input-wrapper">
+                                                        <input
+                                                            className="input-field started"
+                                                            type="text"
+                                                            name="design"
+                                                            ref={(input) => this.design = input}
+                                                            required />
+                                                    </div>
+                                                </div>
+                                                <div className="input-field-wrapper">
+                                                    <span className="input-heading">{t('articleReview.conclusion')}</span>
+                                                    <div className="input-wrapper">
+                                                        <input
+                                                            className="input-field started"
+                                                            type="text"
+                                                            name="conclusion"
+                                                            ref={(input) => this.conclusion = input}
+                                                            required />
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            <div className="answer">
+                                                <div className="input-field-wrapper">
+                                                    <span className="input-heading">{t('articleReview.degreeWork')}</span>
+                                                    <div className="input-wrapper">
+                                                        <input
+                                                            className="input-field started"
+                                                            type="text"
+                                                            name="degree"
+                                                            ref={(input) => this.degree = input}
+                                                            required />
+                                                    </div>
+                                                </div>
+                                                <div className="input-field-wrapper">
+                                                    <span className="input-heading">{t('articleReview.quality')}</span>
+                                                    <div className="input-wrapper">
+                                                        <input
+                                                            className="input-field started"
+                                                            type="text"
+                                                            name="quality"
+                                                            ref={(input) => this.quality = input}
+                                                            required />
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </React.Fragment> : null
+                            }
                             <h3 className="label-textarea">Comment and whishes about article</h3>
                             <div>
-                                <textarea className="article-comments" onChange={this.onCommentChange.bind(this)}>
+                                {/* <textarea className="article-comments" onChange={this.onCommentChange.bind(this)}>
+                                </textarea> */}
+                                <textarea className="article-comments" ref={(node) => this.wish = node}>
                                 </textarea>
                             </div>
                             <h3 className="label-textarea">Change the status of article</h3>
@@ -298,11 +488,12 @@ class ArticleReview extends Component {
                         </div> : this.props.currentArticle.stage == 2 ?
                             <div className="form__select">
                                 <select name="select" value={this.state.commentReview.status} onChange={this.onStatusChange.bind(this)}>
-                                    {
+                                    {/* {
                                         this.props.currentArticle.number !== 2 ?
                                             <option value="2">Send to rework</option>
                                             : null
-                                    }
+                                    } */}
+                                    <option value="2">Send to rework</option>
                                     <option value="5">Send to editor</option>
                                     <option value="3">Rejected</option>
                                 </select>
@@ -333,6 +524,6 @@ const mapDispatchToProps = state => ({
     getCurrentArticle: getCurrentArticle(state)
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ArticleReview));
+export default translate('translations')(withRouter(connect(mapStateToProps, mapDispatchToProps)(ArticleReview)));
 
 

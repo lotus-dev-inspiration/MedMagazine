@@ -45,5 +45,17 @@
     "articleCreation.file": "Choose a file...",
     "articleCreation.fileMust": "The file must be in pdf format and lower than 10 Mb",
     "articleCreation.submit": "Submit article",
-    "articleCreation.submitChange": "Change article"
+    "articleCreation.submitChange": "Change article",
+    "articleReview.rateArticle": "Rate this article according to these criteria (100-point scale)",
+    "articleReview.relevanceProblem": "Relevance of the problem",
+    "articleReview.novelty": "Novelty and originality of ideas",
+    "articleReview.usedResearchMethods": "Used research methods",
+    "articleReview.theoretical": "Theoretical scientific results",
+    "articleReview.practical": "The practical direction of the results",
+    "articleReview.levelLiterature": "Level of use of scientific literature",
+    "articleReview.publications": "Scientific publications",
+    "articleReview.design": "Design of literary sources",
+    "articleReview.conclusion": "Conclusion on plagiarism",
+    "articleReview.degreeWork": "The degree of autonomy of work",
+    "articleReview.quality": "Quality of design"
 }
