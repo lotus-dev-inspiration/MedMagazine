@@ -68,12 +68,6 @@ class SignUp extends Component {
         getUsers().then(response => {
             return response.json();
         }).then(data => {
-            // this.setState({
-            //     ...this.state,
-            //     userNames: data.results.map(el => el.username),
-            //     userEmails: data.results.map(el => el.email)
-            // })
-            console.log(data);
         })
     }
 

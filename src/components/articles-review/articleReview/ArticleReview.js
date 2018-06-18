@@ -7,7 +7,7 @@ import { getCurrentArticle } from 'actions';
 import { fileValidation } from 'services/validation-service';
 import { getArticleComments } from 'services/article-service';
 import NotificationSystem from 'react-notification-system';
-import {getDate,getYear,getMonthNumber} from 'helpers/date-helper';
+import { getDate, getYear, getMonthNumber } from 'helpers/date-helper';
 
 
 class ArticleReview extends Component {
@@ -92,7 +92,6 @@ class ArticleReview extends Component {
             this.props.getCurrentArticle(data);
 
             let statusToSetDefault = 2;
-            let number = data.number;
 
             if (data.number === 2 && data.stage === 1) {
                 statusToSetDefault = 4;
@@ -100,18 +99,12 @@ class ArticleReview extends Component {
                 statusToSetDefault = 5;
             }
 
-            if (statusToSetDefault === 2) {
-                number = ++number;
-            } else {
-                number = 0;
-            }
-
             this.setState({
                 ...this.state,
                 commentReview: {
                     ...this.state.commentReview,
-                    number: number,
-                    status: statusToSetDefault
+                    status: statusToSetDefault,
+                    number: data.number
                 }
             })
         }).catch(error => {
@@ -175,24 +168,37 @@ class ArticleReview extends Component {
     }
 
     sendReview = () => {
-
         if (this.state.commentReview.comment.text) {
-            fetch(`${baseUrl}/articles/${this.state.commentReview.comment.article}/`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                method: 'PATCH',
-                body: JSON.stringify(this.state.commentReview)
-            })
-                .then(response => {
-                    return response.json();
-                }).then(data => {
-                    this.props.history.push('/articles-review');
+            let number = this.state.commentReview.number;
+            if (this.state.commentReview.status !== 2) {
+                number = 0;
+            } else {
+                number = ++number;
+            }
+            this.setState({
+                ...this.state,
+                commentReview: {
+                    ...this.state.commentReview,
+                    number
+                }
+            }, () => {
+                fetch(`${baseUrl}/articles/${this.state.commentReview.comment.article}/`, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    method: 'PATCH',
+                    body: JSON.stringify(this.state.commentReview)
                 })
-                .catch(error => {
-                    console.log(error);
-                })
+                    .then(response => {
+                        return response.json();
+                    }).then(data => {
+                        this.props.history.push('/articles-review');
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+            });
         } else {
             this._addNotification('Fill all fields, please', 'error')
         }
@@ -261,14 +267,14 @@ class ArticleReview extends Component {
                         </div>
                         :
                         <div>
-                            
+
                             {
                                 this.state.comments.length ?
                                     <div className="previousComments">
                                         <h3 className="label-textarea">Your previous comments about this article</h3>
                                         {
                                             this.state.comments.map((comment, id) => {
-                                                return <p><b>{id + 1}.</b> {comment.text} - <b><i>{getDate(comment.date) + "/" + getMonthNumber(comment.date) + "/" +  getYear(comment.date)}</i></b></p>
+                                                return <p><b>{id + 1}.</b> {comment.text} - <b><i>{getDate(comment.date) + "/" + getMonthNumber(comment.date) + "/" + getYear(comment.date)}</i></b></p>
                                             })
                                         }
                                     </div>

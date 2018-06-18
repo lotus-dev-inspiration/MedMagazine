@@ -32,7 +32,6 @@ class ArticlesWrapperPage extends Component {
                     articles: data[0].articles,
                     magazineName: data[0].name
                 })
-                console.log(data);
             } else {
                 this.setState({
                     articles: data.articles,

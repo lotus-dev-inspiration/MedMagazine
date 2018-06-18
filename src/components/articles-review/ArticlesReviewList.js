@@ -123,7 +123,7 @@ class ArticlesReviewList extends Component {
                                                                         )
                                                                     })
                                                             }
-                                                        </div> : null
+                                                        </div> : <p className="no-avail">No available articles</p>
                                                 }
                                             </Panel>
                                             <Panel title="Editing">
@@ -138,7 +138,7 @@ class ArticlesReviewList extends Component {
                                                                         )
                                                                     })
                                                             }
-                                                        </div> : null
+                                                        </div> : <p className="no-avail">No available articles</p>
                                                 }
                                             </Panel>
                                             <Panel title="Rework">
@@ -153,7 +153,7 @@ class ArticlesReviewList extends Component {
                                                                         )
                                                                     })
                                                             }
-                                                        </div> : null
+                                                        </div> : <p className="no-avail">No available articles</p>
                                                 }
                                             </Panel>
                                         </Tabs>
@@ -169,7 +169,7 @@ class ArticlesReviewList extends Component {
                                                             )
                                                         })
                                                     }
-                                                </div> : null
+                                                </div> : <p className="no-avail">No available articles</p>
                                         }
                                     </React.Fragment>
                     }
