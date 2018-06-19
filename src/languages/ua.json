@@ -39,7 +39,7 @@
     "articleCreation.en": "Англійська",
     "articleCreation.other": "Інша...",
     "articleCreation.description": "Опис статті",
-    "articleCreation.descriptionMust": "Опис статті ма бути більше ніж 500 символі",
+    "articleCreation.descriptionMust": "Опис статті ма бути більше ніж 500 символів",
     "articleCreation.keywords": "Ключові сова",
     "articleCreation.keywordsMust": "Ключові слова мають бути 3 символи мінімально",
     "articleCreation.file": "Оберіть файл...",
@@ -108,5 +108,18 @@
     "articlesReviewList.editing": "Редагування",
     "articlesReviewList.rework": "Доопрацювання",
     "articlesReviewList.myarticles": "Мої статті",
-    "articlesReviewList.review": "Статті, що чекають на рев'ю"
+    "articlesReviewList.review": "Статті, що чекають на рев'ю",
+    "articleReview.rateArticle": "Оцініть цю статтю відповідно до цих критеріїв (100-бальна шкала)",
+    "articleReview.relevanceProblem": "Актуальність проблеми",
+    "articleReview.novelty": "Новизна і актуальність ідей",
+    "articleReview.usedResearchMethods": "Використані методи дослідження",
+    "articleReview.theoretical": "Теоретичні наукові результати",
+    "articleReview.practical": "Практична направленість результатів",
+    "articleReview.levelLiterature": "Рівень використання наукової літератури",
+    "articleReview.publications": "Наукові публікації",
+    "articleReview.design": "Оформлення літературних джерел",
+    "articleReview.conclusion": "Заключення на плагіат",
+    "articleReview.degreeWork": "Ступінь самостійнсті роботи",
+    "articleReview.quality": "Якість оформлення"
+
 }
