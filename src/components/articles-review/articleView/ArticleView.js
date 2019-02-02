@@ -35,8 +35,14 @@ class ArticleView extends Component {
             }
         }
 
-        const status = stages.find(el => el.id == this.props.data.status).name;
-        const statusToShow = statuses[currentLanguage][status];
+        let status = stages.find(el => el.id == this.props.data.status);
+        if(status) {
+            status = status.name;
+        } else {
+            status = 'Published';
+        }
+        
+        // const statusToShow = statuses[currentLanguage][status];
 
         return (
             <section className="ArticleView">
@@ -54,7 +60,7 @@ class ArticleView extends Component {
                     <p className="article-status">{t('articleView.status')}:&nbsp;
                         <span className="article-status-changed">
                             {
-                                statusToShow
+                                status
                             }
                         </span>
                     </p>

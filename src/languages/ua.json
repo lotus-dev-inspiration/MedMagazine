@@ -120,6 +120,20 @@
     "articleReview.design": "Оформлення літературних джерел",
     "articleReview.conclusion": "Заключення на плагіат",
     "articleReview.degreeWork": "Ступінь самостійнсті роботи",
-    "articleReview.quality": "Якість оформлення"
-
+    "articleReview.quality": "Якість оформлення",
+    "articleReview.description": "Опис статті",
+    "articleReview.keywords": "Ключові слова",
+    "articleReview.open": "Відкрити у новому вікні",
+    "articleReview.fileMust": "Файл повинен бути в форматі pdf та менше 10 Mb",
+    "articleReview.choose": "Файл",
+    "articleReview.previous": "Ваші попередні коментарі по статті",
+    "articleReview.wishes": "Коментарії та побажання стосовно статті",
+    "articleReview.change": "Змінити статтус статті",
+    "articleReview.rework": "На доопрацювання",
+    "articleReview.review": "На рецезування",
+    "articleReview.rejected": "Відхилено",
+    "articleReview.editor": "У редакцію",
+    "articleReview.save": "Зберегти",
+    "articleReview.publish": "На публікацію",
+    "articleReview.upload": "Завантажити відредаговану"
 }

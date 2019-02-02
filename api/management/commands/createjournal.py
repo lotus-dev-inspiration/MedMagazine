@@ -7,8 +7,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         articles = Article.objects.filter(status=6).order_by('-date')
-        articles = articles[:15]
-        if len(articles) == 15:
+        if len(articles) > 0:
             journal = Journal.objects.create_journal(articles)
             stage = ArticleStage.objects.get(pk=4)
             status = ArticleStatus.objects.get(pk=7)

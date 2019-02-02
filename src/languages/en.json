@@ -120,5 +120,20 @@
     "articleReview.design": "Design of literary sources",
     "articleReview.conclusion": "Conclusion on plagiarism",
     "articleReview.degreeWork": "The degree of autonomy of work",
-    "articleReview.quality": "Quality of design"
+    "articleReview.quality": "Quality of design",
+    "articleReview.description": "Description",
+    "articleReview.keywords": "Key words",
+    "articleReview.open": "Open in a new window",
+    "articleReview.fileMust": "The file must be in pdf format and lower than 10 Mb",
+    "articleReview.choose": "Choose a file",
+    "articleReview.previous": "Your previous comments about this article",
+    "articleReview.wishes": "Comment and whishes about article",
+    "articleReview.change": "Change the status of article",
+    "articleReview.rework": "Send to rework",
+    "articleReview.review": "Send to review",
+    "articleReview.rejected": "Rejected",
+    "articleReview.editor": "Send to editor",
+    "articleReview.save": "Save",
+    "articleReview.publish": "Send to publish",
+    "articleReview.upload": "Upload edited article"
 }
